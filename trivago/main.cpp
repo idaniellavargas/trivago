@@ -3,7 +3,8 @@
 using namespace std;
 using namespace System;
 
-int main() {
+int main()
+{
 	cout << "hola grupo 1!" << endl;
 	system("pause");
 	return 0;

@@ -1,2 +1,4 @@
 C:\Users\usuario\Desktop\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
 C:\Users\usuario\Desktop\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\I.C.G\Desktop\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\I.C.G\Desktop\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
