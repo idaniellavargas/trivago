@@ -1,2 +1,0 @@
-C:\Users\I.C.G\Desktop\trivago\asd\x64\Debug\asd.vcxproj.AssemblyReference.cache
-C:\Users\I.C.G\Desktop\trivago\asd\x64\Debug\asd.vcxproj.SuggestedBindingRedirects.cache
