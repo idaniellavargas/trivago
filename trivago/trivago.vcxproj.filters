@@ -19,4 +19,12 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Recursos.h">
+      <Filter>Archivos de recursos</Filter>
+    </ClInclude>
+    <ClInclude Include="Fecha.h">
+      <Filter>Archivos de recursos</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
