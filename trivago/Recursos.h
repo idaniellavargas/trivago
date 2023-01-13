@@ -69,13 +69,6 @@ void Imprimir_Trivago() {
        \_/  \_/\_\\_/\__/  \_/ \|\____\\____/)" << endl;
 }
 
-void Imprimir_Creditos() {
-	cout << R"(
-      _, __, __, __, _ ___  _,  _,
-     / ` |_) |_  | \ |  |  / \ (_ 
-     \ , | \ |   |_/ |  |  \ / , )
-      ~  ~ ~ ~~~ ~   ~  ~   ~   ~ )" << endl;
-}
 
 // muestra el cursor en el menú
 void Desplazarse(int x, int y, bool visible) {

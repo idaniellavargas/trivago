@@ -1,6 +1,6 @@
 ﻿  main.cpp
 C:\Users\I.C.G\Desktop\trivago\trivago\Recursos.h(50,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-C:\Users\I.C.G\Desktop\trivago\trivago\Recursos.h(91,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+C:\Users\I.C.G\Desktop\trivago\trivago\Recursos.h(84,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
 C:\Users\I.C.G\Desktop\trivago\trivago\main.cpp(67,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
 C:\Users\I.C.G\Desktop\trivago\trivago\main.cpp(173,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
 C:\Users\I.C.G\Desktop\trivago\trivago\main.cpp(176,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
