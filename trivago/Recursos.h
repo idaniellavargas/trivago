@@ -1,5 +1,8 @@
 #pragma once
 #include <iostream>
+#include <string>
+#include <istream>
+#include <fstream>
 #include <conio.h>
 #include "Fecha.h"
 #define FILAS 40

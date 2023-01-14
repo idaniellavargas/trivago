@@ -1,4 +1,169 @@
 #include "Recursos.h"
+#include "Hotel.h"
+
+void Mostrar_Menu();
+int MenuHotel() {
+	int op;
+	do {
+		cout << " Menu de Opciones " << endl;
+		cout << "1.- Registrar Hotel" << endl;
+		cout << "2.- Mostrar Registro de Hoteles " << endl;
+		cout << "3.- Modificar un Registro de Hotel " << endl;
+		cout << "4.- Eliminar Un Registro de Hotel " << endl;
+		cout << "5.- Reporte de ubicacion de Hoteles CAMPOS-ELISEOS" << endl;
+		cout << "6.- Reporte de HOTELES CON DESAYUNO" << endl;
+		cout << "7.- Reporte de HOTELES CON SERVICIO AEROPUERTO" << endl;
+		cout << "8.- Salir " << endl;
+		cout << " Ingrese opcion: "; cin >> op;
+	} while (op < 1 || op > 8);
+	return op;
+}
+
+void FuncionalidadHotel() {
+	ArrHotel* objArreglo = new ArrHotel();
+	CHotel* objHotel;
+	string nombre;
+	string ubicacion;
+	int  estrellas;
+	bool desayuno;
+	int telefono;
+	bool servicio;
+
+	while (true)
+	{
+		Console::Clear();
+		int op;
+
+		op = MenuHotel();
+		if (op == 1)
+		{
+			objHotel = new CHotel();  //instnaciando, lamando a propiedades del objeto
+			cout << " Nombre del contacto: "; cin >> nombre;
+			objHotel->set_nombre(nombre);
+			cout << " Ubicacion: "; cin >> ubicacion;
+			objHotel->set_ubicacion(ubicacion);
+			cout << " Estrellas: "; cin >> estrellas;
+			objHotel->set_estrellas(estrellas);
+			cout << " Desayuno: "; cin >> desayuno;
+			objHotel->set_desayuno(desayuno);
+			cout << " Telefono: "; cin >> telefono;
+			objHotel->set_telefono(telefono);
+			cout << " Servicio: "; cin >> servicio;
+			objHotel->set_servicioA(servicio);
+
+			objArreglo->agregarHotel(objHotel);
+
+		}
+		if (op == 2)
+		{
+			objArreglo->mostrar();
+		}
+
+		if (op == 3)
+		{
+			int pos;
+			int opcionM;
+			cout << "Ingrese la poscion  que desee Modificar "; cin >> pos;
+			CHotel* objHotel = objArreglo->modificar(pos);
+			string nombre;
+			string ubicacion;
+			int  estrellas;
+			bool desayuno;
+			int telefono;
+			bool servicio;
+
+			cout << "Que desea Modificar del Objeto: " << endl;
+			cout << " 1 .- Nombre el Nombre " << endl;
+			cout << " 2 .- Ubicacion " << endl;
+			cout << " 3 .- Estrellas" << endl;
+			cout << " 4 .- Desayuno " << endl;
+			cout << " 5 .- Telefono " << endl;
+			cout << " 6 .- Servicio " << endl;
+			cin >> opcionM;
+
+			switch (opcionM)
+			{
+			case 1:
+
+				cout << " Nombre  : (" << objHotel->get_nombre() << ") :"; cin >> nombre;
+				objHotel->set_nombre(nombre);
+				break;
+			case 2:
+
+				cout << " Ubicacion  : (" << objHotel->get_ubicacion() << ") :"; cin >> ubicacion;
+				objHotel->set_ubicacion(ubicacion);
+				break;
+			case 3:
+
+				cout << " Estrellas : (" << objHotel->get_estrellas() << ") :"; cin >> estrellas;
+				objHotel->set_estrellas(estrellas);
+				break;
+			case 4:
+
+				cout << " Desayuno : (" << objHotel->get_desayuno() << ") :"; cin >> desayuno;
+				objHotel->set_desayuno(desayuno);
+				break;
+			case 5:
+
+				cout << " Telefono : (" << objHotel->get_telefono() << ") :"; cin >> telefono;
+				objHotel->set_telefono(telefono);
+				break;
+			case 6:
+
+				cout << " Servicio : (" << objHotel->get_servicioA() << ") :"; cin >> servicio;
+				objHotel->set_servicioA(servicio);
+				break;
+
+			case 7:
+
+				break;
+
+			default:
+				cout << " Ha digitado un numero invalido " << endl;
+				break;
+			}
+
+
+		}
+
+		if (op == 4)
+		{
+
+			int pos;
+
+			cout << "Ingrese la posicion que desee Eliminar: "; cin >> pos;
+			objArreglo->eliminarPos(pos);
+
+		}
+
+		if (op == 5)
+		{
+
+			objArreglo->reporte1();
+		}
+
+		if (op == 6)
+		{
+
+			objArreglo->reporte2();
+
+		}
+
+		if (op == 7)
+		{
+			objArreglo->reporte3();
+		}
+		
+		if (op == 8)
+		{
+			cout<<"Nos vemos pronto! -- Presiona Esc para volver al menu principal";
+
+		}
+		GoBack();
+		Mostrar_Menu();
+	}
+}
+
 
 void Iniciar_Arreglos_Creditos(int**& pCreditos) {
 	pCreditos = new int* [FILAS];
@@ -147,7 +312,7 @@ void Mostrar_Menu() {
 				else if (j < 30) cout << ' ';
 			}
 			else if (i == 16) {
-				if (j == COLUMNAS / 2 - 8) cout << "MIS FAVORITOS";
+				if (j == COLUMNAS / 2 - 6) cout << "HOTELES";
 				else if (j < 30) cout << ' ';
 			}
 			else if (i == 18) {
@@ -176,7 +341,9 @@ void Mostrar_Menu() {
 			tecla = getch();
 			switch (tecla) {
 			case 13: // Enter
-				if (x == 22) Mostrar_favoritos();
+				if (x == 22) {
+					FuncionalidadHotel();
+				}
 				if (x == 24) Mostrar_Creditos();
 				if (x == 26) exit(0);
 
