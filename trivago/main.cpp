@@ -10,24 +10,21 @@ int MenuHotel() {
 		cout << "2.- Mostrar Registro de Hoteles " << endl;
 		cout << "3.- Modificar un Registro de Hotel " << endl;
 		cout << "4.- Eliminar Un Registro de Hotel " << endl;
-		cout << "5.- Reporte de ubicacion de Hoteles CAMPOS-ELISEOS" << endl;
-		cout << "6.- Reporte de HOTELES CON DESAYUNO" << endl;
-		cout << "7.- Reporte de HOTELES CON SERVICIO AEROPUERTO" << endl;
-		cout << "8.- Salir " << endl;
+		cout << "5.- Reporte de ubicacion de en Francia" << endl;
+		cout << "6.- Reporte de hoteles con desayuno" << endl;
+		cout << "7.- Salir " << endl;
 		cout << " Ingrese opcion: "; cin >> op;
-	} while (op < 1 || op > 8);
+	} while (op < 1 || op > 7);
 	return op;
 }
 
 void FuncionalidadHotel() {
 	ArrHotel* objArreglo = new ArrHotel();
 	CHotel* objHotel;
-	string nombre;
-	string ubicacion;
-	int  estrellas;
-	bool desayuno;
+	string nombre, ID, ubicacion, moneda;
+	short huespedes, habitaciones;
 	int telefono;
-	bool servicio;
+	bool wifi, piscina, spa, parking, mascotas, desayuno;
 
 	while (true)
 	{
@@ -38,24 +35,54 @@ void FuncionalidadHotel() {
 		if (op == 1)
 		{
 			objHotel = new CHotel();  //instnaciando, lamando a propiedades del objeto
-			cout << " Nombre del contacto: "; cin >> nombre;
+			std::cout << "Ingresar detalles del hotel en el siguiente formato:\n"
+				<< "Nombre - Ubicacion - Moneda - Cantidad de huespedes - Habitaciones - Telefono\n"
+				<< "Si se cuenta con el servicio ingrese un 1, caso contrario, ingrese 0:\n" <<
+				"WiFi - Piscina - Spa - Parking - Mascotas - Desayuno\n";
+
+			// leer entrada
+
+			cin >> nombre >> ubicacion >> moneda >> huespedes >> habitaciones >> telefono
+				>> wifi >> piscina >> spa >> parking >> mascotas >> desayuno;
+
 			objHotel->set_nombre(nombre);
-			cout << " Ubicacion: "; cin >> ubicacion;
 			objHotel->set_ubicacion(ubicacion);
-			cout << " Estrellas: "; cin >> estrellas;
-			objHotel->set_estrellas(estrellas);
-			cout << " Desayuno: "; cin >> desayuno;
-			objHotel->set_desayuno(desayuno);
-			cout << " Telefono: "; cin >> telefono;
+			objHotel->set_moneda(moneda);
+			objHotel->set_huespedes(huespedes);
+			objHotel->set_habitaciones(habitaciones);
 			objHotel->set_telefono(telefono);
-			cout << " Servicio: "; cin >> servicio;
-			objHotel->set_servicioA(servicio);
-
+			objHotel->set_wifi(wifi);
+			objHotel->set_piscina(piscina);
+			objHotel->set_spa(spa);
+			objHotel->set_parking(parking);
+			objHotel->set_mascotas(mascotas);
+			objHotel->set_desayuno(desayuno);
+			objHotel->set_ID(generarID(1, nombre, 0));
 			objArreglo->agregarHotel(objHotel);
-
+			objArreglo->actualizar();
+			fstream fout;
+			fout.open(ARCHIVO_HOTELES, ios::out | ios::app);
+			//insertar datos en el archivo en formato csv
+			for (int i = 0; i < objArreglo->get_size(); i++) {
+				fout << objArreglo->get_pos(i)->get_nombre() << ", " <<
+					objArreglo->get_pos(i)->get_ID() << ", " <<
+					objArreglo->get_pos(i)->get_ubicacion() << ", "<<
+					objArreglo->get_pos(i)->get_moneda() << ", " <<
+					objArreglo->get_pos(i)->get_huespedes() << ", " <<
+					objArreglo->get_pos(i)->get_habitaciones() << ", " <<
+					objArreglo->get_pos(i)->get_telefono() << ", " <<
+					objArreglo->get_pos(i)->get_wifi() << ", " <<
+					objArreglo->get_pos(i)->get_piscina() << ", " <<
+					objArreglo->get_pos(i)->get_spa() << ", " <<
+					objArreglo->get_pos(i)->get_parking() << ", " <<
+					objArreglo->get_pos(i)->get_mascotas() << ", " <<
+					objArreglo->get_pos(i)->get_desayuno() << "\n";
+			}
+			MenuHotel();
 		}
 		if (op == 2)
 		{
+			objArreglo->actualizar();
 			objArreglo->mostrar();
 		}
 
@@ -93,11 +120,7 @@ void FuncionalidadHotel() {
 				cout << " Ubicacion  : (" << objHotel->get_ubicacion() << ") :"; cin >> ubicacion;
 				objHotel->set_ubicacion(ubicacion);
 				break;
-			case 3:
-
-				cout << " Estrellas : (" << objHotel->get_estrellas() << ") :"; cin >> estrellas;
-				objHotel->set_estrellas(estrellas);
-				break;
+			
 			case 4:
 
 				cout << " Desayuno : (" << objHotel->get_desayuno() << ") :"; cin >> desayuno;
@@ -108,12 +131,7 @@ void FuncionalidadHotel() {
 				cout << " Telefono : (" << objHotel->get_telefono() << ") :"; cin >> telefono;
 				objHotel->set_telefono(telefono);
 				break;
-			case 6:
-
-				cout << " Servicio : (" << objHotel->get_servicioA() << ") :"; cin >> servicio;
-				objHotel->set_servicioA(servicio);
-				break;
-
+		
 			case 7:
 
 				break;
@@ -132,28 +150,10 @@ void FuncionalidadHotel() {
 			int pos;
 
 			cout << "Ingrese la posicion que desee Eliminar: "; cin >> pos;
-			objArreglo->eliminarPos(pos);
+			//objArreglo->eliminarPos(pos);
 
 		}
 
-		if (op == 5)
-		{
-
-			objArreglo->reporte1();
-		}
-
-		if (op == 6)
-		{
-
-			objArreglo->reporte2();
-
-		}
-
-		if (op == 7)
-		{
-			objArreglo->reporte3();
-		}
-		
 		if (op == 8)
 		{
 			cout<<"Nos vemos pronto! -- Presiona Esc para volver al menu principal";

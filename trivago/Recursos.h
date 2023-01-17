@@ -1,11 +1,15 @@
 #pragma once
-#include <iostream>
 #include <string>
 #include <istream>
 #include <fstream>
+#include <sstream>
+#include <iostream>
+#include <vector>
 #include <conio.h>
 #include "Fecha.h"
+#include <algorithm>
 #define FILAS 40
+#define ARCHIVO_HOTEL hoteles.csv
 #define COLUMNAS 52
 
 using namespace std;
@@ -61,7 +65,29 @@ void Mostrar_Logo(int tecla) {
 	system("color 0F");
 	system("cls");
 }
-
+string generarID(short caso, string nombre, int i = 0)
+{
+	string ID;
+	char temp[3];
+	short cont = 0;
+	if (caso == 1) {
+		ID = nombre.substr(0, 3);
+		for (auto& c : ID) {
+			c = toupper(c);
+		}
+		return ID;
+	}
+	else if (caso == 2) {
+		if (nombre[i] == '\0') return 0; //se termina la cadena
+		if (isupper(nombre[i])) {
+			temp[cont] = nombre[i];
+			cont++;
+			if (cont == 3)ID = temp[0] + temp[1] + temp[2];
+			return ID;
+		}
+		return generarID(2, nombre, i + 1);
+	}
+}
 // usando generador de textos gigantes ASCII: https://www.messletters.com/en/big-text/
 void Imprimir_Trivago() {
 	cout << R"(
@@ -78,6 +104,7 @@ void Desplazarse(int x, int y, bool visible) {
 	Console::SetCursorPosition(y, x);
 	(visible) ? cout << ">" : cout << ' ';
 }
+#define ARCHIVO_HOTELES "hoteles.csv"
 
 // regresa
 void GoBack() {

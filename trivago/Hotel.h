@@ -1,140 +1,148 @@
 #include "Recursos.h"
 
+using namespace std;
+
 string hotelNombre[7] = { "Marriot","Bolivar","Shell", "Winston", "Paris","Casa Andina", "Trivago" };
 string hotelUbicacion[7] = { "Isla de la Cite","San Luis","Barrio Latino", "Montmartre", "La Defensa","Campos Eliseos", "Plaza de la Concordia" };
 
 class CHotel {
 private:
-	string nombre;
-	int estrellas;
-	string ubicacion;
-	bool desayuno;
+	string nombre, ID, ubicacion, moneda;
+	short huespedes, habitaciones;
 	int telefono;
-	bool servicioA; //aeropuerto
+	bool wifi, piscina, spa, parking, mascotas, desayuno;
 public:
 	CHotel();
 	~CHotel() {};
-	void registro() {};
-	//metodos de acceso
-	//getters
-	void set_hotel() {};
 	string get_nombre() { return nombre; }
-	int get_estrellas() { return estrellas; }
+	string get_ID() { return ID; }
 	string get_ubicacion() { return ubicacion; }
-	bool get_desayuno() { return desayuno; }
+	string get_moneda() { return moneda; }
+	short get_huespedes() { return huespedes; }
+	short get_habitaciones() { return habitaciones; }
 	int get_telefono() { return telefono; }
-	bool get_servicioA() { return servicioA; }
-	//setters
+	bool get_wifi() { return wifi; }
+	bool get_piscina() { return piscina; }
+	bool get_spa() { return spa; }
+	bool get_parking() { return parking; }
+	bool get_mascotas() { return mascotas; }
+	bool get_desayuno() { return desayuno; }
 	void set_nombre(string n) { nombre = n; }
-	void set_estrellas(int e) { estrellas = e; }
-	void set_ubicacion(string u) { ubicacion = u; }
+	void set_ID(string id) { ID = id; }
+	void set_ubicacion(string ubicacion) { this->ubicacion = ubicacion; }
+	void set_moneda(string moneda) { this->moneda = moneda; }
+	void set_huespedes(short huespedes) { this->huespedes = huespedes; }
+	void set_habitaciones(short habitaciones) { this->habitaciones = habitaciones; }
+	void set_wifi(bool b){wifi=b;}
+	void set_piscina(bool b){piscina=b;}
+	void set_spa(bool b){parking=b;}
 	void set_desayuno(bool d) { desayuno = d; }
+	void set_parking(bool d) { parking = d; }
+	void set_mascotas(bool d) { mascotas = d; }
+
 	void set_telefono(int t) { telefono = t; }
-	void set_servicioA(bool s) { servicioA = s; }
-	//--
 
 	void toString();
+	CHotel(string nombre, string ID, string ubicacion, short huespedes, short habitaciones, int telefono, bool piscina, bool spa, bool desayuno, bool parking, bool mascotas) {
+		nombre = hotelNombre[rand() % 7];
+		ubicacion = hotelUbicacion[rand() % 7];
+		desayuno = rand() % 2;
+		telefono = rand() % 8000000 + 10000000;
+	}
 };
 
 CHotel::CHotel() {
 	nombre = hotelNombre[rand() % 7];
-	estrellas = rand() % 6;
 	ubicacion = hotelUbicacion[rand() % 7];
 	desayuno = rand() % 2;
 	telefono = rand() % 8000000 + 10000000;
-	servicioA = rand() % 2;
 }
 
 void CHotel::toString() { //para imprimir string
 	cout << "Nombre: " << nombre << "\t";
-	cout << "Estrellas: " << estrellas << "\t";
 	cout << "Ubicacion: " << ubicacion << "\t";
 	cout << "Desayuno: ";
+	cout << "Servicio de WiFi: ";
+	(wifi == true) ? cout << "Sí" : cout << "No";
+	cout << endl;
 	if (desayuno)cout << "Si" << "\t";
 	else cout << "No" << "\t";
 	cout << "Telefono: " << telefono << "\t";
-	cout << "Servicio: ";
-	if (servicioA)cout << "Si" << "\t";
-	else cout << "No" << "\t";
+	
 	cout << endl;
 }
 
-#include <map>
 //clase controladora-->agrega,modifica,elimina, controlar aspectoz de registros y reportes
 class ArrHotel {
 private:
-	map<string, CHotel>Hoteles; //voy a quedarme con esto y reconstruir los metodos con map en lugar de un array
-	CHotel** arreglo;
-	int N;
-	int indice;
+	vector<CHotel*>Hoteles;
 public:
 	ArrHotel() {
-		arreglo = nullptr;
-		N = 0;
-	}
-	void agregarHotel(CHotel* obj) {
-		CHotel** aux = new CHotel * [N + 1];
-		for (int i = 0; i < N; i++) {
-			aux[i] = arreglo[i];
-		}
-		aux[N] = obj;
-		N++;
-		if (arreglo != nullptr)
-
-			delete[] arreglo;
-
-		arreglo = aux;
-	}
-	void mostrar() {
-		for (int i = 0; i < N; i++)
+		fstream archivo(ARCHIVO_HOTELES);
+		string linea;
+		char delimitador = ',';
+		while (getline(archivo, linea))
 		{
-			arreglo[i]->toString();
+
+			stringstream stream(linea); // Convertir la cadena a un stream
+			string nombre, ID, ubicacion, moneda;
+			string huespedes, habitaciones;
+			string telefono;
+			string wifi, piscina, spa, parking, mascotas, desayuno;
+			// Extraer todos los valores de esa fila con getline
+			getline(stream, nombre, delimitador);
+			getline(stream, ID, delimitador);
+			getline(stream, ubicacion, delimitador);
+			getline(stream, moneda, delimitador);
+			getline(stream, huespedes, delimitador);
+			getline(stream, habitaciones, delimitador);
+			getline(stream, telefono, delimitador);
+			getline(stream, wifi, delimitador);
+			getline(stream, piscina, delimitador);
+			getline(stream, spa, delimitador);
+			getline(stream, parking, delimitador);
+			getline(stream, mascotas, delimitador);
+			getline(stream, desayuno, delimitador);
+			CHotel* objHotel = new CHotel();
+			objHotel->set_nombre(nombre);
+			objHotel->set_ubicacion(ubicacion);
+			objHotel->set_moneda(moneda);
+			objHotel->set_huespedes(stoi(huespedes));
+			objHotel->set_habitaciones(stoi(habitaciones));
+			objHotel->set_telefono(stoi(habitaciones));
+			objHotel->set_wifi((bool)(stoi(wifi)));
+			objHotel->set_piscina((bool)(stoi(piscina)));
+			objHotel->set_spa((bool)(stoi(spa)));
+			objHotel->set_parking((bool)(stoi(parking)));
+			objHotel->set_mascotas((bool)(stoi(mascotas)));
+			objHotel->set_desayuno((bool)(stoi(desayuno)));
+			objHotel->set_ID(generarID(1, nombre, 0));
+			Hoteles.push_back(objHotel);
 		}
 	}
-	void eliminarPos(int pos) {
-		for (int i = 0; i < N; i++)
-		{
-			if (i == pos) {
-				for (int j = pos; j < N - 1; j++)
-				{
-					arreglo[j] = arreglo[j + 1]; //sobreescribir
-				}
-			}
-		}
-		N--;
+	void agregarHotel(CHotel* hotel) {
+		Hoteles.push_back(hotel);
 	}
+	int get_size() { return Hoteles.size(); }
+	auto get_pos(int i) { return Hoteles[i]; }
+	void actualizar() {
+		sort(Hoteles.begin(), Hoteles.end(), [](CHotel* hotel1, CHotel* hotel2)
+			{
+				if (hotel1->get_ID() != hotel2->get_ID()) return hotel1->get_ID() < hotel2->get_ID(); // IDs incrementandose
+				else hotel2->set_ID(generarID(2,hotel2->get_nombre(),0)); }); //rehacer id si son iguales
+	}
+
 
 	CHotel* modificar(int pos) {
-		for (int i = 0; i < N; i++)
+		for (int i = 0; i < Hoteles.size(); i++)
 		{
-			return arreglo[pos];
+			return Hoteles[pos];
 		}
 
 	}
-	//mostrar todos los campos Eliseos
-	void reporte1() {
-		for (int i = 0; i < N; i++)
-		{
-			if (arreglo[i]->get_ubicacion() == "Campos Eliseos")
-				arreglo[i]->toString();
-		}
-	}
-	//Hoteles que brindan desayuno
-	void reporte2() {
-		for (int i = 0; i < N; i++)
-		{
-			if (arreglo[i]->get_desayuno() == true)
-				arreglo[i]->toString();
-		}
-	}
-	//hoteles que brindan el servicio de aeropuerto
-	void reporte3() {
-		for (int i = 0; i < N; i++)
-		{
-			if (arreglo[i]->get_servicioA())
-				arreglo[i]->toString();
-		}
-	}
 
-
+	void mostrar() {
+		for (int i = 0; i < Hoteles.size(); i++) Hoteles[i]->toString();
+	}
 };
+
