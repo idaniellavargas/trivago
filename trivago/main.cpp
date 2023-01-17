@@ -36,9 +36,9 @@ void FuncionalidadHotel() {
 		{
 			objHotel = new CHotel();  //instnaciando, lamando a propiedades del objeto
 			std::cout << "Ingresar detalles del hotel en el siguiente formato:\n"
-				<< "Nombre - Ubicacion - Moneda - Cantidad de huespedes - Habitaciones - Telefono\n"
+				<< "Nombre - Ubicacion - Moneda\n - Cantidad de huespedes - Habitaciones - Telefono\n"
 				<< "Si se cuenta con el servicio ingrese un 1, caso contrario, ingrese 0:\n" <<
-				"WiFi - Piscina - Spa - Parking - Mascotas - Desayuno\n";
+				"WiFi - Piscina - Spa\n - Parking - Mascotas - Desayuno\n";
 
 			// leer entrada
 
@@ -59,30 +59,29 @@ void FuncionalidadHotel() {
 			objHotel->set_desayuno(desayuno);
 			objHotel->set_ID(generarID(1, nombre, 0));
 			objArreglo->agregarHotel(objHotel);
-			objArreglo->actualizar();
 			fstream fout;
 			fout.open(ARCHIVO_HOTELES, ios::out | ios::app);
 			//insertar datos en el archivo en formato csv
-			for (int i = 0; i < objArreglo->get_size(); i++) {
-				fout << objArreglo->get_pos(i)->get_nombre() << ", " <<
-					objArreglo->get_pos(i)->get_ID() << ", " <<
-					objArreglo->get_pos(i)->get_ubicacion() << ", "<<
-					objArreglo->get_pos(i)->get_moneda() << ", " <<
-					objArreglo->get_pos(i)->get_huespedes() << ", " <<
-					objArreglo->get_pos(i)->get_habitaciones() << ", " <<
-					objArreglo->get_pos(i)->get_telefono() << ", " <<
-					objArreglo->get_pos(i)->get_wifi() << ", " <<
-					objArreglo->get_pos(i)->get_piscina() << ", " <<
-					objArreglo->get_pos(i)->get_spa() << ", " <<
-					objArreglo->get_pos(i)->get_parking() << ", " <<
-					objArreglo->get_pos(i)->get_mascotas() << ", " <<
-					objArreglo->get_pos(i)->get_desayuno() << "\n";
-			}
+			
+				fout << objArreglo->get_pos(objArreglo->get_size()-1)->get_nombre() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_ID() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_ubicacion() << ", "<<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_moneda() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_huespedes() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_habitaciones() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_telefono() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_wifi() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_piscina() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_spa() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_parking() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_mascotas() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_desayuno() << "\n";
+			fout.close();
+			Console::Clear();
 			MenuHotel();
 		}
 		if (op == 2)
 		{
-			objArreglo->actualizar();
 			objArreglo->mostrar();
 		}
 

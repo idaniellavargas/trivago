@@ -59,17 +59,26 @@ CHotel::CHotel() {
 }
 
 void CHotel::toString() { //para imprimir string
-	cout << "Nombre: " << nombre << "\t";
-	cout << "Ubicacion: " << ubicacion << "\t";
-	cout << "Desayuno: ";
-	cout << "Servicio de WiFi: ";
-	(wifi == true) ? cout << "Sí" : cout << "No";
+	cout << "Nombre: " << nombre << "\n";
+	cout << "ID: "<< ID << "\n";
+	cout << "Ubicacion: " << ubicacion << "\n";
+	cout << "Moneda: " << moneda << "\n";
+	cout << "Huespedes: " << huespedes << "\n";
+	cout << "Habitaciones: " << habitaciones << "\n";
+	cout << "Telefono: " << telefono << "\n";
+	cout << "WiFi: "; (wifi == true) ? cout << "Si" : cout << "No";
 	cout << endl;
-	if (desayuno)cout << "Si" << "\t";
-	else cout << "No" << "\t";
-	cout << "Telefono: " << telefono << "\t";
-	
+	cout << "Piscina: "; (piscina == true) ? cout << "Si" : cout << "No";
 	cout << endl;
+	cout << "Spa: "; (spa == true) ? cout << "Si" : cout << "No";
+	cout << endl;
+	cout << "Parking: "; (parking == true) ? cout << "Si" : cout << "No";
+	cout << endl;
+	cout << "Mascotas: "; (mascotas == true) ? cout << "Si" : cout << "No";
+	cout << endl;
+	cout << "Desayuno: "; (desayuno == true) ? cout << "Si" : cout << "No";
+	cout << endl;
+	cout << "===================" << endl;
 }
 
 //clase controladora-->agrega,modifica,elimina, controlar aspectoz de registros y reportes
@@ -78,12 +87,11 @@ private:
 	vector<CHotel*>Hoteles;
 public:
 	ArrHotel() {
-		fstream archivo(ARCHIVO_HOTELES);
+		ifstream archivo(ARCHIVO_HOTELES);
 		string linea;
 		char delimitador = ',';
 		while (getline(archivo, linea))
 		{
-
 			stringstream stream(linea); // Convertir la cadena a un stream
 			string nombre, ID, ubicacion, moneda;
 			string huespedes, habitaciones;
@@ -105,18 +113,18 @@ public:
 			getline(stream, desayuno, delimitador);
 			CHotel* objHotel = new CHotel();
 			objHotel->set_nombre(nombre);
+			objHotel->set_ID(generarID(1, nombre, 0));
 			objHotel->set_ubicacion(ubicacion);
 			objHotel->set_moneda(moneda);
 			objHotel->set_huespedes(stoi(huespedes));
 			objHotel->set_habitaciones(stoi(habitaciones));
-			objHotel->set_telefono(stoi(habitaciones));
+			objHotel->set_telefono(stol(telefono));
 			objHotel->set_wifi((bool)(stoi(wifi)));
 			objHotel->set_piscina((bool)(stoi(piscina)));
 			objHotel->set_spa((bool)(stoi(spa)));
 			objHotel->set_parking((bool)(stoi(parking)));
 			objHotel->set_mascotas((bool)(stoi(mascotas)));
 			objHotel->set_desayuno((bool)(stoi(desayuno)));
-			objHotel->set_ID(generarID(1, nombre, 0));
 			Hoteles.push_back(objHotel);
 		}
 	}
