@@ -10,5 +10,6 @@ C:\Users\I.C.G\Desktop\trivago\trivago\main.cpp(340,12): warning C4996: 'getch':
 C:\Users\I.C.G\Desktop\trivago\trivago\Fecha.h(115): warning C4715: 'Date::dateIsReal': no todas las rutas de acceso de control devuelven un valor
 C:\Users\I.C.G\Desktop\trivago\trivago\Hotel.h(150): warning C4715: 'ArrHotel::modificar': no todas las rutas de acceso de control devuelven un valor
 C:\Users\I.C.G\Desktop\trivago\trivago\Recursos.h(90): warning C4715: 'generarID': no todas las rutas de acceso de control devuelven un valor
+C:\Users\I.C.G\Desktop\trivago\trivago\Hotel.h(140): warning C4715: '<lambda_f8e5a942b8de3e3dbd21cfa54ed93811>::operator()': no todas las rutas de acceso de control devuelven un valor
   main.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
   trivago.vcxproj -> C:\Users\I.C.G\Desktop\trivago\x64\Debug\trivago.exe

@@ -150,6 +150,7 @@ public:
 	}
 
 	void mostrar() {
+		actualizar();
 		for (int i = 0; i < Hoteles.size(); i++) Hoteles[i]->toString();
 	}
 };
