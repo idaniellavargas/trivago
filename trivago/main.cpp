@@ -1,5 +1,5 @@
 #include "Recursos.h"
-#include "Hotel.h"
+#include "Comentarios.h"
 
 void Mostrar_Menu();
 int MenuHotel() {
@@ -20,7 +20,7 @@ int MenuHotel() {
 
 void FuncionalidadHotel() {
 	ArrHotel* objArreglo = new ArrHotel();
-	CHotel* objHotel;
+	CHotel* objHotel  = NULL;
 	string nombre, ID, ubicacion, moneda;
 	short huespedes, habitaciones;
 	int telefono;
@@ -42,10 +42,12 @@ void FuncionalidadHotel() {
 
 			// leer entrada
 
-			cin >> nombre >> ubicacion >> moneda >> huespedes >> habitaciones >> telefono
-				>> wifi >> piscina >> spa >> parking >> mascotas >> desayuno;
+			
 
-			objHotel->set_nombre(nombre);
+			cin >> nombre >> ubicacion >> moneda >> huespedes >> habitaciones >> telefono
+				>> wifi >> piscina >> spa >> parking >> mascotas >> desayuno; //esto necesta getline e vez de cin
+
+			objHotel->set_nombre(nombre); //no deberia todo esto ser echo en un costructor?
 			objHotel->set_ubicacion(ubicacion);
 			objHotel->set_moneda(moneda);
 			objHotel->set_huespedes(huespedes);
@@ -153,8 +155,11 @@ void FuncionalidadHotel() {
 
 		}
 
-		if (op == 8)
+		if (op == 7)
 		{
+			//limpio memoria para no maltratar mi ram
+			delete objArreglo;
+			delete objHotel;
 			cout<<"Nos vemos pronto! -- Presiona Esc para volver al menu principal";
 
 		}
@@ -319,6 +324,10 @@ void Mostrar_Menu() {
 				else if (j < 30) cout << ' ';
 			}
 			else if (i == 20) {
+				if (j == COLUMNAS / 2 - 6) cout << "COMENTS";
+				else if (j < 30) cout << ' ';
+			}
+			else if (i == 22) {
 				if (j == COLUMNAS / 2 - 5) cout << "SALIR";
 				else if (j < 30) cout << ' ';
 			}
@@ -344,7 +353,8 @@ void Mostrar_Menu() {
 					FuncionalidadHotel();
 				}
 				if (x == 24) Mostrar_Creditos();
-				if (x == 26) exit(0);
+				if (x == 26) FuncionalidadComent();
+				if (x == 28) exit(0);
 
 				Mostrar_Menu();
 				break;
@@ -352,7 +362,7 @@ void Mostrar_Menu() {
 				if (x > 20) x = x - 2;
 				break;
 			case 80: // Abajo
-				if (x < 26) x = x + 2;
+				if (x < 28) x = x + 2; //wtf
 				break;
 			}
 			Desplazarse(x, y, true);

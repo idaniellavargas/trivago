@@ -153,5 +153,12 @@ public:
 		actualizar();
 		for (int i = 0; i < Hoteles.size(); i++) Hoteles[i]->toString();
 	}
+
+	CHotel* BuscarHotel(string id) { //esta funcion devuelve un hotel con la id provista, else devuelve NULL
+		for (auto h : Hoteles) {
+			if (h->get_ID() == id) return h;
+		}
+		return NULL;
+	}
 };
 
