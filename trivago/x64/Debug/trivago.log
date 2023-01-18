@@ -1,16 +1,17 @@
 ﻿  main.cpp
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\Recursos.h(57,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\Recursos.h(114,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\Hotel.h(134,17): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\Comentarios.h(141,2): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\main.cpp(101,9): warning C4101: 'servicio': unreferenced local variable
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\main.cpp(98,9): warning C4101: 'estrellas': unreferenced local variable
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\main.cpp(236,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\main.cpp(346,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\main.cpp(349,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\Fecha.h(115): warning C4715: 'Date::dateIsReal': not all control paths return a value
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\Hotel.h(150): warning C4715: 'ArrHotel::modificar': not all control paths return a value
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\Recursos.h(90): warning C4715: 'generarID': not all control paths return a value
-D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\Hotel.h(140): warning C4715: '<lambda_f8e5a942b8de3e3dbd21cfa54ed93811>::operator()': not all control paths return a value
-  main.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  trivago.vcxproj -> D:\Universidad\2023-0\AyEdD\PC1\trivago\x64\Debug\trivago.exe
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Recursos.h(57,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Recursos.h(114,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Hotel.h(137,17): warning C4267: 'return': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Comentarios.h(141,2): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(249,9): warning C4101: 'servicio': variable local sin referencia
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(246,9): warning C4101: 'estrellas': variable local sin referencia
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(384,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(494,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(497,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Fecha.h(115): warning C4715: 'Date::dateIsReal': no todas las rutas de acceso de control devuelven un valor
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Hotel.h(153): warning C4715: 'ArrHotel::modificar': no todas las rutas de acceso de control devuelven un valor
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Recursos.h(90): warning C4715: 'generarID': no todas las rutas de acceso de control devuelven un valor
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Hotel.h(143): warning C4715: '<lambda_f8e5a942b8de3e3dbd21cfa54ed93811>::operator()': no todas las rutas de acceso de control devuelven un valor
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(58): warning C4715: 'busqueRecur': no todas las rutas de acceso de control devuelven un valor
+  main.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
+  trivago.vcxproj -> C:\Users\I.C.G\Desktop\o\trivago\x64\Debug\trivago.exe

@@ -1,21 +1,169 @@
 #include "Recursos.h"
 #include "Comentarios.h"
+#include "Usuario.h"
 
 void Mostrar_Menu();
 int MenuHotel() {
 	int op;
 	do {
 		cout << " Menu de Opciones " << endl;
-		cout << "1.- Registrar Hotel" << endl;
-		cout << "2.- Mostrar Registro de Hoteles " << endl;
-		cout << "3.- Modificar un Registro de Hotel " << endl;
-		cout << "4.- Eliminar Un Registro de Hotel " << endl;
+		cout << "1.- Registrar Hotel" << endl; //nombres compuestas
+		cout << "2.- Mostrar Registro de Hoteles " << endl; //monedas
+		cout << "3.- Modificar un Registro de Hotel " << endl; //ubicacion
+		cout << "4.- Eliminar Un Registro de Hotel " << endl; //
 		cout << "5.- Reporte de ubicacion de en Francia" << endl;
 		cout << "6.- Reporte de hoteles con desayuno" << endl;
 		cout << "7.- Salir " << endl;
 		cout << " Ingrese opcion: "; cin >> op;
 	} while (op < 1 || op > 7);
 	return op;
+}
+void crearArch() {
+	ofstream archivo;
+	archivo.open("Cuentas.txt", ios::out);
+	archivo.close();
+}
+
+void escribir(vector<string> l) {
+	ofstream archivo;
+	archivo.open("Cuentas.txt", ios::app);
+
+	for (int i = 0; i < l.size(); i++)
+	{
+		if (i == 0)
+		{
+			archivo << l[i] << endl;
+		}
+		else
+		{
+			archivo << l[i] << endl;
+		}
+	}
+	archivo.close();
+}
+
+int busqueRecur(int c, int cons, vector<string> lista, string palabra) {
+	if (c <= -1)
+	{
+		return -1;
+	}
+	if (lista[cons * c] == palabra)
+	{
+		return c * cons;
+	}
+	else
+	{
+		busqueRecur(c - 1, cons, lista, palabra);
+	}
+}
+void registrarse(string& n, string& corr, string& cont) {
+	cout << "Registrarse:" << endl;
+	cout << "Nombre: ";
+	cin >> n;
+	cout << "Correo: ";
+	cin >> corr;
+	cout << "Contrasena: ";
+	cin >> cont;
+}
+
+void FuncionalidadUsuario() {
+	int cont;
+	char opc;
+	string nom, opc2, cor, con;
+	vector<string> lista;
+	Usuario* cuenta;
+	cuenta = new Usuario("", "", "");
+
+	ifstream Parchivo("Cuentas.txt");
+	if (Parchivo.fail())
+	{
+		crearArch();
+	}
+	Parchivo.close();
+
+	do
+	{
+		//Pedimos una de las 2 opciones.
+		cout << "Registrarse (R) o Iniciar secion (I)?" << endl;
+		cin >> opc;
+		opc = toupper(opc);
+		Console::Clear();
+		if (cuenta->getnombre() != "")
+		{
+			cout << "Ya su cuenta ya esta iniciada" << endl;
+			opc = 'o';
+		}
+	} while (opc != 'R' && opc != 'I');
+
+	if (opc == 'R')
+	{
+		cout << "---------Registrarse---------" << endl;
+		cout << "Nombre: ";
+		cin >> nom;
+		cout << "Correo: ";
+		cin >> cor;
+		cout << "Contraseña: ";
+		cin >> con;
+		cuenta = new Usuario(nom, cor, con);
+		cout << cuenta->getnombre();
+		lista.push_back(nom);
+		lista.push_back(cor);
+		lista.push_back(con);
+		escribir(lista);
+	}
+	else if (opc == 'I')
+	{
+		int contador = 0;
+		bool val1, val2;
+		string linea;
+		vector<string> lineas;
+		ifstream larchivo("Cuentas.txt");
+
+		//obtenemos los datos del archivo en un contenedor
+		while (getline(larchivo, linea)) {
+			lineas.push_back(linea);
+		}
+
+		larchivo.close(); //cerramos el archivo
+
+		do
+		{
+			cout << "Correo: ";
+			cin >> cor;
+			for (int i = 1; i < lineas.size(); i += 3)
+			{
+				val1 = cor == lineas[i];
+				if (val1 == true)
+				{
+					cont = i;
+					break;
+				}
+			}
+			if (val1 != true)
+			{
+				cout << "correo incorrecto" << endl;
+			}
+		} while (val1 != true);
+
+
+		do
+		{
+			cout << "Contraseña: ";
+			cin >> con;
+			cout << lineas[cont + 1] << endl;
+			val2 = con == lineas[cont + 1];
+			if (val2 == true)
+			{
+				cout << "contraseña correcta";
+				cuenta = new Usuario(lineas[cont - 1], lineas[cont], lineas[cont + 1]);
+				break;
+			}
+			else
+			{
+				cout << "contraseña incorrecta" << endl;
+			}
+		} while (val2 != true);
+	}
 }
 
 void FuncionalidadHotel() {
@@ -349,6 +497,9 @@ void Mostrar_Menu() {
 			tecla = getch();
 			switch (tecla) {
 			case 13: // Enter
+				if (x == 20) {
+					FuncionalidadUsuario();
+				}
 				if (x == 22) {
 					FuncionalidadHotel();
 				}

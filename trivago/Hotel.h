@@ -2,9 +2,11 @@
 
 using namespace std;
 
+
+//getline eliminar demas, getters y setters, llamar objetos
 string hotelNombre[7] = { "Marriot","Bolivar","Shell", "Winston", "Paris","Casa Andina", "Trivago" };
 string hotelUbicacion[7] = { "Isla de la Cite","San Luis","Barrio Latino", "Montmartre", "La Defensa","Campos Eliseos", "Plaza de la Concordia" };
-
+//getline
 class CHotel {
 private:
 	string nombre, ID, ubicacion, moneda;
@@ -14,6 +16,7 @@ private:
 public:
 	CHotel();
 	~CHotel() {};
+	// getters y setters
 	string get_nombre() { return nombre; }
 	string get_ID() { return ID; }
 	string get_ubicacion() { return ubicacion; }
