@@ -27,7 +27,7 @@ void crearArch() {
 void escribir(vector<string> l) {
 	ofstream archivo;
 	archivo.open("Cuentas.txt", ios::app);
-
+	//Revisamos el vector para ingresar los datos en el .txt
 	for (int i = 0; i < l.size(); i++)
 	{
 		if (i == 0)
@@ -39,47 +39,42 @@ void escribir(vector<string> l) {
 			archivo << l[i] << endl;
 		}
 	}
-	archivo.close();
+	archivo.close(); //Cerramos el archivo
 }
-void registrarse(string& n, string& corr, string& cont) {
-	cout << "Registrarse:" << endl;
-	cout << "Nombre: ";
-	cin >> n;
-	cout << "Correo: ";
-	cin >> corr;
-	cout << "Contrasena: ";
-	cin >> cont;
-}
-
 void FuncionalidadUsuario(Usuario*cuenta) {
-	int cont;
+	Console::Clear();
 	char opc;
 	string nom, opc2, cor, con;
 	vector<string> lista;
 
+	//Revisamos si existe un archivo para las cuentas
 	ifstream Parchivo("Cuentas.txt");
 	if (Parchivo.fail())
 	{
-		crearArch();
+		crearArch(); //Si no existe un archivo se crea
 	}
-	Parchivo.close();
+	Parchivo.close(); //Cerramos la validacion de existencia del archivo
 
+	//Pedimos que se registre o inicie sesion
 	do
 	{
-		//Pedimos una de las 2 opciones.
 		cout << "Registrarse (R) o Iniciar secion (I)?" << endl;
 		cin >> opc;
 		opc = toupper(opc);
-		Console::Clear();
-		if (cuenta->getnombre() != "")
+		if (cuenta->getnombre() != "") //Revisamos que ya se haya registrado o iniciado sesion
 		{
 			cout << "Ya su cuenta ya esta iniciada" << endl;
+			_sleep(1000);
+			Mostrar_Menu(cuenta);
+
 			opc = 'o';
+			break;
 		}
 	} while (opc != 'R' && opc != 'I');
 
 	if (opc == 'R')
 	{
+		//Registramos las variables del usuario
 		cout << "---------Registrarse---------" << endl;
 		cout << "Nombre: ";
 		cin >> nom;
@@ -87,17 +82,18 @@ void FuncionalidadUsuario(Usuario*cuenta) {
 		cin >> cor;
 		cout << "Contraseña: ";
 		cin >> con;
-		cuenta = new Usuario(nom, cor, con);
-		cout << cuenta->getnombre();
+		cuenta = new Usuario(nom, cor, con); //Registramos al usuario
+		//Ingresamos los datos a un vector
 		lista.push_back(nom);
 		lista.push_back(cor);
 		lista.push_back(con);
+		//Registramos los datos en el archivo
 		escribir(lista);
 	}
 	else if (opc == 'I')
 	{
-		int contador = 0;
-		bool val1, val2;
+		int indi = 0, indice;
+		bool val2;
 		string linea;
 		vector<string> lineas;
 		ifstream larchivo("Cuentas.txt");
@@ -106,44 +102,40 @@ void FuncionalidadUsuario(Usuario*cuenta) {
 		while (getline(larchivo, linea)) {
 			lineas.push_back(linea);
 		}
-
 		larchivo.close(); //cerramos el archivo
 
+		//Verificamos si el correo es correcto
 		do
 		{
 			cout << "Correo: ";
-			cin >> cor;
-			for (int i = 1; i < lineas.size(); i += 3)
-			{
-				val1 = cor == lineas[i];
-				if (val1 == true)
-				{
-					cont = i;
-					break;
-				}
-			}
-			if (val1 != true)
-			{
-				cout << "correo incorrecto" << endl;
-			}
-		} while (val1 != true);
+			cin >> cor; //Ingresamos el correo
+			indi = lineas.size();
+			indice = busqueRecur(1, 0, indi, 3, lineas, cor); //Usamos una funcion recursiva para hallar el correo
+		} while (indice == 0);
 
-
+		//Validamos la contraseña
 		do
 		{
-			cout << "Contraseña: ";
-			cin >> con;
-			cout << lineas[cont + 1] << endl;
-			val2 = con == lineas[cont + 1];
+			cout << "Contrasena: ";
+			cin >> con; //Ingresamos la contraseña
+			val2 = con == lineas[indice + 1]; //Validamos la contraseña registrada con la ingresada
 			if (val2 == true)
 			{
-				cout << "contraseña correcta";
-				cuenta = new Usuario(lineas[cont - 1], lineas[cont], lineas[cont + 1]);
+				cout << "contrasena correcta";
+				_sleep(1000);
+				cuenta = new Usuario(lineas[indice - 1], lineas[indice], lineas[indice + 1]); //Registramos al usuario
+				Mostrar_Menu(cuenta);
+
 				break;
+
 			}
 			else
 			{
-				cout << "contraseña incorrecta" << endl;
+				cout << "contrasena incorrecta" << endl;
+				_sleep(1000);
+
+				Mostrar_Menu(cuenta);
+
 			}
 		} while (val2 != true);
 	}
@@ -153,8 +145,8 @@ void FuncionalidadHotel(Usuario*cuenta) {
 	Catalogo* objArreglo = new Catalogo();
 	Hotel* objHotel  = NULL;
 	string nombre, ID, ubicacion, moneda;
-	string huespedes, habitaciones;
-	string telefono;
+	short huespedes, habitaciones;
+	int telefono;
 	bool wifi, piscina, spa, parking, mascotas, desayuno;
 
 	while (true)
@@ -469,8 +461,7 @@ void Mostrar_Menu(Usuario*cuenta) {
 				if (x == 24) Mostrar_Creditos();
 				if (x == 26) FuncionalidadComent();
 				if (x == 28) exit(0);
-
-				Mostrar_Menu(cuenta);
+				//aqui
 				break;
 			case 72: // Arriba
 				if (x > 20) x = x - 2;
@@ -483,11 +474,10 @@ void Mostrar_Menu(Usuario*cuenta) {
 		}
 	}
 }
+Usuario* cuenta = new Usuario("", "", "");
 
 int main()
 {
-	Usuario* cuenta;
-	cuenta = new Usuario("", "", "");
 	Console::SetWindowSize(COLUMNAS, FILAS);
 	Console::CursorVisible = false;
 	int tecla = 0;

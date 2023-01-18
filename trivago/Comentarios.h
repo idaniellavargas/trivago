@@ -1,25 +1,21 @@
 #pragma once
 #include "Hotel.h"
-#include <string.h>
+#include "Recursos.h"
 
-
-#define ARCHIVO_COMENT "coment.csv"
-
-
-class comentario {
+class Comentario {
 private:
 	string ID;
 	string Usuario;
 	short Puntaje;
 	string Coment;
 public:
-	comentario(string ID, string Usuario, short Puntaje, string Coment) {
+	Comentario(string ID, string Usuario, short Puntaje, string Coment) {
 		this->ID = ID;
 		this->Usuario = Usuario;
 		this->Puntaje = Puntaje;
 		this->Coment = Coment;
 	}
-	~comentario() {}
+	~Comentario() {}
 
 	void toString() {
 		cout << "ID: " << ID << "\n";
@@ -32,12 +28,11 @@ public:
 	string guardar() {
 		return "\n" + ID + "," + Usuario + "," + to_string(Puntaje) + "," + Coment ;
 	}
-
 };
 
 class arrComent {
 private:
-	vector <comentario*> arrc;
+	vector<Comentario*> arrc;
 public:
 	arrComent() {
 		ifstream archivo(ARCHIVO_COMENT);
@@ -55,7 +50,7 @@ public:
 			getline(stream, p, delimitador);
 			puntaje = stoi(p);
 			getline(stream, coment, delimitador);
-			comentario* aux = new comentario(ID, usuario, puntaje, coment);
+			Comentario* aux = new Comentario(ID, usuario, puntaje, coment);
 			arrc.push_back(aux);
 		}
 	}
@@ -66,7 +61,7 @@ public:
 		}
 	}
 
-	void addComent(comentario* nc) {
+	void addComent(Comentario* nc) {
 		arrc.push_back(nc);
 	}
 };
@@ -123,7 +118,7 @@ void NuevoComentario(arrComent* arrc) {
 				getline(cin, coment);
 			}
 
-			comentario* ncoment = new comentario(id, "anonimo", puntaje, coment);
+			Comentario* ncoment = new Comentario(id, "anonimo", puntaje, coment);
 			arrc->addComent(ncoment);
 
 			fstream fout;
@@ -146,8 +141,8 @@ int MenuComent() {
 	int op;
 	do {
 		cout << " Menu de Opciones " << endl;
-		cout << "1.- Agregar nuevo comentario" << endl;
-		cout << "2.- Mostrar comentarios" << endl;
+		cout << "1.- Agregar nuevo Comentario" << endl;
+		cout << "2.- Mostrar Comentarios" << endl;
 		cout << " Ingrese opcion: "; cin >> op;
 	} while (op < 1 || op > 2);
 	return op;

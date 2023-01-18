@@ -1,10 +1,8 @@
-#include "Recursos.h"
-
 class Hotel {
 private:
 	string nombre, ID, ubicacion, moneda;
-	string huespedes, habitaciones;
-	string telefono;
+	short huespedes, habitaciones;
+	int telefono;
 	bool wifi, piscina, spa, parking, mascotas, desayuno;
 public:
 	Hotel() {}
@@ -13,9 +11,9 @@ public:
 	string get_ID() { return ID; }
 	string get_ubicacion() { return ubicacion; }
 	string get_moneda() { return moneda; }
-	string get_huespedes() { return huespedes; }
-	string get_habitaciones() { return habitaciones; }
-	string get_telefono() { return telefono; }
+	short get_huespedes() { return huespedes; }
+	short get_habitaciones() { return habitaciones; }
+	int get_telefono() { return telefono; }
 	bool get_wifi() { return wifi; }
 	bool get_piscina() { return piscina; }
 	bool get_spa() { return spa; }
@@ -26,16 +24,16 @@ public:
 	void set_ID(string id) { ID = id; }
 	void set_ubicacion(string ubicacion) { this->ubicacion = ubicacion; }
 	void set_moneda(string moneda) { this->moneda = moneda; }
-	void set_huespedes(string huespedes) { this->huespedes = huespedes; }
-	void set_habitaciones(string habitaciones) { this->habitaciones = habitaciones; }
+	void set_huespedes(short huespedes) { this->huespedes = huespedes; }
+	void set_habitaciones(short habitaciones) { this->habitaciones = habitaciones; }
 	void set_wifi(bool b) { wifi = b; }
 	void set_piscina(bool b) { piscina = b; }
 	void set_spa(bool b) { parking = b; }
 	void set_desayuno(bool d) { desayuno = d; }
 	void set_parking(bool d) { parking = d; }
 	void set_mascotas(bool d) { mascotas = d; }
-	void set_telefono(string t) { telefono = t; }
-	Hotel(string nombre, string ID, string ubicacion, string moneda, string huespedes, string habitaciones, string telefono, bool wifi, bool piscina, bool spa, bool parking, bool mascotas, bool desayuno) {
+	void set_telefono(int t) { telefono = t; }
+	Hotel(string nombre, string ID, string ubicacion, string moneda, short huespedes, short habitaciones, int telefono, bool wifi, bool piscina, bool spa, bool parking, bool mascotas, bool desayuno) {
 		this->nombre = nombre;
 		this->ID = ID;
 		this->ubicacion = ubicacion;
@@ -69,8 +67,6 @@ public:
 		cout << endl;
 	}
 };
-
-
 class Catalogo {
 private:
 	vector<Hotel*>Hoteles;
@@ -79,13 +75,14 @@ public:
 		ifstream archivo(ARCHIVO_HOTELES);
 		string linea;
 		char delimitador = ',';
-		stringstream stream(linea);
-		string nombre, ID, ubicacion, moneda;
-		string huespedes, habitaciones;
-		string telefono;
-		string wifi, piscina, spa, parking, mascotas, desayuno;
 		while (getline(archivo, linea))
 		{
+			stringstream stream(linea); // Convertir la cadena a un stream
+			string nombre, ID, ubicacion, moneda;
+			string huespedes, habitaciones;
+			string telefono;
+			string wifi, piscina, spa, parking, mascotas, desayuno;
+			// Extraer todos los valores de esa fila con getline
 			getline(stream, nombre, delimitador);
 			getline(stream, ID, delimitador);
 			getline(stream, ubicacion, delimitador);
@@ -99,9 +96,7 @@ public:
 			getline(stream, parking, delimitador);
 			getline(stream, mascotas, delimitador);
 			getline(stream, desayuno, delimitador);
-			generarID(1, nombre, 0);
-			Hotel* objHotel = new Hotel(nombre, generarID(1, nombre, 0), ubicacion, moneda, huespedes, habitaciones, telefono, (bool)stoi(wifi), (bool)stoi(piscina), (bool)stoi(spa), (bool)stoi(parking), (bool)stoi(mascotas), (bool)stoi(desayuno));
-			/*Hotel* objHotel = new Hotel();
+			Hotel* objHotel = new Hotel();
 			objHotel->set_nombre(nombre);
 			objHotel->set_ID(generarID(1, nombre, 0));
 			objHotel->set_ubicacion(ubicacion);
@@ -114,9 +109,8 @@ public:
 			objHotel->set_spa((bool)(stoi(spa)));
 			objHotel->set_parking((bool)(stoi(parking)));
 			objHotel->set_mascotas((bool)(stoi(mascotas)));
-			objHotel->set_desayuno((bool)(stoi(desayuno)));*/
+			objHotel->set_desayuno((bool)(stoi(desayuno)));
 			Hoteles.push_back(objHotel);
-
 		}
 	}
 	void agregarHotel(Hotel* hotel) {
@@ -126,9 +120,9 @@ public:
 	auto get_pos(int i) { return Hoteles[i]; }
 	void actualizar() {
 		sort(Hoteles.begin(), Hoteles.end(), [](Hotel* hotel1, Hotel* hotel2)
-			{
-				if (hotel1->get_ID() != hotel2->get_ID()) return hotel1->get_ID() < hotel2->get_ID(); // IDs incrementandose
-				else hotel2->set_ID(generarID(2,hotel2->get_nombre(),0)); }); //rehacer id si son iguales
+		{
+		if (hotel1->get_ID() != hotel2->get_ID()) return hotel1->get_ID() < hotel2->get_ID(); // IDs incrementandose
+		else hotel2->set_ID(generarID(2, hotel2->get_nombre(), 0)); }); //rehacer id si son iguales
 	}
 
 
@@ -152,4 +146,3 @@ public:
 		return NULL;
 	}
 };
-

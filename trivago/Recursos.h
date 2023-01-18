@@ -1,6 +1,7 @@
 #pragma once
 #include "Fecha.h"
 #include <string>
+#include <string.h>
 #include <istream>
 #include <fstream>
 #include <sstream>
@@ -11,6 +12,8 @@
 #define COLUMNAS 52
 #define FILAS 40
 #define ARCHIVO_HOTELES "hoteles.csv"
+#define ARCHIVO_COMENT "coment.csv"
+
 
 using namespace std;
 using namespace System;
@@ -20,18 +23,33 @@ dataType Randomizar(dataType lowerBound, dataType upperBound) {
 	return lowerBound + rand() % (upperBound + 1 - lowerBound);
 }
 
-int busqueRecur(int c, int cons, vector<string> lista, string palabra) {
-	if (c <= -1)
+int busqueRecur(int indi, int ini, int indimax, int cons, vector<string> lista, string palabra) {
+	if (indi + 2 >= indimax) //En el caso que no se encuentre el dato, retornar -1
 	{
+		cout << "No se encontro su correo" << endl;
 		return -1;
 	}
-	if (lista[cons * c] == palabra)
+	if (ini == 0) //En caso sea la primera llamada
 	{
-		return c * cons;
+		if (lista[indi] == palabra) //Validar el dato
+		{
+			return indi + cons; //Retornar el indice del dato
+		}
+		else
+		{
+			return busqueRecur(indi + cons, 1, indimax, cons, lista, palabra); //Volver a llamar a la funcion
+		}
 	}
-	else
+	else //En caso ya se haya llamado mas de una vez
 	{
-		busqueRecur(c - 1, cons, lista, palabra);
+		if (lista[indi + cons] == palabra) //Validar el dato del dato
+		{
+			return indi + cons; //Retornar el indice
+		}
+		else
+		{
+			return busqueRecur(indi + cons, 1, indimax, cons, lista, palabra); //Volver a llamar a la funcion
+		}
 	}
 }
 void Mostrar_Logo(int tecla) {
@@ -188,6 +206,7 @@ void Imprimir_Trivago() {
        | |  |    /| || \// | |-||| |_//| \_/|
        \_/  \_/\_\\_/\__/  \_/ \|\____\\____/)" << endl;
 }
+
 void Desplazarse(int x, int y, bool visible) {
 	Console::SetCursorPosition(y, x);
 	(visible) ? cout << ">" : cout << ' ';

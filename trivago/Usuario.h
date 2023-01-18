@@ -13,6 +13,7 @@ private:
 	string correo;
 	string contrasena;
 	string ID;
+	//UPC::Vector<int> v;
 public:
 	Usuario(){}
 	Usuario(string nombre, string correo, string contrasena) {
@@ -41,12 +42,17 @@ public:
 	}
 };
 
+/*
 class Cliente : public Usuario {
 private:
 	vector<Hotel*>reservas;
 public:
 	Cliente(){}
+
 	void reservarHotel() {}
+	void cancelarreserva(){]
+	void adelantarreserva
+	void posterreserva
 	void actualizarCorreo(){}
 	void actualizarContrasenha(){}
 };
@@ -58,5 +64,5 @@ public:
 	void actualizarCatalogo(){}
 	void actualizarCorreo() {}
 	void actualizarContrasenha() {}
-};
+};*/
 
