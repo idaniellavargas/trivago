@@ -1,9 +1,10 @@
 #pragma once
+#include "Recursos.h"
 #include <string>
 #include <iostream>
 
 using namespace std;
-
+using namespace UPC;
 
 class Usuario
 {
@@ -12,9 +13,8 @@ private:
 	string correo;
 	string contrasena;
 	string ID;
-
 public:
-	Usuario();
+	Usuario(){}
 	Usuario(string nombre, string correo, string contrasena) {
 		this->nombre = nombre;
 		this->correo = correo;
@@ -40,3 +40,23 @@ public:
 		return ID;
 	}
 };
+
+class Cliente : public Usuario {
+private:
+	vector<Hotel*>reservas;
+public:
+	Cliente(){}
+	void reservarHotel() {}
+	void actualizarCorreo(){}
+	void actualizarContrasenha(){}
+};
+
+class Admnistrador : public Usuario {
+private:
+	short credencial;
+public:
+	void actualizarCatalogo(){}
+	void actualizarCorreo() {}
+	void actualizarContrasenha() {}
+};
+

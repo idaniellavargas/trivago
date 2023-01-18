@@ -1,4 +1,5 @@
 #pragma once
+#include "Fecha.h"
 #include <string>
 #include <istream>
 #include <fstream>
@@ -6,11 +7,10 @@
 #include <iostream>
 #include <vector>
 #include <conio.h>
-#include "Fecha.h"
 #include <algorithm>
-#define FILAS 40
-#define ARCHIVO_HOTEL hoteles.csv
 #define COLUMNAS 52
+#define FILAS 40
+#define ARCHIVO_HOTELES "hoteles.csv"
 
 using namespace std;
 using namespace System;
@@ -20,6 +20,20 @@ dataType Randomizar(dataType lowerBound, dataType upperBound) {
 	return lowerBound + rand() % (upperBound + 1 - lowerBound);
 }
 
+int busqueRecur(int c, int cons, vector<string> lista, string palabra) {
+	if (c <= -1)
+	{
+		return -1;
+	}
+	if (lista[cons * c] == palabra)
+	{
+		return c * cons;
+	}
+	else
+	{
+		busqueRecur(c - 1, cons, lista, palabra);
+	}
+}
 void Mostrar_Logo(int tecla) {
 	system("color 7C");
 	cout << R"(  
@@ -65,6 +79,84 @@ void Mostrar_Logo(int tecla) {
 	system("color 0F");
 	system("cls");
 }
+namespace UPC {
+	template <typename T>  class Vector {
+	public:
+		T* vec;
+		int len;
+
+		Vector() {
+			vec = new T[0];
+			len = 0;
+		}
+		~Vector() {};
+
+		T& operator[](const int& index) { return vec[index]; }
+
+		void pushback(T elem) {
+			T* aux = new T[len + 1];
+			for (int i = 0; i < len; i++) {
+				aux[i] = vec[i];
+			}
+			aux[len] = elem;
+			delete vec;
+
+			vec = aux;
+			len++;
+		}
+
+		void popback() {
+			T* aux = new T[len - 1];
+			for (int i = 0; i < len - 1; i++) {
+				aux[i] = vec[i];
+			}
+
+			delete vec;
+			vec = aux;
+			len--;
+		}
+
+		void erase(T* it) {
+			T* aux = new T[len - 1];
+			int j = 0;
+			for (int i = 0; i < len; i++) {
+				if ((begin() + i) == it) continue;
+				aux[j] = vec[i];
+				j++;
+			}
+
+			delete vec;
+			vec = aux;
+			len--;
+		}
+
+		void erase(T* ini, T* fin) {
+			if (ini > fin) return;
+
+			T* aux = new T[len - (fin - ini)];
+			int j = 0;
+			bool er = false;
+			for (int i = 0; i < len; i++) {
+				if ((begin() + i) == ini) er = true;
+				else if ((begin() + i) == fin) {
+					er = false;
+					continue;
+				}
+				if (er) continue;
+				aux[j] = vec[i];
+				j++;
+			}
+
+			delete vec;
+			vec = aux;
+			len -= (fin - ini) + 1;
+		}
+
+		T* begin() { return &vec[0]; }
+		T* end() { return &vec[len]; }
+		int lenght() { return len; }
+	};
+}
 string generarID(short caso, string nombre, int i = 0)
 {
 	string ID;
@@ -88,7 +180,6 @@ string generarID(short caso, string nombre, int i = 0)
 		return generarID(2, nombre, i + 1);
 	}
 }
-// usando generador de textos gigantes ASCII: https://www.messletters.com/en/big-text/
 void Imprimir_Trivago() {
 	cout << R"(
       _____  ____  _  _     ____  _____ ____ 
@@ -97,16 +188,10 @@ void Imprimir_Trivago() {
        | |  |    /| || \// | |-||| |_//| \_/|
        \_/  \_/\_\\_/\__/  \_/ \|\____\\____/)" << endl;
 }
-
-
-// muestra el cursor en el menú
 void Desplazarse(int x, int y, bool visible) {
 	Console::SetCursorPosition(y, x);
 	(visible) ? cout << ">" : cout << ' ';
 }
-#define ARCHIVO_HOTELES "hoteles.csv"
-
-// regresa
 void GoBack() {
 	int tecla = 0;
 	Console::SetCursorPosition(0, 0);
@@ -114,6 +199,7 @@ void GoBack() {
 		if (kbhit()) tecla = getch();
 	} while (tecla != 27); // Esc
 }
+
 
 // texto del inicio de Trivago
 /*Te damos la bievenida

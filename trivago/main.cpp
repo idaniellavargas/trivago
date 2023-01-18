@@ -2,7 +2,7 @@
 #include "Comentarios.h"
 #include "Usuario.h"
 
-void Mostrar_Menu();
+void Mostrar_Menu(Usuario*cuenta);
 int MenuHotel() {
 	int op;
 	do {
@@ -41,21 +41,6 @@ void escribir(vector<string> l) {
 	}
 	archivo.close();
 }
-
-int busqueRecur(int c, int cons, vector<string> lista, string palabra) {
-	if (c <= -1)
-	{
-		return -1;
-	}
-	if (lista[cons * c] == palabra)
-	{
-		return c * cons;
-	}
-	else
-	{
-		busqueRecur(c - 1, cons, lista, palabra);
-	}
-}
 void registrarse(string& n, string& corr, string& cont) {
 	cout << "Registrarse:" << endl;
 	cout << "Nombre: ";
@@ -66,13 +51,11 @@ void registrarse(string& n, string& corr, string& cont) {
 	cin >> cont;
 }
 
-void FuncionalidadUsuario() {
+void FuncionalidadUsuario(Usuario*cuenta) {
 	int cont;
 	char opc;
 	string nom, opc2, cor, con;
 	vector<string> lista;
-	Usuario* cuenta;
-	cuenta = new Usuario("", "", "");
 
 	ifstream Parchivo("Cuentas.txt");
 	if (Parchivo.fail())
@@ -166,12 +149,12 @@ void FuncionalidadUsuario() {
 	}
 }
 
-void FuncionalidadHotel() {
-	ArrHotel* objArreglo = new ArrHotel();
-	CHotel* objHotel  = NULL;
+void FuncionalidadHotel(Usuario*cuenta) {
+	Catalogo* objArreglo = new Catalogo();
+	Hotel* objHotel  = NULL;
 	string nombre, ID, ubicacion, moneda;
-	short huespedes, habitaciones;
-	int telefono;
+	string huespedes, habitaciones;
+	string telefono;
 	bool wifi, piscina, spa, parking, mascotas, desayuno;
 
 	while (true)
@@ -182,7 +165,7 @@ void FuncionalidadHotel() {
 		op = MenuHotel();
 		if (op == 1)
 		{
-			objHotel = new CHotel();  //instnaciando, lamando a propiedades del objeto
+			objHotel = new Hotel();  //instnaciando, lamando a propiedades del objeto
 			std::cout << "Ingresar detalles del hotel en el siguiente formato:\n"
 				<< "Nombre - Ubicacion - Moneda\n - Cantidad de huespedes - Habitaciones - Telefono\n"
 				<< "Si se cuenta con el servicio ingrese un 1, caso contrario, ingrese 0:\n" <<
@@ -240,21 +223,15 @@ void FuncionalidadHotel() {
 			int pos;
 			int opcionM;
 			cout << "Ingrese la poscion  que desee Modificar "; cin >> pos;
-			CHotel* objHotel = objArreglo->modificar(pos);
+			Hotel* objHotel = objArreglo->modificar(pos);
 			string nombre;
 			string ubicacion;
-			int  estrellas;
-			bool desayuno;
-			int telefono;
-			bool servicio;
 
 			cout << "Que desea Modificar del Objeto: " << endl;
 			cout << " 1 .- Nombre el Nombre " << endl;
 			cout << " 2 .- Ubicacion " << endl;
 			cout << " 3 .- Estrellas" << endl;
-			cout << " 4 .- Desayuno " << endl;
-			cout << " 5 .- Telefono " << endl;
-			cout << " 6 .- Servicio " << endl;
+	
 			cin >> opcionM;
 
 			switch (opcionM)
@@ -270,21 +247,7 @@ void FuncionalidadHotel() {
 				objHotel->set_ubicacion(ubicacion);
 				break;
 			
-			case 4:
-
-				cout << " Desayuno : (" << objHotel->get_desayuno() << ") :"; cin >> desayuno;
-				objHotel->set_desayuno(desayuno);
-				break;
-			case 5:
-
-				cout << " Telefono : (" << objHotel->get_telefono() << ") :"; cin >> telefono;
-				objHotel->set_telefono(telefono);
-				break;
-		
-			case 7:
-
-				break;
-
+	
 			default:
 				cout << " Ha digitado un numero invalido " << endl;
 				break;
@@ -312,7 +275,7 @@ void FuncionalidadHotel() {
 
 		}
 		GoBack();
-		Mostrar_Menu();
+		Mostrar_Menu(cuenta);
 	}
 }
 
@@ -442,7 +405,7 @@ void Iniciar_Arreglos_Menu(int**& pMenu) {
 
 	for (int i = 0; i < FILAS; i++)pMenu[i] = new int[COLUMNAS];
 }
-void Mostrar_Menu() {
+void Mostrar_Menu(Usuario*cuenta) {
 	/* Inicializamos matriz */
 	int** pMenu;
 	Iniciar_Arreglos_Menu(pMenu);
@@ -498,16 +461,16 @@ void Mostrar_Menu() {
 			switch (tecla) {
 			case 13: // Enter
 				if (x == 20) {
-					FuncionalidadUsuario();
+					FuncionalidadUsuario(cuenta);
 				}
 				if (x == 22) {
-					FuncionalidadHotel();
+					FuncionalidadHotel(cuenta);
 				}
 				if (x == 24) Mostrar_Creditos();
 				if (x == 26) FuncionalidadComent();
 				if (x == 28) exit(0);
 
-				Mostrar_Menu();
+				Mostrar_Menu(cuenta);
 				break;
 			case 72: // Arriba
 				if (x > 20) x = x - 2;
@@ -523,11 +486,13 @@ void Mostrar_Menu() {
 
 int main()
 {
+	Usuario* cuenta;
+	cuenta = new Usuario("", "", "");
 	Console::SetWindowSize(COLUMNAS, FILAS);
 	Console::CursorVisible = false;
 	int tecla = 0;
 	Mostrar_Logo(tecla);
-	Mostrar_Menu();
+	Mostrar_Menu(cuenta);
 	system("pause");
 	return 0;
 }

@@ -73,8 +73,8 @@ public:
 
 
 void NuevoComentario(arrComent* arrc) {
-	ArrHotel* arrh = new ArrHotel();
-	CHotel* h = NULL;
+	Catalogo* arrh = new Catalogo();
+	Hotel* h = NULL;
 	string id;
 	char c;
 	short puntaje;

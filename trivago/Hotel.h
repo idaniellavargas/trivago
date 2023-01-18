@@ -1,29 +1,21 @@
 #include "Recursos.h"
 
-using namespace std;
-
-
-//getline eliminar demas, getters y setters, llamar objetos
-string hotelNombre[7] = { "Marriot","Bolivar","Shell", "Winston", "Paris","Casa Andina", "Trivago" };
-string hotelUbicacion[7] = { "Isla de la Cite","San Luis","Barrio Latino", "Montmartre", "La Defensa","Campos Eliseos", "Plaza de la Concordia" };
-//getline
-class CHotel {
+class Hotel {
 private:
 	string nombre, ID, ubicacion, moneda;
-	short huespedes, habitaciones;
-	int telefono;
+	string huespedes, habitaciones;
+	string telefono;
 	bool wifi, piscina, spa, parking, mascotas, desayuno;
 public:
-	CHotel();
-	~CHotel() {};
-	// getters y setters
+	Hotel() {}
+	~Hotel() {};
 	string get_nombre() { return nombre; }
 	string get_ID() { return ID; }
 	string get_ubicacion() { return ubicacion; }
 	string get_moneda() { return moneda; }
-	short get_huespedes() { return huespedes; }
-	short get_habitaciones() { return habitaciones; }
-	int get_telefono() { return telefono; }
+	string get_huespedes() { return huespedes; }
+	string get_habitaciones() { return habitaciones; }
+	string get_telefono() { return telefono; }
 	bool get_wifi() { return wifi; }
 	bool get_piscina() { return piscina; }
 	bool get_spa() { return spa; }
@@ -34,73 +26,66 @@ public:
 	void set_ID(string id) { ID = id; }
 	void set_ubicacion(string ubicacion) { this->ubicacion = ubicacion; }
 	void set_moneda(string moneda) { this->moneda = moneda; }
-	void set_huespedes(short huespedes) { this->huespedes = huespedes; }
-	void set_habitaciones(short habitaciones) { this->habitaciones = habitaciones; }
-	void set_wifi(bool b){wifi=b;}
-	void set_piscina(bool b){piscina=b;}
-	void set_spa(bool b){parking=b;}
+	void set_huespedes(string huespedes) { this->huespedes = huespedes; }
+	void set_habitaciones(string habitaciones) { this->habitaciones = habitaciones; }
+	void set_wifi(bool b) { wifi = b; }
+	void set_piscina(bool b) { piscina = b; }
+	void set_spa(bool b) { parking = b; }
 	void set_desayuno(bool d) { desayuno = d; }
 	void set_parking(bool d) { parking = d; }
 	void set_mascotas(bool d) { mascotas = d; }
-
-	void set_telefono(int t) { telefono = t; }
-
-	void toString();
-	CHotel(string nombre, string ID, string ubicacion, short huespedes, short habitaciones, int telefono, bool piscina, bool spa, bool desayuno, bool parking, bool mascotas) {
-		nombre = hotelNombre[rand() % 7];
-		ubicacion = hotelUbicacion[rand() % 7];
-		desayuno = rand() % 2;
-		telefono = rand() % 8000000 + 10000000;
+	void set_telefono(string t) { telefono = t; }
+	Hotel(string nombre, string ID, string ubicacion, string moneda, string huespedes, string habitaciones, string telefono, bool wifi, bool piscina, bool spa, bool parking, bool mascotas, bool desayuno) {
+		this->nombre = nombre;
+		this->ID = ID;
+		this->ubicacion = ubicacion;
+		this->huespedes = huespedes;
+		this->habitaciones = habitaciones;
+		this->telefono = telefono;
+		this->piscina = piscina;
+		this->spa = spa;
+		this->desayuno = desayuno;
+		this->parking = parking;
+		this->mascotas = mascotas;
+		this->wifi = wifi;
+	}
+	void toString() {
+		string aux = nombre;
+		transform(aux.begin(), aux.end(), aux.begin(), ::toupper);
+		cout << "\n/============  " << aux << "  ============/";
+		cout << "\nNombre: " << nombre;
+		cout << "\nID: " << ID;
+		cout << "\nUbicacion: " << ubicacion;
+		cout << "\nMoneda: " << moneda;
+		cout << "\nHuespedes: " << huespedes;
+		cout << "\nHabitaciones: " << habitaciones;
+		cout << "\nTelefono: " << telefono;
+		cout << "\nWiFi: "; (wifi) ? cout << "Si" : cout << "No";
+		cout << "\nPiscina: "; (piscina) ? cout << "Si" : cout << "No";
+		cout << "\nSpa: "; (spa) ? cout << "Si" : cout << "No";
+		cout << "\nParking: "; (parking) ? cout << "Si" : cout << "No";
+		cout << "\nMascotas: "; (mascotas) ? cout << "Si" : cout << "No";
+		cout << "\nDesayuno: "; (desayuno) ? cout << "Si" : cout << "No";
+		cout << endl;
 	}
 };
 
-CHotel::CHotel() {
-	nombre = hotelNombre[rand() % 7];
-	ubicacion = hotelUbicacion[rand() % 7];
-	desayuno = rand() % 2;
-	telefono = rand() % 8000000 + 10000000;
-}
 
-void CHotel::toString() { //para imprimir string
-	cout << "Nombre: " << nombre << "\n";
-	cout << "ID: "<< ID << "\n";
-	cout << "Ubicacion: " << ubicacion << "\n";
-	cout << "Moneda: " << moneda << "\n";
-	cout << "Huespedes: " << huespedes << "\n";
-	cout << "Habitaciones: " << habitaciones << "\n";
-	cout << "Telefono: " << telefono << "\n";
-	cout << "WiFi: "; (wifi == true) ? cout << "Si" : cout << "No";
-	cout << endl;
-	cout << "Piscina: "; (piscina == true) ? cout << "Si" : cout << "No";
-	cout << endl;
-	cout << "Spa: "; (spa == true) ? cout << "Si" : cout << "No";
-	cout << endl;
-	cout << "Parking: "; (parking == true) ? cout << "Si" : cout << "No";
-	cout << endl;
-	cout << "Mascotas: "; (mascotas == true) ? cout << "Si" : cout << "No";
-	cout << endl;
-	cout << "Desayuno: "; (desayuno == true) ? cout << "Si" : cout << "No";
-	cout << endl;
-	cout << "===================" << endl;
-}
-
-//clase controladora-->agrega,modifica,elimina, controlar aspectoz de registros y reportes
-class ArrHotel {
+class Catalogo {
 private:
-	vector<CHotel*>Hoteles;
+	vector<Hotel*>Hoteles;
 public:
-	ArrHotel() {
+	Catalogo() {
 		ifstream archivo(ARCHIVO_HOTELES);
 		string linea;
 		char delimitador = ',';
+		stringstream stream(linea);
+		string nombre, ID, ubicacion, moneda;
+		string huespedes, habitaciones;
+		string telefono;
+		string wifi, piscina, spa, parking, mascotas, desayuno;
 		while (getline(archivo, linea))
 		{
-			stringstream stream(linea); // Convertir la cadena a un stream
-			string nombre, ID, ubicacion, moneda;
-			string huespedes, habitaciones;
-			string telefono;
-			string wifi, piscina, spa, parking, mascotas, desayuno;
-			// Extraer todos los valores de esa fila con getline
 			getline(stream, nombre, delimitador);
 			getline(stream, ID, delimitador);
 			getline(stream, ubicacion, delimitador);
@@ -114,7 +99,9 @@ public:
 			getline(stream, parking, delimitador);
 			getline(stream, mascotas, delimitador);
 			getline(stream, desayuno, delimitador);
-			CHotel* objHotel = new CHotel();
+			generarID(1, nombre, 0);
+			Hotel* objHotel = new Hotel(nombre, generarID(1, nombre, 0), ubicacion, moneda, huespedes, habitaciones, telefono, (bool)stoi(wifi), (bool)stoi(piscina), (bool)stoi(spa), (bool)stoi(parking), (bool)stoi(mascotas), (bool)stoi(desayuno));
+			/*Hotel* objHotel = new Hotel();
 			objHotel->set_nombre(nombre);
 			objHotel->set_ID(generarID(1, nombre, 0));
 			objHotel->set_ubicacion(ubicacion);
@@ -127,24 +114,25 @@ public:
 			objHotel->set_spa((bool)(stoi(spa)));
 			objHotel->set_parking((bool)(stoi(parking)));
 			objHotel->set_mascotas((bool)(stoi(mascotas)));
-			objHotel->set_desayuno((bool)(stoi(desayuno)));
+			objHotel->set_desayuno((bool)(stoi(desayuno)));*/
 			Hoteles.push_back(objHotel);
+
 		}
 	}
-	void agregarHotel(CHotel* hotel) {
+	void agregarHotel(Hotel* hotel) {
 		Hoteles.push_back(hotel);
 	}
 	int get_size() { return Hoteles.size(); }
 	auto get_pos(int i) { return Hoteles[i]; }
 	void actualizar() {
-		sort(Hoteles.begin(), Hoteles.end(), [](CHotel* hotel1, CHotel* hotel2)
+		sort(Hoteles.begin(), Hoteles.end(), [](Hotel* hotel1, Hotel* hotel2)
 			{
 				if (hotel1->get_ID() != hotel2->get_ID()) return hotel1->get_ID() < hotel2->get_ID(); // IDs incrementandose
 				else hotel2->set_ID(generarID(2,hotel2->get_nombre(),0)); }); //rehacer id si son iguales
 	}
 
 
-	CHotel* modificar(int pos) {
+	Hotel* modificar(int pos) {
 		for (int i = 0; i < Hoteles.size(); i++)
 		{
 			return Hoteles[pos];
@@ -157,7 +145,7 @@ public:
 		for (int i = 0; i < Hoteles.size(); i++) Hoteles[i]->toString();
 	}
 
-	CHotel* BuscarHotel(string id) { //esta funcion devuelve un hotel con la id provista, else devuelve NULL
+	Hotel* BuscarHotel(string id) { //esta funcion devuelve un hotel con la id provista, else devuelve NULL
 		for (auto h : Hoteles) {
 			if (h->get_ID() == id) return h;
 		}
