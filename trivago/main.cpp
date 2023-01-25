@@ -215,6 +215,7 @@ void FuncionalidadHotel(Usuario*cuenta) {
 		if (op == 2)
 		{
 			objArreglo->mostrar();
+			_getch();
 		}
 
 		if (op == 3)

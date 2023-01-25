@@ -61,7 +61,7 @@ public:
 		string id;
 		cin >> id;
 		lista->BuscarHotel(ID);
-		reservas.push_back(make_pair(lista->BuscarHotel(ID),fecha));
+		reservas.push_front(make_pair(lista->BuscarHotel(ID),fecha));
 		agendacionExitosa(ID);
 		_sleep(2000);
 	}

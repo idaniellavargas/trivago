@@ -25,16 +25,11 @@ dataType Randomizar(dataType lowerBound, dataType upperBound) {
 }
 
 int busqueRecur(int indi, int ini, int indimax, int cons, vector<string> lista, string palabra) {
-	if (indi + 2 >= indimax) //En el caso que no se encuentre el dato, retornar -1
-	{
-		cout << "No se encontro su correo" << endl;
-		return -1;
-	}
 	if (ini == 0) //En caso sea la primera llamada
 	{
 		if (lista[indi] == palabra) //Validar el dato
 		{
-			return indi + cons; //Retornar el indice del dato
+			return indi; //Retornar el indice del dato
 		}
 		else
 		{
@@ -43,9 +38,14 @@ int busqueRecur(int indi, int ini, int indimax, int cons, vector<string> lista, 
 	}
 	else //En caso ya se haya llamado mas de una vez
 	{
-		if (lista[indi + cons] == palabra) //Validar el dato del dato
+		if (lista[indi] == palabra) //Validar el dato del dato
 		{
-			return indi + cons; //Retornar el indice
+			return indi; //Retornar el indice
+		}
+		else if (indi + 2 >= indimax) //En el caso que no se encuentre el dato, retornar -1
+		{
+			cout << "No se encontro su correo" << endl;
+			return -1;
 		}
 		else
 		{
