@@ -43,6 +43,8 @@ Date::Date(int day, int month, int year)
 	this->year = year;
 }
 
+
+
 Date::~Date() {}
 
 int Date::get_year()

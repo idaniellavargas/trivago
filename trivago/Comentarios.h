@@ -1,6 +1,7 @@
 #pragma once
 #include "Hotel.h"
 #include "Recursos.h"
+using namespace System;
 
 class Comentario {
 private:
@@ -24,8 +25,11 @@ public:
 		if (Coment != "") cout << "Comentario:\n" << Coment << "\n";
 		cout << "===================" << endl;
 	}
+	
 
+	
 	string guardar() {
+		_sleep(2000);
 		return "\n" + ID + "," + Usuario + "," + to_string(Puntaje) + "," + Coment ;
 	}
 };

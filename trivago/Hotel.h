@@ -1,8 +1,9 @@
+#include <functional>
 class Hotel {
 private:
 	string nombre, ID, ubicacion, moneda;
 	short huespedes, habitaciones;
-	int telefono;
+	long telefono;
 	bool wifi, piscina, spa, parking, mascotas, desayuno;
 public:
 	Hotel() {}
@@ -13,7 +14,7 @@ public:
 	string get_moneda() { return moneda; }
 	short get_huespedes() { return huespedes; }
 	short get_habitaciones() { return habitaciones; }
-	int get_telefono() { return telefono; }
+	long get_telefono() { return telefono; }
 	bool get_wifi() { return wifi; }
 	bool get_piscina() { return piscina; }
 	bool get_spa() { return spa; }
@@ -33,7 +34,7 @@ public:
 	void set_parking(bool d) { parking = d; }
 	void set_mascotas(bool d) { mascotas = d; }
 	void set_telefono(int t) { telefono = t; }
-	Hotel(string nombre, string ID, string ubicacion, string moneda, short huespedes, short habitaciones, int telefono, bool wifi, bool piscina, bool spa, bool parking, bool mascotas, bool desayuno) {
+	Hotel(string nombre, string ID, string ubicacion, string moneda, short huespedes, short habitaciones, long telefono, bool wifi, bool piscina, bool spa, bool parking, bool mascotas, bool desayuno) {
 		this->nombre = nombre;
 		this->ID = ID;
 		this->ubicacion = ubicacion;
@@ -113,11 +114,21 @@ public:
 			Hoteles.push_back(objHotel);
 		}
 	}
+
+	function<void(string)> agregar{
+		[](string id) { if (id != "")cout << "\nRegistro de hotel exitoso"; }
+	};
+
 	void agregarHotel(Hotel* hotel) {
 		Hoteles.push_back(hotel);
+		agregar(hotel->get_ID());
 	}
+	void eliminarPos(int pos) {
+		Hoteles.erase(Hoteles.begin() + pos);
+	}
+
 	int get_size() { return Hoteles.size(); }
-	auto get_pos(int i) { return Hoteles[i]; }
+	Hotel* get_pos(int i) { return Hoteles[i]; }
 	void actualizar() {
 		sort(Hoteles.begin(), Hoteles.end(), [](Hotel* hotel1, Hotel* hotel2)
 		{
@@ -125,7 +136,8 @@ public:
 		else hotel2->set_ID(generarID(2, hotel2->get_nombre(), 0)); }); //rehacer id si son iguales
 	}
 
-
+	
+	
 	Hotel* modificar(int pos) {
 		for (int i = 0; i < Hoteles.size(); i++)
 		{

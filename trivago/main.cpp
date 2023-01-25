@@ -124,6 +124,7 @@ void FuncionalidadUsuario(Usuario*cuenta) {
 				cout << "contrasena correcta";
 				_sleep(1000);
 				cuenta = new Usuario(lineas[indice - 1], lineas[indice], lineas[indice + 1]); //Registramos al usuario
+				_sleep(2000);
 				Mostrar_Menu(cuenta);
 
 				break;
@@ -146,7 +147,7 @@ void FuncionalidadHotel(Usuario*cuenta) {
 	Hotel* objHotel  = NULL;
 	string nombre, ID, ubicacion, moneda;
 	short huespedes, habitaciones;
-	int telefono;
+	long telefono;
 	bool wifi, piscina, spa, parking, mascotas, desayuno;
 
 	while (true)
@@ -158,17 +159,21 @@ void FuncionalidadHotel(Usuario*cuenta) {
 		if (op == 1)
 		{
 			objHotel = new Hotel();  //instnaciando, lamando a propiedades del objeto
-			std::cout << "Ingresar detalles del hotel en el siguiente formato:\n"
-				<< "Nombre - Ubicacion - Moneda\n - Cantidad de huespedes - Habitaciones - Telefono\n"
-				<< "Si se cuenta con el servicio ingrese un 1, caso contrario, ingrese 0:\n" <<
+			fflush(stdin);
+			cin.ignore();
+			cout << "Como se llama el hotel?\n";
+			getline(cin, nombre);
+			cout << "Donde se ubica?\n";
+			getline(cin, ubicacion);
+			cout << "Que tipo de cambio usa?\n";
+			getline(cin, moneda);
+			cout << "Ingresar detalles del hotel en el siguiente formato:\n"
+				<< "Cantidad de huespedes - Habitaciones - Telefono\n";
+				cin >> huespedes >> habitaciones >> telefono;
+			cout << "Si se cuenta con el servicio ingrese un 1, caso contrario, ingrese 0:\n" <<
 				"WiFi - Piscina - Spa\n - Parking - Mascotas - Desayuno\n";
 
-			// leer entrada
-
-			
-
-			cin >> nombre >> ubicacion >> moneda >> huespedes >> habitaciones >> telefono
-				>> wifi >> piscina >> spa >> parking >> mascotas >> desayuno; //esto necesta getline e vez de cin
+			cin >> wifi >> piscina >> spa >> parking >> mascotas >> desayuno; 
 
 			objHotel->set_nombre(nombre); //no deberia todo esto ser echo en un costructor?
 			objHotel->set_ubicacion(ubicacion);
@@ -184,6 +189,8 @@ void FuncionalidadHotel(Usuario*cuenta) {
 			objHotel->set_desayuno(desayuno);
 			objHotel->set_ID(generarID(1, nombre, 0));
 			objArreglo->agregarHotel(objHotel);
+			_sleep(2000);
+			//cout<<confirmar(objHotel->get_ID());
 			fstream fout;
 			fout.open(ARCHIVO_HOTELES, ios::out | ios::app);
 			//insertar datos en el archivo en formato csv
@@ -220,9 +227,8 @@ void FuncionalidadHotel(Usuario*cuenta) {
 			string ubicacion;
 
 			cout << "Que desea Modificar del Objeto: " << endl;
-			cout << " 1 .- Nombre el Nombre " << endl;
+			cout << " 1 .- El Nombre " << endl;
 			cout << " 2 .- Ubicacion " << endl;
-			cout << " 3 .- Estrellas" << endl;
 	
 			cin >> opcionM;
 
@@ -254,21 +260,21 @@ void FuncionalidadHotel(Usuario*cuenta) {
 			int pos;
 
 			cout << "Ingrese la posicion que desee Eliminar: "; cin >> pos;
-			//objArreglo->eliminarPos(pos);
+			objArreglo->eliminarPos(pos);
 
 		}
 
 		if (op == 7)
 		{
-			//limpio memoria para no maltratar mi ram
-			delete objArreglo;
-			delete objHotel;
-			cout<<"Nos vemos pronto! -- Presiona Esc para volver al menu principal";
-
-		}
-		GoBack();
-		Mostrar_Menu(cuenta);
+			delete objArreglo, objHotel;
+			cout << "Nos vemos pronto!";
+			_sleep(1000);
+			break;
+		}break;
 	}
+	Console::Clear();
+	Mostrar_Menu(cuenta);
+
 }
 
 
@@ -434,6 +440,14 @@ void Mostrar_Menu(Usuario*cuenta) {
 				if (j == COLUMNAS / 2 - 5) cout << "SALIR";
 				else if (j < 30) cout << ' ';
 			}
+			else if (i == 24) {
+				if (j == COLUMNAS / 2 - 10) cout << "ACTUALIZAR DATOS";
+				else if (j < 30) cout << ' ';
+			}
+			else if (i == 26) {
+				if (j == COLUMNAS / 2 - 10) cout << "RESERVAR ESTADIA";
+				else if (j < 30) cout << ' ';
+			}
 			else {
 				cout << ' ';
 			}
@@ -460,14 +474,44 @@ void Mostrar_Menu(Usuario*cuenta) {
 				}
 				if (x == 24) Mostrar_Creditos();
 				if (x == 26) FuncionalidadComent();
+				if (x == 30) {
+					Console::Clear();
+					int n;
+					string aux;
+						cout << "Ingrese el numero de su seleccion: ";
+						cout << "\n1.Contrasenha";
+						cout << "\n2.Correo";
+						cout << "\n3.Usuario";
+						cout << endl;
+						cin >> n;
+						switch (n) {
+						case 1:
+							cout << endl;
+							cin.ignore();
+							cout << "Ingrese nuevo correo" << endl;
+							cin >> aux;
+							cuenta->ActualizarCorr(aux);
+							cout << "Listo!";
+							Mostrar_Menu(cuenta);
+						}
+				}
+
 				if (x == 28) exit(0);
+				
+				if (x == 32) {
+					Console::Clear();
+					Catalogo* objArreglo = new Catalogo();
+					cuenta->reservarHotel(objArreglo);
+					Mostrar_Menu(cuenta);
+				}
+
 				//aqui
 				break;
 			case 72: // Arriba
 				if (x > 20) x = x - 2;
 				break;
 			case 80: // Abajo
-				if (x < 28) x = x + 2; //wtf
+				if (x < 32) x = x + 2; 
 				break;
 			}
 			Desplazarse(x, y, true);

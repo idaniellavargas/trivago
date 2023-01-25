@@ -5,6 +5,7 @@
 #include <istream>
 #include <fstream>
 #include <sstream>
+//#include "UPC.h"
 #include <iostream>
 #include <vector>
 #include <conio.h>
@@ -97,84 +98,6 @@ void Mostrar_Logo(int tecla) {
 	system("color 0F");
 	system("cls");
 }
-namespace UPC {
-	template <typename T>  class Vector {
-	public:
-		T* vec;
-		int len;
-
-		Vector() {
-			vec = new T[0];
-			len = 0;
-		}
-		~Vector() {};
-
-		T& operator[](const int& index) { return vec[index]; }
-
-		void pushback(T elem) {
-			T* aux = new T[len + 1];
-			for (int i = 0; i < len; i++) {
-				aux[i] = vec[i];
-			}
-			aux[len] = elem;
-			delete vec;
-
-			vec = aux;
-			len++;
-		}
-
-		void popback() {
-			T* aux = new T[len - 1];
-			for (int i = 0; i < len - 1; i++) {
-				aux[i] = vec[i];
-			}
-
-			delete vec;
-			vec = aux;
-			len--;
-		}
-
-		void erase(T* it) {
-			T* aux = new T[len - 1];
-			int j = 0;
-			for (int i = 0; i < len; i++) {
-				if ((begin() + i) == it) continue;
-				aux[j] = vec[i];
-				j++;
-			}
-
-			delete vec;
-			vec = aux;
-			len--;
-		}
-
-		void erase(T* ini, T* fin) {
-			if (ini > fin) return;
-
-			T* aux = new T[len - (fin - ini)];
-			int j = 0;
-			bool er = false;
-			for (int i = 0; i < len; i++) {
-				if ((begin() + i) == ini) er = true;
-				else if ((begin() + i) == fin) {
-					er = false;
-					continue;
-				}
-				if (er) continue;
-				aux[j] = vec[i];
-				j++;
-			}
-
-			delete vec;
-			vec = aux;
-			len -= (fin - ini) + 1;
-		}
-
-		T* begin() { return &vec[0]; }
-		T* end() { return &vec[len]; }
-		int lenght() { return len; }
-	};
-}
 string generarID(short caso, string nombre, int i = 0)
 {
 	string ID;
@@ -261,3 +184,4 @@ void GoBack() {
 
 	Alojamientos - Favoritos - Configuración
 	*/
+

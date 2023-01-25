@@ -1,18 +1,26 @@
 ﻿  main.cpp
-C:\Users\I.C.G\Desktop\o\trivago\trivago\Recursos.h(89,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-C:\Users\I.C.G\Desktop\o\trivago\trivago\Recursos.h(218,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-C:\Users\I.C.G\Desktop\o\trivago\trivago\Hotel.h(119,17): warning C4267: 'return': conversión de 'size_t' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\o\trivago\trivago\Comentarios.h(137,2): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Recursos.h(90,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Recursos.h(141,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Hotel.h(130,17): warning C4267: 'return': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Comentarios.h(32,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Comentarios.h(140,2): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Usuario.h(31,39): warning C4552: "+": el resultado de la expresión no se usa
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Usuario.h(41,39): warning C4552: "+": el resultado de la expresión no se usa
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Usuario.h(66,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Usuario.h(78,35): warning C4552: "+": el resultado de la expresión no se usa
 C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(112,24): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
 C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(67,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
 C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(125,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(135,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(339,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(449,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(452,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-C:\Users\I.C.G\Desktop\o\trivago\trivago\Fecha.h(115): warning C4715: 'Date::dateIsReal': no todas las rutas de acceso de control devuelven un valor
-C:\Users\I.C.G\Desktop\o\trivago\trivago\Hotel.h(135): warning C4715: 'Catalogo::modificar': no todas las rutas de acceso de control devuelven un valor
-C:\Users\I.C.G\Desktop\o\trivago\trivago\Recursos.h(200): warning C4715: 'generarID': no todas las rutas de acceso de control devuelven un valor
-C:\Users\I.C.G\Desktop\o\trivago\trivago\Hotel.h(125): warning C4715: '<lambda_8e9d37eabcf8c13bdd2d6b77f0ed469f>::operator()': no todas las rutas de acceso de control devuelven un valor
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(127,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(136,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(192,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(271,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(345,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(463,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\main.cpp(466,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Fecha.h(117): warning C4715: 'Date::dateIsReal': no todas las rutas de acceso de control devuelven un valor
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Hotel.h(147): warning C4715: 'Catalogo::modificar': no todas las rutas de acceso de control devuelven un valor
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Recursos.h(123): warning C4715: 'generarID': no todas las rutas de acceso de control devuelven un valor
+C:\Users\I.C.G\Desktop\o\trivago\trivago\Hotel.h(136): warning C4715: '<lambda_8e9d37eabcf8c13bdd2d6b77f0ed469f>::operator()': no todas las rutas de acceso de control devuelven un valor
   main.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
   trivago.vcxproj -> C:\Users\I.C.G\Desktop\o\trivago\x64\Debug\trivago.exe
