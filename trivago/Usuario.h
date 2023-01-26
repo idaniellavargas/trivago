@@ -26,6 +26,14 @@ public:
 		confirmar(correo);
 	}
 
+	~Usuario() {}
+
+	void Actualizar(string nombre, string correo, string contrasena) {
+		this->nombre = nombre;
+		this->correo = correo;
+		this->contrasena = contrasena;
+		confirmar(correo);
+	}
 
 	void ActualizarContra(vector<string>& lista, string contra) {
 		for (int i = 1; i < lista.size(); i + 3)
@@ -96,8 +104,6 @@ public:
 	function<void(string)> confirmar{
 		[](string correo) { if (correo != "")cout << "\nRegistro de usuario exitoso"; }
 	};
-	
-	~Usuario();
 	void setnombre(string n) {
 		this->nombre = n;
 	}

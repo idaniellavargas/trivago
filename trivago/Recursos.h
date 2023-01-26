@@ -5,9 +5,9 @@
 #include <istream>
 #include <fstream>
 #include <sstream>
-//#include "UPC.h"
+#include "UPC.h"
 #include <iostream>
-#include <vector>
+//#include <vector>
 #include <conio.h>
 #include <algorithm>
 #define COLUMNAS 52
@@ -18,13 +18,14 @@
 
 using namespace std;
 using namespace System;
+using namespace UPC;
 
 template<typename dataType>
 dataType Randomizar(dataType lowerBound, dataType upperBound) {
 	return lowerBound + rand() % (upperBound + 1 - lowerBound);
 }
 
-int busqueRecur(int indi, int ini, int indimax, int cons, vector<string> lista, string palabra) {
+int busqueRecur(int indi, int ini, int indimax, int cons, vector<string> &lista, string palabra) {
 	if (ini == 0) //En caso sea la primera llamada
 	{
 		if (lista[indi] == palabra) //Validar el dato
@@ -38,17 +39,20 @@ int busqueRecur(int indi, int ini, int indimax, int cons, vector<string> lista, 
 	}
 	else //En caso ya se haya llamado mas de una vez
 	{
-		if (lista[indi] == palabra) //Validar el dato del dato
-		{
-			return indi; //Retornar el indice
-		}
-		else if (indi + 2 >= indimax) //En el caso que no se encuentre el dato, retornar -1
+		if (indi >= indimax) //En el caso que no se encuentre el dato, retornar -1
 		{
 			cout << "No se encontro su correo" << endl;
 			return -1;
 		}
+		else if (lista[indi] == palabra) //Validar el dato del dato
+		{
+			string x = lista[indi];
+			return indi; //Retornar el indice
+		}
+		
 		else
 		{
+			string x = lista[indi];
 			return busqueRecur(indi + cons, 1, indimax, cons, lista, palabra); //Volver a llamar a la funcion
 		}
 	}

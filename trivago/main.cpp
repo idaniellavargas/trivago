@@ -24,7 +24,7 @@ void crearArch() {
 	archivo.close();
 }
 
-void escribir(vector<string> l) {
+void escribir(vector<string> &l) {
 	ofstream archivo;
 	archivo.open("Cuentas.txt", ios::app);
 	//Revisamos el vector para ingresar los datos en el .txt
@@ -111,7 +111,7 @@ void FuncionalidadUsuario(Usuario*cuenta) {
 			cin >> cor; //Ingresamos el correo
 			indi = lineas.size();
 			indice = busqueRecur(1, 0, indi, 3, lineas, cor); //Usamos una funcion recursiva para hallar el correo
-		} while (indice == 0);
+		} while (indice == -1);
 
 		//Validamos la contraseña
 		do
@@ -123,9 +123,8 @@ void FuncionalidadUsuario(Usuario*cuenta) {
 			{
 				cout << "contrasena correcta";
 				_sleep(1000);
-				cuenta = new Usuario(lineas[indice - 1], lineas[indice], lineas[indice + 1]); //Registramos al usuario
+				cuenta->Actualizar(lineas[indice - 1], lineas[indice], lineas[indice + 1]); //Registramos al usuario
 				_sleep(2000);
-				Mostrar_Menu(cuenta);
 
 				break;
 
@@ -134,9 +133,6 @@ void FuncionalidadUsuario(Usuario*cuenta) {
 			{
 				cout << "contrasena incorrecta" << endl;
 				_sleep(1000);
-
-				Mostrar_Menu(cuenta);
-
 			}
 		} while (val2 != true);
 	}
@@ -158,7 +154,6 @@ void FuncionalidadHotel(Usuario*cuenta) {
 		op = MenuHotel();
 		if (op == 1)
 		{
-			objHotel = new Hotel();  //instnaciando, lamando a propiedades del objeto
 			fflush(stdin);
 			cin.ignore();
 			cout << "Como se llama el hotel?\n";
@@ -175,7 +170,10 @@ void FuncionalidadHotel(Usuario*cuenta) {
 
 			cin >> wifi >> piscina >> spa >> parking >> mascotas >> desayuno; 
 
-			objHotel->set_nombre(nombre); //no deberia todo esto ser echo en un costructor?
+
+
+			objHotel = new Hotel(nombre, generarID(1, nombre, 0), ubicacion, moneda, huespedes, habitaciones, telefono, wifi, piscina, spa, parking, mascotas, desayuno);
+			/*objHotel->set_nombre(nombre); //no deberia todo esto ser echo en un costructor?
 			objHotel->set_ubicacion(ubicacion);
 			objHotel->set_moneda(moneda);
 			objHotel->set_huespedes(huespedes);
@@ -188,6 +186,7 @@ void FuncionalidadHotel(Usuario*cuenta) {
 			objHotel->set_mascotas(mascotas);
 			objHotel->set_desayuno(desayuno);
 			objHotel->set_ID(generarID(1, nombre, 0));
+			*/
 			objArreglo->agregarHotel(objHotel);
 			_sleep(2000);
 			//cout<<confirmar(objHotel->get_ID());
@@ -404,63 +403,72 @@ void Iniciar_Arreglos_Menu(int**& pMenu) {
 
 	for (int i = 0; i < FILAS; i++)pMenu[i] = new int[COLUMNAS];
 }
-void Mostrar_Menu(Usuario*cuenta) {
+void Mostrar_Menu(Usuario* cuenta) {
 	/* Inicializamos matriz */
 	int** pMenu;
 	Iniciar_Arreglos_Menu(pMenu);
+	bool mostrarMenu = true;
+	int tecla, x = 20, y = 8;
 
-	/* Limpieza de la consola */
-	Console::Clear();
+	while (1) {
 
-	/* Cargamos datos de Menú */
-	for (int i = 0; i < FILAS; i++) {
-		for (int j = 0; j < COLUMNAS; j++) {
-			Console::ForegroundColor = ConsoleColor::Yellow;
-		
-			if (i == 8) {
-				if(j==COLUMNAS/2)Imprimir_Trivago();
-			}
+		if (mostrarMenu) {
+			mostrarMenu = false;
 
-			else if (i == 14) {
-				if (j == COLUMNAS / 2 - 15) cout << "INICIAR SESION O CREAR CUENTA";
-				else if (j < 30) cout << ' ';
-			}
-			else if (i == 16) {
-				if (j == COLUMNAS / 2 - 6) cout << "HOTELES";
-				else if (j < 30) cout << ' ';
-			}
-			else if (i == 18) {
-				if (j == COLUMNAS / 2 - 6) cout << "CREDITOS";
-				else if (j < 30) cout << ' ';
-			}
-			else if (i == 20) {
-				if (j == COLUMNAS / 2 - 6) cout << "COMENTS";
-				else if (j < 30) cout << ' ';
-			}
-			else if (i == 22) {
-				if (j == COLUMNAS / 2 - 5) cout << "SALIR";
-				else if (j < 30) cout << ' ';
-			}
-			else if (i == 24) {
-				if (j == COLUMNAS / 2 - 10) cout << "ACTUALIZAR DATOS";
-				else if (j < 30) cout << ' ';
-			}
-			else if (i == 26) {
-				if (j == COLUMNAS / 2 - 10) cout << "RESERVAR ESTADIA";
-				else if (j < 30) cout << ' ';
-			}
-			else {
-				cout << ' ';
+			/* Limpieza de la consola */
+			Console::CursorVisible = false;
+			Console::Clear();
+
+			/* Cargamos datos de Menú */
+			for (int i = 0; i < FILAS; i++) {
+				for (int j = 0; j < COLUMNAS; j++) {
+					Console::ForegroundColor = ConsoleColor::Yellow;
+
+					if (i == 8) {
+						if (j == COLUMNAS / 2)Imprimir_Trivago();
+					}
+
+					else if (i == 14) {
+						if (j == COLUMNAS / 2 - 15) cout << "INICIAR SESION O CREAR CUENTA";
+						else if (j < 30) cout << ' ';
+					}
+					else if (i == 16) {
+						if (j == COLUMNAS / 2 - 6) cout << "HOTELES";
+						else if (j < 30) cout << ' ';
+					}
+					else if (i == 18) {
+						if (j == COLUMNAS / 2 - 6) cout << "CREDITOS";
+						else if (j < 30) cout << ' ';
+					}
+					else if (i == 20) {
+						if (j == COLUMNAS / 2 - 6) cout << "COMENTS";
+						else if (j < 30) cout << ' ';
+					}
+					else if (i == 22) {
+						if (j == COLUMNAS / 2 - 5) cout << "SALIR";
+						else if (j < 30) cout << ' ';
+					}
+					else if (i == 24) {
+						if (j == COLUMNAS / 2 - 10) cout << "ACTUALIZAR DATOS";
+						else if (j < 30) cout << ' ';
+					}
+					else if (i == 26) {
+						if (j == COLUMNAS / 2 - 10) cout << "RESERVAR ESTADIA";
+						else if (j < 30) cout << ' ';
+					}
+					else {
+						cout << ' ';
+					}
+				}
+
+				cout << endl;
 			}
 		}
 
-		cout << endl;
-	}
+		/* Teclas */
+		
+		Desplazarse(x, y, true);
 
-	/* Teclas */
-	int tecla, x = 20, y = 8;
-	Desplazarse(x, y, true);
-	while (true) {
 		if (kbhit()) {
 			Desplazarse(x, y, false);
 
@@ -479,32 +487,33 @@ void Mostrar_Menu(Usuario*cuenta) {
 					Console::Clear();
 					int n;
 					string aux;
-						cout << "Ingrese el numero de su seleccion: ";
-						cout << "\n1.Contrasenha";
-						cout << "\n2.Correo";
-						cout << "\n3.Usuario";
+					cout << "Ingrese el numero de su seleccion: ";
+					cout << "\n1.Contrasenha";
+					cout << "\n2.Correo";
+					cout << "\n3.Usuario";
+					cout << endl;
+					cin >> n;
+					switch (n) {
+					case 1:
 						cout << endl;
-						cin >> n;
-						switch (n) {
-						case 1:
-							cout << endl;
-							cin.ignore();
-							cout << "Ingrese nuevo correo" << endl;
-							cin >> aux;
-							cuenta->ActualizarCorr(aux);
-							cout << "Listo!";
-							Mostrar_Menu(cuenta);
-						}
+						cin.ignore();
+						cout << "Ingrese nuevo correo" << endl;
+						cin >> aux;
+						cuenta->ActualizarCorr(aux);
+						cout << "Listo!";
+						Mostrar_Menu(cuenta);
+					}
 				}
 
-				if (x == 28) exit(0);
-				
+				if (x == 28) return;
+
 				if (x == 32) {
 					Console::Clear();
 					Catalogo* objArreglo = new Catalogo();
 					cuenta->reservarHotel(objArreglo);
 					Mostrar_Menu(cuenta);
 				}
+				mostrarMenu = true;
 
 				//aqui
 				break;
@@ -512,22 +521,25 @@ void Mostrar_Menu(Usuario*cuenta) {
 				if (x > 20) x = x - 2;
 				break;
 			case 80: // Abajo
-				if (x < 32) x = x + 2; 
+				if (x < 32) x = x + 2;
 				break;
 			}
 			Desplazarse(x, y, true);
 		}
+		
 	}
 }
-Usuario* cuenta = new Usuario("", "", "");
 
 int main()
 {
+	Usuario* cuenta = new Usuario("", "", "");
 	Console::SetWindowSize(COLUMNAS, FILAS);
 	Console::CursorVisible = false;
 	int tecla = 0;
 	Mostrar_Logo(tecla);
 	Mostrar_Menu(cuenta);
 	system("pause");
+
+	delete cuenta;
 	return 0;
 }
