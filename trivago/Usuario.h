@@ -68,9 +68,9 @@ public:
 		cout << "Ingrese el ID del hotel a reservar:" << endl;
 		string id;
 		cin >> id;
-		lista->BuscarHotel(ID);
-		reservas.push_front(make_pair(lista->BuscarHotel(ID),fecha));
-		agendacionExitosa(ID);
+		lista->BuscarHotel(id);
+		reservas.push_front(make_pair(lista->BuscarHotel(id),fecha));
+		agendacionExitosa(id);
 		_sleep(2000);
 	}
 

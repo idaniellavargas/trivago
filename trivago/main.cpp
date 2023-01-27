@@ -1,47 +1,16 @@
 #include "Recursos.h"
 #include "Comentarios.h"
 #include "Usuario.h"
+using namespace std;
+// puntero a funcion
+typedef void (*fp)();
+Usuario* cuenta = new Usuario("", "", "");
+UPC::stack<fp>s;
+auto funcion=&Mostrar_Logo;
+// forward declaration
+void Mostrar_Menu();
 
-void Mostrar_Menu(Usuario*cuenta);
-int MenuHotel() {
-	int op;
-	do {
-		cout << " Menu de Opciones " << endl;
-		cout << "1.- Registrar Hotel" << endl; //nombres compuestas
-		cout << "2.- Mostrar Registro de Hoteles " << endl; //monedas
-		cout << "3.- Modificar un Registro de Hotel " << endl; //ubicacion
-		cout << "4.- Eliminar Un Registro de Hotel " << endl; //
-		cout << "5.- Reporte de ubicacion de en Francia" << endl;
-		cout << "6.- Reporte de hoteles con desayuno" << endl;
-		cout << "7.- Salir " << endl;
-		cout << " Ingrese opcion: "; cin >> op;
-	} while (op < 1 || op > 7);
-	return op;
-}
-void crearArch() {
-	ofstream archivo;
-	archivo.open("Cuentas.txt", ios::out);
-	archivo.close();
-}
-
-void escribir(vector<string> &l) {
-	ofstream archivo;
-	archivo.open("Cuentas.txt", ios::app);
-	//Revisamos el vector para ingresar los datos en el .txt
-	for (int i = 0; i < l.size(); i++)
-	{
-		if (i == 0)
-		{
-			archivo << l[i] << endl;
-		}
-		else
-		{
-			archivo << l[i] << endl;
-		}
-	}
-	archivo.close(); //Cerramos el archivo
-}
-void FuncionalidadUsuario(Usuario*cuenta) {
+void FuncionalidadUsuario() {
 	Console::Clear();
 	char opc;
 	string nom, opc2, cor, con;
@@ -58,15 +27,13 @@ void FuncionalidadUsuario(Usuario*cuenta) {
 	//Pedimos que se registre o inicie sesion
 	do
 	{
-		cout << "Registrarse (R) o Iniciar secion (I)?" << endl;
+		cout << "¿Registrarse (R) o Iniciar sesión (I)?" << endl;
 		cin >> opc;
 		opc = toupper(opc);
 		if (cuenta->getnombre() != "") //Revisamos que ya se haya registrado o iniciado sesion
 		{
-			cout << "Ya su cuenta ya esta iniciada" << endl;
+			cout << "Ya se encuentra autenticado en el sistema" << endl;
 			_sleep(1000);
-			Mostrar_Menu(cuenta);
-
 			opc = 'o';
 			break;
 		}
@@ -116,29 +83,26 @@ void FuncionalidadUsuario(Usuario*cuenta) {
 		//Validamos la contraseña
 		do
 		{
-			cout << "Contrasena: ";
+			cout << "Contraseña: ";
 			cin >> con; //Ingresamos la contraseña
 			val2 = con == lineas[indice + 1]; //Validamos la contraseña registrada con la ingresada
 			if (val2 == true)
 			{
-				cout << "contrasena correcta";
+				cout << "Contraseña correcta";
 				_sleep(1000);
 				cuenta->Actualizar(lineas[indice - 1], lineas[indice], lineas[indice + 1]); //Registramos al usuario
 				_sleep(2000);
-
 				break;
-
 			}
 			else
 			{
-				cout << "contrasena incorrecta" << endl;
+				cout << "Contraseña incorrecta" << endl;
 				_sleep(1000);
 			}
 		} while (val2 != true);
 	}
 }
-
-void FuncionalidadHotel(Usuario*cuenta) {
+void FuncionalidadHotel() {
 	Catalogo* objArreglo = new Catalogo();
 	Hotel* objHotel  = NULL;
 	string nombre, ID, ubicacion, moneda;
@@ -272,78 +236,6 @@ void FuncionalidadHotel(Usuario*cuenta) {
 			break;
 		}break;
 	}
-	Console::Clear();
-	Mostrar_Menu(cuenta);
-
-}
-
-
-void Iniciar_Arreglos_Creditos(int**& pCreditos) {
-	pCreditos = new int* [FILAS];
-
-	for (int i = 0; i < FILAS; i++)pCreditos[i] = new int[COLUMNAS];
-
-	for (int i = 0; i < FILAS; i++) {
-		for (int j = 0; j < COLUMNAS; j++) {
-			pCreditos[i][j] = 0;
-		}
-	}
-
-	// limitar bordes
-	for (int i = 0; i < FILAS; i++) {
-		for (int j = 0; j < COLUMNAS; j++) {
-			if (i == 0 || i == FILAS-1 || j == 0 || j == COLUMNAS-1) pCreditos[i][j] = 1;
-		}
-	}
-
-	// pinta las celdas de la matriz para escribir "Creditos"
-	pCreditos[8][8] = 3; pCreditos[8][9] = 3;
-	pCreditos[8][11] = 3; pCreditos[8][12] = 3;
-	pCreditos[8][15] = 3; pCreditos[8][16] = 3;
-	pCreditos[8][18] = 3; pCreditos[8][19] = 3;
-	pCreditos[8][22] = 3; pCreditos[8][24] = 3;
-	pCreditos[8][25] = 3; pCreditos[8][26] = 3;
-	pCreditos[8][29] = 3; pCreditos[8][32] = 3;
-	pCreditos[8][33] = 3; pCreditos[8][34] = 3;
-	pCreditos[9][7] = 3; pCreditos[9][11] = 3;
-	pCreditos[9][13] = 3; pCreditos[9][15] = 3;
-	pCreditos[9][18] = 3; pCreditos[9][20] = 3;
-	pCreditos[9][22] = 3; pCreditos[9][25] = 3;
-	pCreditos[9][28] = 3; pCreditos[9][30] = 3;
-	pCreditos[9][32] = 3; 
-	pCreditos[10][7] = 3; pCreditos[10][11] = 3;
-	pCreditos[10][12] = 3; pCreditos[10][15] = 3;
-	pCreditos[10][16] = 3; pCreditos[10][11] = 3;
-	pCreditos[10][18] = 3; pCreditos[10][20] = 3;
-	pCreditos[10][22] = 3; pCreditos[10][25] = 3;
-
-	pCreditos[10][28] = 3; pCreditos[10][30] = 3;
-	pCreditos[10][32] = 3; pCreditos[10][33] = 3;
-	pCreditos[10][34] = 3; pCreditos[11][7] = 3;
-	pCreditos[11][11] = 3; pCreditos[11][13] = 3;
-	pCreditos[11][15] = 3; pCreditos[11][18] = 3;
-	pCreditos[11][20] = 3; pCreditos[11][22] = 3;
-	pCreditos[11][25] = 3; pCreditos[11][28] = 3;
-	pCreditos[11][30] = 3; pCreditos[11][34] = 3;
-	pCreditos[12][9] = 3; pCreditos[12][11] = 3;
-	pCreditos[12][13] = 3; pCreditos[12][15] = 3;
-	pCreditos[12][16] = 3; pCreditos[12][18] = 3;
-	pCreditos[12][19] = 3; pCreditos[12][22] = 3;
-	pCreditos[12][25] = 3; pCreditos[12][29] = 3;
-	pCreditos[12][32] = 3; pCreditos[12][33] = 3;
-	pCreditos[12][34] = 3;	pCreditos[12][8] = 3;
-
-}
-void Mostrar_favoritos() {
-	Console::Clear();
-	cout << "Mis favoritos";
-
-	// Tecla
-	int tecla = 0;
-	Console::SetCursorPosition(0, 0);
-	do {
-		if (kbhit()) tecla = getch();
-	} while (tecla != 27);
 }
 void Mostrar_Creditos() {
 	/* Inicializamos matriz */
@@ -393,17 +285,10 @@ void Mostrar_Creditos() {
 
 		cout << endl;
 	}
-
 	// Tecla
 	GoBack();
 }
-void Iniciar_Arreglos_Menu(int**& pMenu) {
-	/* Inicializamos el arreglo llenándolo de ceros */
-	pMenu = new int* [FILAS];
-
-	for (int i = 0; i < FILAS; i++)pMenu[i] = new int[COLUMNAS];
-}
-void Mostrar_Menu(Usuario* cuenta) {
+void Mostrar_Menu() {
 	/* Inicializamos matriz */
 	int** pMenu;
 	Iniciar_Arreglos_Menu(pMenu);
@@ -471,18 +356,14 @@ void Mostrar_Menu(Usuario* cuenta) {
 
 		if (kbhit()) {
 			Desplazarse(x, y, false);
-
 			tecla = getch();
 			switch (tecla) {
 			case 13: // Enter
-				if (x == 20) {
-					FuncionalidadUsuario(cuenta);
-				}
-				if (x == 22) {
-					FuncionalidadHotel(cuenta);
-				}
-				if (x == 24) Mostrar_Creditos();
-				if (x == 26) FuncionalidadComent();
+				if (x == 20) funcion = &FuncionalidadUsuario;
+				if (x == 22) funcion = &FuncionalidadHotel;
+				if (x == 24) funcion = &Mostrar_Creditos;
+				if (x == 26) funcion = &FuncionalidadComent;
+				if (x == 28) return;
 				if (x == 30) {
 					Console::Clear();
 					int n;
@@ -501,21 +382,18 @@ void Mostrar_Menu(Usuario* cuenta) {
 						cin >> aux;
 						cuenta->ActualizarCorr(aux);
 						cout << "Listo!";
-						Mostrar_Menu(cuenta);
 					}
 				}
-
-				if (x == 28) return;
-
 				if (x == 32) {
 					Console::Clear();
 					Catalogo* objArreglo = new Catalogo();
 					cuenta->reservarHotel(objArreglo);
-					Mostrar_Menu(cuenta);
 				}
-				mostrarMenu = true;
-
-				//aqui
+				s.push(funcion);
+				(*funcion)();
+				s.pop();
+				funcion = s.top(); //menu
+				(*funcion)();
 				break;
 			case 72: // Arriba
 				if (x > 20) x = x - 2;
@@ -526,18 +404,22 @@ void Mostrar_Menu(Usuario* cuenta) {
 			}
 			Desplazarse(x, y, true);
 		}
-		
 	}
 }
 
 int main()
 {
-	Usuario* cuenta = new Usuario("", "", "");
+	setlocale(LC_ALL, "spanish"); 
+	SetConsoleCP(1252); 
+	SetConsoleOutputCP(1252);
 	Console::SetWindowSize(COLUMNAS, FILAS);
 	Console::CursorVisible = false;
-	int tecla = 0;
-	Mostrar_Logo(tecla);
-	Mostrar_Menu(cuenta);
+	s.push(funcion);
+	(*funcion)();
+	s.pop();
+	funcion = &Mostrar_Menu;
+	s.push(funcion);
+	(*funcion)();
 	system("pause");
 
 	delete cuenta;

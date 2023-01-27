@@ -131,13 +131,15 @@ void NuevoComentario(arrComent* arrc) {
 			fout.close();
 			break;
 		}
+		GoBack();
+		break;
 	}
 }
 
 void mostrarComentario(arrComent* arrc) {
 	Console::Clear();
 	arrc->toString();
-	getch();
+	GoBack();
 }
 
 int MenuComent() {
@@ -169,5 +171,6 @@ void FuncionalidadComent() {
 		{
 			mostrarComentario(objArreglo);
 		}
+		break;
 	}
 }
