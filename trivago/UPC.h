@@ -1,17 +1,27 @@
 #pragma once
 #include <iostream>
+#include <functional>
+
+#define func std::function<bool(T, T)>
+
+
 namespace UPC {
 
 	//version 5.0: ahora con menos crash
+	//version 6.0: agregué los sorts. Insertion sort para lista y vector implementados en las clases.
 
 	template <typename T>  class vector {
 	public:
 		T* vec;
 		int len;
+		bool is_sorted;
+		func comp;
 
 		vector() {
 			vec = new T[1];
 			len = 0;
+			is_sorted = true;
+			comp = [](T a, T b) -> bool {return a < b; };
 		}
 		~vector() {
 			delete[]vec;
@@ -20,6 +30,7 @@ namespace UPC {
 		vector(const vector& nv) {
 			vec = new T[nv.len];
 			len = nv.len;
+			is_sorted = nv.sorted;
 			for (int i = 0; i < len; i++) {
 				vec[i] = nv.vec[i];
 			}
@@ -31,18 +42,31 @@ namespace UPC {
 			delete[]vec;
 			vec = new T[rhs.len];
 			len = rhs.len;
-			for (int i = 0; i < len; i++) {
-				vec[i] = rhs.vec[i];
-			}
+			is_sorted = rhs.is_sorted;
+				for (int i = 0; i < len; i++) {
+					vec[i] = rhs.vec[i];
+				}
 			return *this;
 		}
 
 		void push_back(T elem) {
 			T* aux = new T[len + 1];
+			if (comp(elem, vec[len - 1])) is_sorted = false;
 			for (int i = 0; i < len; i++) {
 				aux[i] = vec[i];
 			}
 			aux[len] = elem;
+			vec = aux;
+			len++;
+		}
+
+		void push_front(T elem) {
+			T* aux = new T[len + 1];
+			if (!comp(elem, vec[0])) is_sorted = false;
+			aux[0] = elem;
+			for (int i = 1; i <= len; i++) {
+				aux[i] = vec[i - 1];
+			}
 			vec = aux;
 			len++;
 		}
@@ -54,6 +78,21 @@ namespace UPC {
 				aux[i] = vec[i];
 			}
 
+			T* to_delete = vec[len - 1];
+			delete to_delete;
+			vec = aux;
+			len--;
+		}
+
+		void pop_front() {
+			if (len == 0) return;
+			T* aux = new T[len - 1];
+			for (int i = 1; i < len; i++) {
+				aux[i - 1] = vec[i];
+			}
+
+			T* to_delete = vec[0];
+			delete to_delete;
 			vec = aux;
 			len--;
 		}
@@ -109,6 +148,15 @@ namespace UPC {
 		T* begin() { return &vec[0]; }
 		T* end() { return &vec[len]; }
 		int size() { return len; }
+
+		bool getComp() { return comp; }
+		void setComp(func comp) { this->comp = comp; }
+
+		bool sorted() { return sorted; }
+
+		void setSort(bool b) { is_sorted = b; }
+
+		void insert(T elem);
 	};
 
 	template<typename T> class list {
@@ -116,15 +164,24 @@ namespace UPC {
 		struct node {
 			T data;
 			node* next;
-
-			node(T d) {
+			
+			node(T d, node* n = nullptr) {
 				data = d;
-				next = nullptr;
+				next = n;
 			}
 
 			node(const node& d) {
 				data = d.data;
 				next = d.next;
+				
+			}
+
+			bool operator>(node rhs) {
+				return data > rhs.data;
+			}
+
+			bool operator<(node rhs) {
+				return data < rhs.data;
 			}
 		};
 
@@ -132,11 +189,15 @@ namespace UPC {
 		node* ini;
 		node* back;
 		int len;
+		bool is_sorted;
+		func comp;
 	public:
 
 		list() {
 			ini = nullptr;
 			len = 0;
+			is_sorted = true;
+			comp = [](T a, T b) { return a < b; };
 		}
 
 		~list() {
@@ -152,6 +213,7 @@ namespace UPC {
 				crawlerNew = crawlerNew->next;
 				crawlerOld = crawlerOld->next;
 			}
+			is_sorted = nl.is_sorted;
 			back = crawlerNew->next;
 			len = nl.len;
 		}
@@ -169,6 +231,7 @@ namespace UPC {
 				crawlerNew = crawlerNew->next;
 				crawlerOld = crawlerOld->next;
 			}
+			is_sorted = rhs.is_sorted;
 			back = crawlerNew;
 			len = rhs.len;
 			return *this;
@@ -198,6 +261,11 @@ namespace UPC {
 			Iterator& operator=(node* nn)
 			{
 				cn = nn;
+				return *this;
+			}
+
+			Iterator& operator=(T rhs) {
+				cn->data = rhs;
 				return *this;
 			}
 
@@ -231,8 +299,13 @@ namespace UPC {
 			return Iterator(nullptr);
 		}
 
+		Iterator rbegin() {
+			return Iterator(back);
+		}
+
 		void push_front(T data) {
 			node* n = new node(data);
+			if(!comp(data, ini->data)) is_sorted = false;
 			n->next = ini;
 			ini = n;
 			if (len == 0) back = ini;
@@ -243,9 +316,9 @@ namespace UPC {
 			if (len == 0) {
 				ini = new node(data);
 				back = ini;
-
 			}
 			else {
+				if (comp(data, ini->data)) is_sorted = false;
 				node* n = new node(data);
 				back->next = n;
 				back = n;
@@ -318,9 +391,15 @@ namespace UPC {
 			}
 		}
 
-		int lenght() {
+		int size() {
 			return len;
 		}
+
+		void setComp(func comp) { this->comp = comp; }
+
+		void insert(T data);
+
+		void setSorted(bool b) { is_sorted = b; }
 	};
 
 	template <typename T> class stack {
@@ -519,4 +598,447 @@ namespace UPC {
 		}
 
 	};
+
+
+	template<typename T> void lswap(typename list<T>::Iterator a, typename list<T>::Iterator b) {
+		T aux = *a;
+		a = *b;
+		b = aux;
+	}
+
+	template<typename T> void shuffle(T arr[], int len) {
+		if (!len) return;
+		for (int i = len - 1; i > 0; i--) {
+			int j = (rand() % (i + 1));
+			std::swap(arr[i], arr[j]);
+		}
+	}
+
+	template <typename T> void shuffle(vector<T>& v) {
+		if (!v.size()) return;
+		v.setSort(false);
+		for (int i = v.size() - 1; i > 0; i--) {
+			int j = (rand() % (i + 1));
+			std::swap(v[i], v[j]);
+		}
+	}
+
+	template <typename T> void shuffle(list<T>& l) {
+		if (!l.size()) return;
+		l.setSorted(false);
+		int i = 0;
+		for (auto it = l.begin(); it != l.end(); it++) {
+			int j = (rand() % (l.size() - i) + i);
+			auto ran = l.begin();
+			while (j--) ran++;
+			/*
+			int aux = *it;
+			it = *ran;
+			ran = aux;
+			*/
+			lswap<T>(it, ran);
+			i++;
+		}
+	}
+
+	template <typename T, typename L> void esort(T arr[], int len, L comp) {
+		for (int i = 0; i < len - 1; i++) {
+			for (int j = i + 1; j < len; j++) {
+				if (comp(arr[j], arr[i])) std::swap(arr[j], arr[i]);
+			}
+		}
+	}
+
+	template <typename T> void esort(T arr[], int len) {
+		for (int i = 0; i < len - 1; i++) {
+			for (int j = i + 1; j < len; j++) {
+				if (arr[j] < arr[i]) std::swap(arr[j], arr[i]);
+			}
+		}
+	}
+
+	template <typename T> void esort(vector<T>& v) {
+		for (int i = 0; i < v.size() - 1; i++) {
+			for (int j = i + 1; j < v.size(); j++) {
+				if (v[j] < v[i]) std::swap(v[j], v[i]);
+			}
+		}
+	}
+
+	template <typename T, typename L> void esort(vector<T>& v, L comp) {
+		for (int i = 0; i < v.size() - 1; i++) {
+			for (int j = i + 1; j < v.size(); j++) {
+				if (comp(v[j], v[i])) std::swap(v[j], v[i]);
+			}
+		}
+	}
+
+	template <typename T> void esort(list<T>& l) {
+		for (auto it = l.begin(); it != l.rbegin(); it++) {
+			auto j = it;
+			j++;
+			for (; j != l.end(); j++) {
+				if (*j < *it) lswap<T>(it, j);
+			}
+		}
+	}
+
+	template <typename T, typename L> void esort(list<T>& l, L comp) {
+		for (auto it = l.begin(); it != l.rbegin(); it++) {
+			auto j = it;
+			j++;
+			for (; j != l.end(); j++) {
+				if (comp(*j, *it)) lswap<T>(it, j);
+			}
+		}
+	}
+
+	template <typename T> void bsort(T arr[], int len) {
+		bool ord;
+		for (int i = 0; i < len - 1; i++) {
+			ord = true;
+			for (int j = 0; j < len - i - 1; j++) {
+				if (arr[j] > arr[j + 1]) {
+					std::swap(arr[j], arr[j + 1]);
+					ord = false;
+				}
+			}
+			if (ord) break;
+		}
+	}
+
+	template <typename T, typename L> void bsort(T arr[], int len, L comp) {
+		bool ord;
+		for (int i = 0; i < len - 1; i++) {
+			ord = true;
+			for (int j = 0; j < len - i - 1; j++) {
+				if (comp(arr[j], arr[j + 1])) {
+					std::swap(arr[j], arr[j + 1]);
+					ord = false;
+				}
+			}
+			if (ord) break;
+		}
+	}
+
+	template <typename T> void bsort(vector<T>& v) {
+		bool ord;
+		for (int i = 0; i < v.size() - 1; i++) {
+			ord = true;
+			for (int j = 0; j < v.size() - i - 1; j++) {
+				if (v[j] > v[j + 1]) {
+					std::swap(v[j], v[j + 1]);
+					ord = false;
+				}
+			}
+			if (ord) break;
+		}
+	}
+
+	template <typename T, typename L> void bsort(vector<T>& v, L comp) {
+		bool ord;
+		for (int i = 0; i < v.size() - 1; i++) {
+			ord = true;
+			for (int j = 0; j < v.size() - i - 1; j++) {
+				if (comp(v[j], v[j + 1])) {
+					std::swap(v[j], v[j + 1]);
+					ord = false;
+				}
+			}
+			if (ord) break;
+		}
+	}
+
+	template <typename T> void bsort(list<T>& l) {
+		bool ord;
+		auto k = l.rbegin();
+		auto aux = l.begin();
+
+		for (auto it = l.begin(); it != k; it++) {
+			ord = true;
+			for (auto j = l.begin(); j != k; j++) {
+				auto l = j;
+				++l;
+				if (*j > *l) {
+					lswap<T>(j, l);
+					ord = false;
+				}
+				if (l == k) aux = l;
+			}
+			if (ord) break;
+			k = aux;
+
+		}
+	}
+
+	template <typename T, typename L> void bsort(list<T>& l, L comp) {
+		bool ord;
+		auto k = l.rbegin();
+		auto aux = l.begin();
+
+		for (auto it = l.begin(); it != k; it++) {
+			ord = true;
+			for (auto j = l.begin(); j != k; j++) {
+				auto l = j;
+				++l;
+				if (comp(*j, *l)) {
+					lswap<T>(j, l);
+					ord = false;
+				}
+				if (l == k) aux = l;
+			}
+			if (ord) break;
+			k = aux;
+
+		}
+	}
+
+	template <typename T> void ssort(T arr[], int len) {
+		int k, menor;
+		for (int i = 0; i < len - 1; i++) {
+			k = i;
+			menor = arr[i];
+			for (int j = i + 1; j < len; j++) {
+				if (arr[j] < menor) {
+					menor = arr[j];
+					k = j;
+				}
+			}
+			std::swap(arr[i], arr[k]);
+		}
+	}
+
+	template <typename T, typename L> void ssort(T arr[], int len, L comp) {
+		int k, menor;
+		for (int i = 0; i < len - 1; i++) {
+			k = i;
+			menor = arr[i];
+			for (int j = i + 1; j < len; j++) {
+				if (comp(arr[j], menor)) {
+					menor = arr[j];
+					k = j;
+				}
+			}
+			std::swap(arr[i], arr[k]);
+		}
+	}
+
+	template <typename T> void ssort(vector<T>& v) {
+		int k, menor;
+		for (int i = 0; i < v.size() - 1; i++) {
+			k = i;
+			menor = v[i];
+			for (int j = i + 1; j < v.size(); j++) {
+				if (v[j] < menor) {
+					menor = v[j];
+					k = j;
+				}
+			}
+			std::swap(v[i], v[k]);
+		}
+	}
+
+	template <typename T, typename L> void ssort(vector<T>& v, L comp) {
+		int k, menor;
+		for (int i = 0; i < v.size() - 1; i++) {
+			k = i;
+			menor = v[i];
+			for (int j = i + 1; j < v.size(); j++) {
+				if (comp(v[j], menor)) {
+					menor = v[j];
+					k = j;
+				}
+			}
+			std::swap(v[i], v[k]);
+		}
+	}
+
+	template <typename T> void ssort(list<T>& l) {
+		typename list<T>::Iterator k;
+		for (auto it = l.begin(); it != l.rbegin(); it++) {
+			k = it;
+			auto jt = it;
+			++jt;
+			for (; jt != l.end(); jt++) {
+				if (*jt < *k) {
+					k = jt;
+				}
+			}
+			lswap<T>(it, k);
+		}
+	}
+
+	template <typename T, typename L> void ssort(list<T>& l, L comp) {
+		typename list<T>::Iterator k;
+		for (auto it = l.begin(); it != l.rbegin(); it++) {
+			k = it;
+			auto jt = it;
+			++jt;
+			for (; jt != l.end(); jt++) {
+				if (comp(*jt, *k)) {
+					k = jt;
+				}
+			}
+			lswap<T>(it, k);
+		}
+	}
+
+	template <typename T> void isort(T arr[], int len) {
+		int aux, k;
+		for (int i = 1; i < len; i++) {
+			aux = arr[i];
+			k = i - 1;
+			while (k >= 0 && aux < arr[k]) {
+				arr[k + 1] = arr[k];
+				k--;
+			}
+			arr[k + 1] = aux;
+		}
+	}
+
+	template <typename T, typename L> void isort(T arr[], int len, L comp) {
+		int aux, k;
+		for (int i = 1; i < len; i++) {
+			aux = arr[i];
+			k = i - 1;
+			while (k >= 0 && comp(aux, arr[k])) {
+				arr[k + 1] = arr[k];
+				k--;
+			}
+			arr[k + 1] = aux;
+		}
+	}
+
+	template <typename T> void isort(vector<T>& v) {
+		int aux, k;
+		for (int i = 1; i < v.size(); i++) {
+			aux = v[i];
+			k = i - 1;
+			while (k >= 0 && aux < v[k]) {
+				v[k + 1] = v[k];
+				k--;
+			}
+			v[k + 1] = aux;
+		}
+	}
+
+	template <typename T, typename L> void isort(vector<T>& v, L comp) {
+		int aux, k;
+		for (int i = 1; i < v.size(); i++) {
+			aux = v[i];
+			k = i - 1;
+			while (k >= 0 && comp(aux, v[k])) {
+				v[k + 1] = v[k];
+				k--;
+			}
+			v[k + 1] = aux;
+		}
+	}
+
+	template <typename T> void shsort(T arr[], int len) {
+		for (int half = len / 2; half > 0; half /= 2) {
+			for (int i = half; i < len; i++) {
+				for (int j = i - half; j >= 0; j -= half) {
+					int k = j + half;
+					if (arr[j] <= arr[k]) j = -1;
+					else {
+						std::swap(arr[j], arr[k]);
+					}
+				}
+			}
+		}
+	}
+
+	template <typename T, typename L> void shsort(T arr[], int len, L comp) {
+		for (int half = len / 2; half > 0; half /= 2) {
+			for (int i = half; i < len; i++) {
+				for (int j = i - half; j >= 0; j -= half) {
+					int k = j + half;
+					if (comp(arr[j], arr[k])) j = -1;
+					else {
+						std::swap(arr[j], arr[k]);
+					}
+				}
+			}
+		}
+	}
+
+	template <typename T> void shsort(vector<T>& v) {
+		for (int half = v.size() / 2; half > 0; half /= 2) {
+			for (int i = half; i < v.size(); i++) {
+				for (int j = i - half; j >= 0; j -= half) {
+					int k = j + half;
+					if (v[j] <= v[k]) j = -1;
+					else {
+						std::swap(v[j], v[k]);
+					}
+				}
+			}
+		}
+	}
+
+	template <typename T, typename L> void shsort(vector<T>& v, L comp) {
+		for (int half = v.size() / 2; half > 0; half /= 2) {
+			for (int i = half; i < v.size(); i++) {
+				for (int j = i - half; j >= 0; j -= half) {
+					int k = j + half;
+					if (comp(v[j], v[k])) j = -1;
+					else {
+						std::swap(v[j], v[k]);
+					}
+				}
+			}
+		}
+	}
+
+	template <typename T> void vector<T>::insert(T data) {
+		if (is_sorted) {
+			bool ok = false;
+			T* aux = new T[len + 1];
+			for (int i = 0; i < len + 1; i++) {
+				if (!ok && !comp(vec[i], data)) {
+					ok = true;
+					aux[i] = data;
+				}
+				else {
+					aux[i] = vec[i - ok];
+				}
+			}
+			vec = aux;
+			len++;
+		}
+		else {
+			push_back(data);
+			shsort(*this, comp);
+			is_sorted = true;
+		}
+	}
+
+	template <typename T> void list<T>::insert(T data) {
+		if (is_sorted) {
+			bool ok = false;
+			node* prev = nullptr;
+			
+			if (comp(data, ini->data)) { 
+				push_front(data);
+				return;
+			}
+			if (!comp(data, back->data)) {
+				push_back(data);
+				return;
+			}
+			for (node* n = ini->next; !comp(data, n->data); n = n->next) {
+				prev = n;
+			}
+			node* nn = new node(data, prev->next);
+			prev->next = nn;
+			len++;
+		}
+		else {
+			push_back(data);
+			ssort(*this, comp);
+			is_sorted = true;
+		}
+	}
+
 }
