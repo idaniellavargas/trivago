@@ -119,6 +119,7 @@
     <ClInclude Include="Fecha.h" />
     <ClInclude Include="Hotel.h" />
     <ClInclude Include="Recursos.h" />
+    <ClInclude Include="sorts.h" />
     <ClInclude Include="UPC.h" />
     <ClInclude Include="Usuario.h" />
   </ItemGroup>
