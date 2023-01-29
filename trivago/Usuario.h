@@ -1,8 +1,5 @@
 #pragma once
 #include "Recursos.h"
-#include <list>
-
-using namespace std;
 
 class Usuario
 {
@@ -143,6 +140,13 @@ public:
 		cout<< "\nEstado: " << estado;
 		cout << endl;
 	}
+
+	bool operator>(Reserva* rhs) {
+		return fecha > rhs->fecha;
+	}
+	bool operator<(Reserva* rhs) {
+		return fecha < rhs->fecha;
+	}
 };
 #define ARCHIVO_RESERVAS "reservas.csv"
 class Reservas {
@@ -210,13 +214,13 @@ public:
 		agregar(Reserva->get_titular());
 	}
 	void eliminarPos(int pos) {
-		reservas.erase(reservas.begin() + pos);
+		reservas.erase(pos);
 	}
 
 	int get_size() { return reservas.size(); }
 	Reserva* get_pos(int i) { return reservas[i]; }
 	void actualizar() {
-		sort(reservas.begin(), reservas.end(), [](Reserva* Reserva1, Reserva* Reserva2) {
+		shsort(reservas, [](Reserva* Reserva1, Reserva* Reserva2) {
 			return Reserva1->get_fecha() < Reserva2->get_fecha(); });
 	}
 
@@ -242,15 +246,15 @@ public:
 
 	}
 
-	std::list<Reserva*> BuscarReservaTitular(string nombre) { 
-		std::list<Reserva*>l;
+	UPC::list<Reserva*>& BuscarReservaTitular(string nombre) { 
+		UPC::list<Reserva*>l;
 
-		for (auto h : reservas) {
-			if (h->get_titular() == nombre)l.push_front(h);
+		for (Reserva** h = reservas.begin(); h != reservas.end(); h++) {
+			if ((*h)->get_titular() == nombre)l.push_front(*h);
 		}
 		return l;
 	}
-	UPC::queue<Reserva*> BuscarWaitingList(string hotel) { 
+	UPC::queue<Reserva*>& BuscarWaitingList(string hotel) { 
 		UPC::queue<Reserva*>q;
 
 		for (auto r : reservas) {
@@ -366,7 +370,7 @@ public:
 		agregar(admin->getcorreo());
 	}
 	void eliminarPos(int pos) {
-		admins.erase(admins.begin() + pos);
+		admins.erase(pos);
 	}
 
 	int get_size() { return admins.size(); }
@@ -380,7 +384,7 @@ public:
 		return NULL;
 	}
 };
-using namespace UPC;
+
 class DueñoHotelero : public Usuario {
 private:
 	int ganancias;
@@ -458,7 +462,7 @@ public:
 		agregar(dueño->getcorreo());
 	}
 	void eliminarPos(int pos) {
-		dueños.erase(dueños.begin() + pos);
+		dueños.erase(pos);
 	}
 
 	int get_size() { return dueños.size(); }
@@ -482,7 +486,7 @@ public:
 
 class Cliente : public Usuario {
 private:
-	std::list<Reserva*> reservas;
+	list<Reserva*> reservas;
 	float cartera;
 public:
 	Cliente(string nombre, string correo, string contrasena, float cartera) {
@@ -576,7 +580,8 @@ public:
 			std::cin >> n;
 
 			auto it = reservas.begin();
-			advance(it, n - 1);
+			n--;
+			while (n--) it++;
 			auto* p = *it;
 			Catalogo* h = new Catalogo();
 			h->BuscarHotel(p->get_idHotel())->agregarHabitacion(1);
@@ -618,10 +623,11 @@ public:
 				cout << endl;
 			}
 			short n;
-			std::cin >> n;
+			std::cin >> n; //validar imput?
 
 			auto it = reservas.begin();
-			advance(it, n - 1);
+			n--;
+			while (n--) it++;
 			auto* p = *it;
 			p->set_fecha(fecha->getDate());
 			conf = false;
@@ -668,7 +674,7 @@ public:
 		agregar(cliente->getnombre());
 	}
 	void eliminarPos(int pos) {
-		clientela.erase(clientela.begin() + pos);
+		clientela.erase(pos);
 	}
 
 	int get_size() { return clientela.size(); }

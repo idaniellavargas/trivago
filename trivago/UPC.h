@@ -10,6 +10,7 @@ namespace UPC {
 	//version 5.0: ahora con menos crash
 	//version 6.0: agregué los sorts. Insertion sort para lista y vector implementados en las clases.
 	//version 6.1: problemas de memoria.
+	//version 6.2: copia de listas recursivas implementadas
 
 	template <typename T>  class vector {
 	public:
@@ -194,6 +195,7 @@ namespace UPC {
 		func comp;
 	public:
 
+
 		list() {
 			ini = nullptr;
 			len = 0;
@@ -205,35 +207,27 @@ namespace UPC {
 			while (len != 0) pop_front();
 		}
 
-		list(const list& nl) {
-
-			ini = new node(*nl.ini);
-			node* crawlerNew = ini, crawlerOld = nl.ini;
-			while (crawlerOld->next != nullptr) {
-				crawlerNew->next = new node(crawlerOld->next);
-				crawlerNew = crawlerNew->next;
-				crawlerOld = crawlerOld->next;
+		node* copyList(node* nn) {
+			if (nn->next == nullptr) {
+				back = new node(nn->data);
+				return back;
 			}
+			else {
+				return new node(nn->data, copyList(nn->next));
+			}
+		}
+
+		list(const list& nl) {
+			ini = copyList(nl.ini);
 			is_sorted = nl.is_sorted;
-			back = crawlerNew->next;
 			len = nl.len;
 		}
 
 		list<T>& operator= (const list<T>& rhs) {
 			if (this == &rhs) return *this;
 			while (len != 0) pop_front();
-			ini = new node(*rhs.ini);
-			node* crawlerNew;
-			node* crawlerOld;
-			crawlerNew = ini;
-			crawlerOld = rhs.ini;
-			while (crawlerOld->next != nullptr) {
-				crawlerNew->next = new node(*crawlerOld->next);
-				crawlerNew = crawlerNew->next;
-				crawlerOld = crawlerOld->next;
-			}
+			ini = copyList(rhs.ini);
 			is_sorted = rhs.is_sorted;
-			back = crawlerNew;
 			len = rhs.len;
 			return *this;
 		}
@@ -430,31 +424,27 @@ namespace UPC {
 			len = 0;
 		}
 		~stack() { while (!empty()) pop(); }
-		stack(const stack<T>& ns) {
-			Top = new node(*ns.Top);
-			node* crawlerNew = Top, crawlerOld = ns.Top;
-			while (crawlerOld->next != nullptr) {
-				crawlerNew->next = new node(*crawlerOld->next);
-				crawlerNew = crawlerNew->next;
-				crawlerOld = crawlerOld->next;
+
+		node* copyList(node* nn) {
+			if (nn->next == nullptr) {
+				return new node(nn->data);
 			}
-			len = ns.len;
+			else {
+				return new node(nn->data, copyList(nn->next));
+			}
+		}
+
+		stack(const stack& nl) {
+			Top = copyList(nl.Top);
+			len = nl.len;
 		}
 
 		stack<T>& operator= (const stack<T>& rhs) {
 			if (this == &rhs) return *this;
-			while (!empty()) pop();
-			Top = new node(*rhs.Top);
-			node* crawlerNew;
-			node* crawlerOld;
-			crawlerNew = Top;
-			crawlerOld = rhs.Top;
-			while (crawlerOld->next != nullptr) {
-				crawlerNew->next = new node(*crawlerOld->next);
-				crawlerNew = crawlerNew->next;
-				crawlerOld = crawlerOld->next;
-			}
+			while (len != 0) pop();
+			Top = copyList(rhs.ini);
 			len = rhs.len;
+			return *this;
 		}
 
 
@@ -543,21 +533,27 @@ namespace UPC {
 			Back = crawlerNew;
 		}
 
+		node* copyList(node* nn) {
+			if (nn->next == nullptr) {
+				Back = new node(nn->data);
+				return Back;
+			}
+			else {
+				return new node(nn->data, copyList(nn->next));
+			}
+		}
+
+		queue(const queue& nl) {
+			Front = copyList(nl.Front);
+			len = nl.len;
+		}
+
 		queue<T>& operator= (const queue<T>& rhs) {
 			if (this == &rhs) return *this;
-			while (!empty()) pop();
-			Front = new node(*rhs.Front);
-			node* crawlerNew;
-			node* crawlerOld;
-			crawlerNew = Front;
-			crawlerOld = rhs.Front;
-			while (crawlerOld->next != nullptr) {
-				crawlerNew->next = new node(*crawlerOld->next);
-				crawlerNew = crawlerNew->next;
-				crawlerOld = crawlerOld->next;
-			}
+			while (len != 0) pop();
+			Front = copyList(rhs.Front);
 			len = rhs.len;
-			Back = crawlerNew;
+			return *this;
 		}
 
 		void push(T data) {
