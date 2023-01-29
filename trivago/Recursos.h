@@ -151,8 +151,23 @@ void Imprimir_Trivago() {
        / \  |  \/|| || | //| / \|| |  _| / \|
        | |  |    /| || \// | |-||| |_//| \_/|
        \_/  \_/\_\\_/\__/  \_/ \|\____\\____/)" << endl;
+	/*cout << endl;
+	cout << "¿Buscas un hotel cerca de ti para esta noche?" << endl;
+	cout << "Relájate.Nosotros nos encargamos." << endl;*/
 }
-
+int MenuReservas() {
+	Console::Clear();
+	int op;
+	do {
+		cout << " Menú de Opciones " << endl;
+		cout << "1.- Reservar nueva estadía" << endl;
+		cout << "2.- Ver el estado de mis reservas" << endl;
+		cout << "3.- Cancelar reserva" << endl;
+		cout << "4.- Postergar reserva" << endl;
+		cout << " Ingrese opcion: "; cin >> op;
+	} while (op < 1 || op > 4);
+	return op;
+}
 void Desplazarse(int x, int y, bool visible) {
 	Console::SetCursorPosition(y, x);
 	(visible) ? cout << ">" : cout << ' ';
@@ -203,7 +218,6 @@ void GoBack() {
 	Relájate. Nosotros nos encargamos.
 
 	Iniciar sesión o crear cuenta
-
 
 	Alojamientos - Favoritos - Configuración
 	*/

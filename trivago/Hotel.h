@@ -39,6 +39,9 @@ public:
 	void set_parking(bool d) { parking = d; }
 	void set_mascotas(bool d) { mascotas = d; }
 	void set_telefono(int t) { telefono = t; }
+	void agregarHabitacion(short cantidad) { habitaciones += cantidad; }
+	void quitarHabitacion(short cantidad) { habitaciones -= cantidad; }
+
 	Hotel(string nombre, string ID, string ubicacion, string moneda, short huespedes, short habitaciones, long telefono, bool wifi, bool piscina, bool spa, bool parking, bool mascotas, bool desayuno, float precio, float precioVIP) {
 		this->nombre = nombre;
 		this->ID = ID;
@@ -55,10 +58,18 @@ public:
 		this->precio = precio;
 		this->precioVIP = precioVIP;
 	}
+
+	function<void(string)> bordes{
+		[](string nombre) { 
+			if (nombre != "") {
+				transform(nombre.begin(), nombre.end(), nombre.begin(), ::toupper);
+				cout << "\n/============  " << nombre << "  ============/";
+
+			}}
+	};
+
 	void toString() {
-		string aux = nombre;
-		transform(aux.begin(), aux.end(), aux.begin(), ::toupper);
-		cout << "\n/============  " << aux << "  ============/";
+		bordes(nombre);
 		cout << "\nNombre: " << nombre;
 		cout << "\nID: " << ID;
 		cout << "\nUbicacion: " << ubicacion;
@@ -76,6 +87,7 @@ public:
 		cout << "\nDesayuno: "; (desayuno) ? cout << "Si" : cout << "No";
 		cout << endl;
 	}
+
 
 	bool operator>(Hotel* rhs) {
 		return nombre > rhs->nombre;

@@ -5,6 +5,9 @@ using namespace std;
 // puntero a funcion
 typedef void (*fp)();
 Usuario* cuenta = new Usuario("", "", "");
+Cliente* cliente;
+DueñoHotelero* dueño;
+Administrador* admin;
 bool sesionIniciada = false;
 short tipo = 0;
 
@@ -95,7 +98,7 @@ void FuncionalidadUsuario() {
 			{
 				cout << "Contraseña correcta";
 				_sleep(1000);
-				cuenta->Actualizar(lineas[indice - 1], lineas[indice], lineas[indice + 1]); //Registramos al usuario
+				//cuenta->Actualizar(lineas[indice - 1], lineas[indice], lineas[indice + 1]); //Registramos al usuario
 				_sleep(2000);
 				break;
 			}
@@ -143,20 +146,6 @@ void FuncionalidadHotel() {
 
 
 			objHotel = new Hotel(nombre, generarID(1, nombre, 0), ubicacion, moneda, huespedes, habitaciones, telefono, wifi, piscina, spa, parking, mascotas, desayuno, precio, precioVIP);
-			/*objHotel->set_nombre(nombre); //no deberia todo esto ser echo en un costructor?
-			objHotel->set_ubicacion(ubicacion);
-			objHotel->set_moneda(moneda);
-			objHotel->set_huespedes(huespedes);
-			objHotel->set_habitaciones(habitaciones);
-			objHotel->set_telefono(telefono);
-			objHotel->set_wifi(wifi);
-			objHotel->set_piscina(piscina);
-			objHotel->set_spa(spa);
-			objHotel->set_parking(parking);
-			objHotel->set_mascotas(mascotas);
-			objHotel->set_desayuno(desayuno);
-			objHotel->set_ID(generarID(1, nombre, 0));
-			*/
 			objArreglo->agregarHotel(objHotel);
 			_sleep(2000);
 			//cout<<confirmar(objHotel->get_ID());
@@ -188,7 +177,7 @@ void FuncionalidadHotel() {
 		if (op == 2)
 		{
 			objArreglo->mostrar();
-			_getch();
+			GoBack();
 		}
 
 		if (op == 3)
@@ -304,7 +293,6 @@ void FuncionalidadComent() {
 
 	while (true)
 	{
-		Console::Clear();
 		int op;
 
 		op = MenuComent();
@@ -315,6 +303,35 @@ void FuncionalidadComent() {
 		else if (op == 2)
 		{
 			mostrarComentario(objArreglo);
+		}
+		break;
+	}
+}
+
+void FuncionalidadReservas() {
+	Catalogo* c = new Catalogo();
+	Reservas* objArreglo = new Reservas();
+	
+	while (true)
+	{
+		Console::Clear();
+		int op;
+
+		op = MenuReservas();
+		if (op == 1)
+		{
+			cliente->reservarHotel(c, objArreglo);
+		}
+		else if (op == 2)
+		{
+			objArreglo->visualizarReservas(cliente->getcorreo());
+		}
+		else if (op == 3)
+		{
+			cliente->cancelarReserva(objArreglo);
+		}
+		else if(op==4){
+			cliente->cambiarfecha(objArreglo);
 		}
 		break;
 	}
@@ -407,7 +424,7 @@ void Mostrar_Menu() {
 				if (x == 22) funcion = &FuncionalidadHotel;
 				if (x == 24) funcion = &Mostrar_Creditos;
 				if (x == 26) funcion = &FuncionalidadComent;
-				if (x == 28) return;
+				if (x == 28) exit(0);
 				if (x == 30) {
 					Console::Clear();
 					int n;
@@ -424,15 +441,11 @@ void Mostrar_Menu() {
 						std::cin.ignore();
 						cout << "Ingrese nuevo correo" << endl;
 						std::cin >> aux;
-						cuenta->ActualizarCorr(aux);
+						//cuenta->ActualizarCorr(aux);
 						cout << "Listo!";
 					}
 				}
-				if (x == 32) {
-					Console::Clear();
-					Catalogo* objArreglo = new Catalogo();
-					//cuenta->reservarHotel(objArreglo);
-				}
+				if (x == 32) funcion = &FuncionalidadReservas;
 				s.push(funcion);
 				(*funcion)();
 				s.pop();
@@ -451,6 +464,7 @@ void Mostrar_Menu() {
 	}
 }
 
+
 int main()
 {
 	setlocale(LC_ALL, "spanish"); 
@@ -465,7 +479,6 @@ int main()
 	s.push(funcion);
 	(*funcion)();
 	system("pause");
-
 	delete cuenta;
 	return 0;
 }

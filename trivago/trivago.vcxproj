@@ -118,6 +118,7 @@
     <ClInclude Include="Comentarios.h" />
     <ClInclude Include="Fecha.h" />
     <ClInclude Include="Hotel.h" />
+    <ClInclude Include="Ofertas.h" />
     <ClInclude Include="Recursos.h" />
     <ClInclude Include="sorts.h" />
     <ClInclude Include="UPC.h" />
