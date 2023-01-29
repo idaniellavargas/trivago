@@ -4,7 +4,7 @@
 using namespace std;
 // puntero a funcion
 typedef void (*fp)();
-Usuario* cuenta = new Usuario("", "", "");
+Usuario* cuenta = NULL;
 Cliente* cliente;
 DueñoHotelero* dueño;
 Administrador* admin;
@@ -19,8 +19,13 @@ void Mostrar_Menu();
 void FuncionalidadUsuario() {
 	Console::Clear();
 	char opc;
-	string nom, opc2, cor, con;
+	string nom, opc2, cor, con, hot;
 	vector<string> lista;
+	Clientela* arrCliente;
+	Administradores* arrAdmin;
+	Dueños* arrHotel;
+	Usuario* temp = NULL;
+	int id;
 
 	//Revisamos si existe un archivo para las cuentas
 	ifstream Parchivo("Cuentas.txt");
@@ -36,7 +41,7 @@ void FuncionalidadUsuario() {
 		cout << "¿Registrarse (R) o Iniciar sesión (I)?" << endl;
 		std::cin >> opc;
 		opc = toupper(opc);
-		if (cuenta->getnombre() != "") //Revisamos que ya se haya registrado o iniciado sesion
+		if (cuenta != NULL) //Revisamos que ya se haya registrado o iniciado sesion
 		{
 			cout << "Ya se encuentra autenticado en el sistema" << endl;
 			_sleep(1000);
@@ -47,26 +52,72 @@ void FuncionalidadUsuario() {
 
 	if (opc == 'R')
 	{
+		do {
+			cout << "¿Desea registrarse como cliente(1), dueño hotelero(2), o administrador(3)?" << endl;
+			std::cin >> tipo;
+		} while (tipo > 3 || tipo < 0);
+
 		//Registramos las variables del usuario
 		cout << "---------Registrarse---------" << endl;
 		cout << "Nombre: ";
 		std::cin >> nom;
+		if (tipo == 2) {
+			cout << "ID: ";
+			cin >> id;
+		}
+		else if (tipo == 3) {
+			cout << "Hotel: ";
+			cin >> hot;
+		}
 		cout << "Correo: ";
 		std::cin >> cor;
 		cout << "Contraseña: ";
 		std::cin >> con;
-		cuenta = new Usuario(nom, cor, con); //Registramos al usuario
-		//Ingresamos los datos a un vector
-		lista.push_back(nom);
-		lista.push_back(cor);
-		lista.push_back(con);
-		//Registramos los datos en el archivo
-		escribir(lista);
+		if(cuenta != NULL) delete cuenta;
+		if (tipo == 1) {
+			cuenta = new Cliente(nom, cor, con, 0); //Registramos al usuario
+			ofstream fout;
+			fout.open(ARCHIVO_CLIENTES, ios::out | ios::app);
+			fout << cuenta->guardar();
+			fout.close();
+		}
+		else if (tipo == 2) {
+			cuenta = new Administrador(nom, cor, con, id, true);
+			ofstream fout;
+			fout.open(ARCHIVO_ADMINS, ios::out | ios::app);
+			fout << admin->guardar();
+			fout.close();
+		}
+		else {
+			cuenta = new DueñoHotelero(nom, cor, con, 0, hot);
+			ofstream fout;
+			fout.open(ARCHIVO_DUEÑOS, ios::out | ios::app);
+			fout << cuenta->guardar();
+			fout.close();
+		}
+		sesionIniciada = true;
+		_sleep(1000);
 	}
 	else if (opc == 'I')
 	{
-		cout << "¿Desea iniciar sesión como cliente(1), dueño hotelero(2), o administrador(3)?" << endl;
-		std::cin >> tipo;
+		do {
+			cout << "¿Desea iniciar sesión como cliente(1), dueño hotelero(2), o administrador(3)?" << endl;
+			std::cin >> tipo;
+		} while (tipo > 3 || tipo < 0);
+
+		switch (tipo) {
+		case 1:
+			arrCliente = new Clientela();
+			break;
+		case 2:
+			arrAdmin = new Administradores();
+			break;
+		case 3:
+			arrHotel = new Dueños();
+			break;
+		}
+		
+		/*
 		int indi = 0, indice;
 		bool val2;
 		string linea;
@@ -79,35 +130,50 @@ void FuncionalidadUsuario() {
 		}
 		larchivo.close(); //cerramos el archivo
 
+		*/
 		//Verificamos si el correo es correcto
 		do
 		{
-			cout << "Correo: ";
-			std::cin >> cor; //Ingresamos el correo
-			indi = lineas.size();
-			indice = busqueRecur(1, 0, indi, 3, lineas, cor); //Usamos una funcion recursiva para hallar el correo
-		} while (indice == -1);
-
-		//Validamos la contraseña
-		do
-		{
-			cout << "Contraseña: ";
-			std::cin >> con; //Ingresamos la contraseña
-			val2 = con == lineas[indice + 1]; //Validamos la contraseña registrada con la ingresada
-			if (val2 == true)
-			{
-				cout << "Contraseña correcta";
-				_sleep(1000);
-				//cuenta->Actualizar(lineas[indice - 1], lineas[indice], lineas[indice + 1]); //Registramos al usuario
-				_sleep(2000);
+			switch (tipo) {
+			case 1:
+				cout << "Correo: ";
+				std::cin >> cor; //Ingresamos el correo
+				temp = arrCliente->BuscarCliente(cor);
+				break;
+			case 2:
+				cout << "ID: ";
+				cin >> id;
+				temp = arrAdmin->BuscarAdmin(id);
+				break;
+			case 3:
+				cout << "Hotel: ";
+				cin >> hot;
+				temp = arrHotel->BuscarDueño(hot);
+				break;
+			default:
 				break;
 			}
-			else
-			{
-				cout << "Contraseña incorrecta" << endl;
-				_sleep(1000);
-			}
-		} while (val2 != true);
+		} while (temp == NULL);
+
+		//Validamos la contraseña
+
+		cout << "Contraseña: ";
+		std::cin >> con; //Ingresamos la contraseña
+		if (temp->getContrasena() == con)
+		{
+			sesionIniciada = true;
+			cout << "Contraseña correcta";
+			_sleep(1000);
+			delete cuenta;
+			cuenta = temp;
+			cout << "\nInicio de sesion exitoso.";
+			_sleep(2000);
+		}
+		else
+		{
+			cout << "Contraseña incorrecta" << endl;
+			_sleep(1000);
+		}
 	}
 }
 void FuncionalidadHotel() {
@@ -127,6 +193,10 @@ void FuncionalidadHotel() {
 		op = MenuHotel();
 		if (op == 1)
 		{
+			if (tipo != 2 && tipo != 3) {
+				cout << "ACCESO DENEGADO";
+				_sleep(1000);
+			}
 			fflush(stdin);
 			std::cin.ignore();
 			cout << "Como se llama el hotel?\n";
@@ -453,10 +523,10 @@ void Mostrar_Menu() {
 				(*funcion)();
 				break;
 			case 72: // Arriba
-				if (x > 20) x = x - 2;
+				if (x > 20 && sesionIniciada) x = x - 2;
 				break;
 			case 80: // Abajo
-				if (x < 32) x = x + 2;
+				if (x < 32 && sesionIniciada) x = x + 2;
 				break;
 			}
 			Desplazarse(x, y, true);

@@ -218,14 +218,23 @@ namespace UPC {
 		}
 
 		list(const list& nl) {
-			ini = copyList(nl.ini);
 			is_sorted = nl.is_sorted;
 			len = nl.len;
+			if (nl.ini == nullptr) {
+				ini = nullptr;
+			}
+			else {
+			ini = copyList(nl.ini);
+			}
 		}
 
 		list<T>& operator= (const list<T>& rhs) {
 			if (this == &rhs) return *this;
 			while (len != 0) pop_front();
+			if (rhs.ini == nullptr) {
+				ini = nullptr;
+				return *this;
+			}
 			ini = copyList(rhs.ini);
 			is_sorted = rhs.is_sorted;
 			len = rhs.len;
@@ -1006,26 +1015,28 @@ namespace UPC {
 	}
 
 	template <typename T> void vector<T>::insert(T data) {
-		if (is_sorted) {
-			bool ok = false;
-			T* aux = new T[len + 1];
-			for (int i = 0; i < len + 1; i++) {
-				if (len == 0 || (!ok && !comp(vec[i], data))) {
-					ok = true;
-					aux[i] = data;
+		if (is_sorted) { //1
+			bool ok = false;  //2
+			T* aux = new T[len + 1]; //1
+			for (int i = 0; i < len + 1; i++) { //n + 2
+				if (len == 0 || (!ok && !comp(vec[i], data))) { //bc: 1 | wc: 4
+					ok = true; //1
+					aux[i] = data; //1
 				}
 				else {
-					aux[i] = vec[i - ok];
+					aux[i] = vec[i - ok]; //2
 				}
 			}
-			vec = aux;
-			len++;
+			vec = aux; //1
+			len++; //1
 		}
 		else {
-			push_back(data);
-			shsort(*this, comp);
-			is_sorted = true;
+			push_back(data); //n
+			shsort(*this, comp); //nlog(n)
+			is_sorted = true; //1
 		}
+		//bc: 6n + 6 | wc: nlog(n) + 2
+		//if(n <= 68) O(n) else O(nlog(n))
 	}
 
 	template <typename T> void list<T>::insert(T data) {

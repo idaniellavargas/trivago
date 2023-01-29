@@ -11,7 +11,6 @@ public:
 		this->nombre = nombre;
 		this->correo = correo;
 		this->contrasena = contrasena;
-		confirmar(correo);
 	}
 	~Usuario() {}
 	
@@ -19,15 +18,13 @@ public:
 		[](string id) { if (id != "")cout << "\nAgendacion exitosa"; }
 	};
 
-	function<void(string)> confirmar{
-		[](string correo) { if (correo != "")cout << "\nRegistro de usuario exitoso"; }
-	};
 	void setnombre(string n) {
 		this->nombre = n;
 	}
 	void setcorreo(string cor) {
 		this->correo = cor;
 	}
+	string getContrasena() { return contrasena; }
 	void setcontraseña(string con) {
 		this->contrasena = con;
 	};
@@ -43,6 +40,8 @@ public:
 	bool operator<(Usuario* rhs) {
 		return correo < rhs->correo;
 	}
+
+	virtual string guardar() = 0;
 };
 
 class Reserva {
@@ -246,7 +245,7 @@ public:
 
 	}
 
-	UPC::list<Reserva*>& BuscarReservaTitular(string nombre) { 
+	UPC::list<Reserva*> BuscarReservaTitular(string nombre) { 
 		UPC::list<Reserva*>l;
 
 		for (Reserva** h = reservas.begin(); h != reservas.end(); h++) {
@@ -330,10 +329,14 @@ public:
 		this->contrasena = contrasena;
 		this->credencial = credencial;
 		this->permisoCatalogo = permisoCatalogo;
-		confirmar(correo);
 	}
+
 	int get_credencial() { return credencial; }
 	bool actualizarCatalogo() { return permisoCatalogo; }
+
+	string guardar() {
+		return "\n" + nombre + "," + correo + "," + contrasena + "," + to_string(credencial) + "," + to_string(permisoCatalogo);
+	}
 };
 
 #define ARCHIVO_ADMINS "admins.csv"
@@ -399,7 +402,6 @@ public:
 		this->contrasena = contrasena;
 		this->ganancias = ganancias;
 		this->hotel = hotel;
-		confirmar(correo);
 	}
 	string get_hotel() { return hotel; }
 	int get_ganancias() { return ganancias; }
@@ -426,6 +428,10 @@ public:
 	}
 
 	bool actualizarServicios() { return true; }
+
+	string guardar() {
+		return "\n" + nombre + "," + correo + "," + contrasena + "," + to_string(ganancias) + "," + hotel;
+	}
 };
 
 #define ARCHIVO_DUEÑOS "duenhos.csv"
@@ -457,9 +463,10 @@ public:
 		[](string correo) { if (correo != "")cout << "\nRegistro de dueño exitoso"; }
 	};
 
-	void agregarDueño(DueñoHotelero* dueño) {
-		dueños.insert(dueño);
-		agregar(dueño->getcorreo());
+	void agregarDueño(DueñoHotelero* duenho) {
+		dueños.insert(duenho);
+		
+		agregar(duenho->getcorreo());
 	}
 	void eliminarPos(int pos) {
 		dueños.erase(pos);
@@ -496,7 +503,6 @@ public:
 		this->cartera = cartera;
 		Reservas* r = new Reservas();
 		reservas = r->BuscarReservaTitular(nombre);
-		confirmar(correo);
 	}
 	~Cliente() {}
 	float get_cartera() { return cartera; }
@@ -638,6 +644,10 @@ public:
 		}
 		if (conf)cout << "No hay reservas en el registro" << endl;
 	}
+
+	string guardar() {
+		return "\n" + nombre + "," + correo + "," + contrasena + "," + to_string(cartera);
+	}
 };
 
 #define ARCHIVO_CLIENTES "clientes.csv"
@@ -660,14 +670,18 @@ public:
 			getline(stream, cartera, delimitador);
 
 
-			Cliente* cliente = new Cliente(nombre, correo, contrasena, stof(cartera));
-			clientela.insert(cliente);
+			if (nombre != "") {
+				Cliente* cliente = new Cliente(nombre, correo, contrasena, stof(cartera));
+				clientela.insert(cliente);
+
+			}
 		}
 	}
 
 	function<void(string)> agregar{
 		[](string id) { if (id != "")cout << "\nRegistro de cliente exitoso"; }
 	};
+
 
 	void agregarCliente(Cliente* cliente) {
 		clientela.insert(cliente);
