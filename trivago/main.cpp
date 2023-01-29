@@ -431,7 +431,7 @@ void Mostrar_Menu() {
 				if (x == 32) {
 					Console::Clear();
 					Catalogo* objArreglo = new Catalogo();
-					cuenta->reservarHotel(objArreglo);
+					//cuenta->reservarHotel(objArreglo);
 				}
 				s.push(funcion);
 				(*funcion)();

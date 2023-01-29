@@ -1,17 +1,15 @@
 #pragma once
-#include "Fecha.h"
+#include <iostream>
+#include <conio.h>
+#include <algorithm>
 #include <string>
-#include <string.h>
 #include <istream>
 #include <fstream>
 #include <sstream>
 #include <windows.h>
 #include <locale.h>
 #include "UPC.h"
-#include <iostream>
-//#include <vector>
-#include <conio.h>
-#include <algorithm>
+#include "Fecha.h"
 #define COLUMNAS 52
 #define FILAS 40
 #define ARCHIVO_HOTELES "hoteles.csv"
