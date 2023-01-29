@@ -988,6 +988,23 @@ namespace UPC {
 		}
 	}
 
+	template <typename T> void rbsort(vector<T>&v, int n = v.size()) {
+		if (n == 1) return;
+
+		bool ok = false;
+
+		for (int i = 0; i < n - 1; i++) {
+			if (arr[i] > arr[i + 1]) {
+				swap(arr[i], arr[i + 1]);
+				count = true;
+			}
+		}
+
+		if (count) return;
+
+		rbsort(v, n - 1);
+	}
+
 	template <typename T> void vector<T>::insert(T data) {
 		if (is_sorted) {
 			bool ok = false;
