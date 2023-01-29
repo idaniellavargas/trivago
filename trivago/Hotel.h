@@ -5,6 +5,7 @@ private:
 	short huespedes, habitaciones;
 	long telefono;
 	bool wifi, piscina, spa, parking, mascotas, desayuno;
+	float precioVIP, precio;
 public:
 	Hotel() {}
 	~Hotel() {};
@@ -14,6 +15,8 @@ public:
 	string get_moneda() { return moneda; }
 	short get_huespedes() { return huespedes; }
 	short get_habitaciones() { return habitaciones; }
+	float get_precioVIP() { return precioVIP; }
+	float get_precio() { return precio; }
 	long get_telefono() { return telefono; }
 	bool get_wifi() { return wifi; }
 	bool get_piscina() { return piscina; }
@@ -30,11 +33,13 @@ public:
 	void set_wifi(bool b) { wifi = b; }
 	void set_piscina(bool b) { piscina = b; }
 	void set_spa(bool b) { parking = b; }
+	void set_precioVIP(float precio) { this->precioVIP = precio; }
+	void set_precio(float precio) { this->precio = precio; }
 	void set_desayuno(bool d) { desayuno = d; }
 	void set_parking(bool d) { parking = d; }
 	void set_mascotas(bool d) { mascotas = d; }
 	void set_telefono(int t) { telefono = t; }
-	Hotel(string nombre, string ID, string ubicacion, string moneda, short huespedes, short habitaciones, long telefono, bool wifi, bool piscina, bool spa, bool parking, bool mascotas, bool desayuno) {
+	Hotel(string nombre, string ID, string ubicacion, string moneda, short huespedes, short habitaciones, long telefono, bool wifi, bool piscina, bool spa, bool parking, bool mascotas, bool desayuno, float precio, float precioVIP) {
 		this->nombre = nombre;
 		this->ID = ID;
 		this->ubicacion = ubicacion;
@@ -47,6 +52,8 @@ public:
 		this->parking = parking;
 		this->mascotas = mascotas;
 		this->wifi = wifi;
+		this->precio = precio;
+		this->precioVIP = precioVIP;
 	}
 	void toString() {
 		string aux = nombre;
@@ -57,7 +64,9 @@ public:
 		cout << "\nUbicacion: " << ubicacion;
 		cout << "\nMoneda: " << moneda;
 		cout << "\nHuespedes: " << huespedes;
-		cout << "\nHabitaciones: " << habitaciones;
+		cout << "\nHabitaciones restantes: " << habitaciones;
+		cout << "\nPrecio: " << precio;
+		cout << "\nPrecio VIP: " << precioVIP;
 		cout << "\nTelefono: " << telefono;
 		cout << "\nWiFi: "; (wifi) ? cout << "Si" : cout << "No";
 		cout << "\nPiscina: "; (piscina) ? cout << "Si" : cout << "No";
@@ -91,6 +100,7 @@ public:
 			string huespedes, habitaciones;
 			string telefono;
 			string wifi, piscina, spa, parking, mascotas, desayuno;
+			string precio, precioVIP;
 			// Extraer todos los valores de esa fila con getline
 			getline(stream, nombre, delimitador);
 			getline(stream, ID, delimitador);
@@ -105,6 +115,9 @@ public:
 			getline(stream, parking, delimitador);
 			getline(stream, mascotas, delimitador);
 			getline(stream, desayuno, delimitador);
+			getline(stream, precio, delimitador);
+			getline(stream, precioVIP, delimitador);
+
 			Hotel* objHotel = new Hotel();
 			objHotel->set_nombre(nombre);
 			objHotel->set_ID(generarID(1, nombre, 0));
@@ -119,6 +132,9 @@ public:
 			objHotel->set_parking((bool)(stoi(parking)));
 			objHotel->set_mascotas((bool)(stoi(mascotas)));
 			objHotel->set_desayuno((bool)(stoi(desayuno)));
+			objHotel->set_precio((float)(stoi(desayuno)));
+			objHotel->set_precioVIP((float)(stoi(desayuno)));
+
 			Hoteles.insert(objHotel);
 		}
 	}

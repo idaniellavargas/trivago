@@ -5,6 +5,9 @@ using namespace std;
 // puntero a funcion
 typedef void (*fp)();
 Usuario* cuenta = new Usuario("", "", "");
+bool sesionIniciada = false;
+short tipo = 0;
+
 UPC::stack<fp>s;
 auto funcion=&Mostrar_Logo;
 // forward declaration
@@ -28,7 +31,7 @@ void FuncionalidadUsuario() {
 	do
 	{
 		cout << "¿Registrarse (R) o Iniciar sesión (I)?" << endl;
-		cin >> opc;
+		std::cin >> opc;
 		opc = toupper(opc);
 		if (cuenta->getnombre() != "") //Revisamos que ya se haya registrado o iniciado sesion
 		{
@@ -44,11 +47,11 @@ void FuncionalidadUsuario() {
 		//Registramos las variables del usuario
 		cout << "---------Registrarse---------" << endl;
 		cout << "Nombre: ";
-		cin >> nom;
+		std::cin >> nom;
 		cout << "Correo: ";
-		cin >> cor;
+		std::cin >> cor;
 		cout << "Contraseña: ";
-		cin >> con;
+		std::cin >> con;
 		cuenta = new Usuario(nom, cor, con); //Registramos al usuario
 		//Ingresamos los datos a un vector
 		lista.push_back(nom);
@@ -59,6 +62,8 @@ void FuncionalidadUsuario() {
 	}
 	else if (opc == 'I')
 	{
+		cout << "¿Desea iniciar sesión como cliente(1), dueño hotelero(2), o administrador(3)?" << endl;
+		std::cin >> tipo;
 		int indi = 0, indice;
 		bool val2;
 		string linea;
@@ -75,7 +80,7 @@ void FuncionalidadUsuario() {
 		do
 		{
 			cout << "Correo: ";
-			cin >> cor; //Ingresamos el correo
+			std::cin >> cor; //Ingresamos el correo
 			indi = lineas.size();
 			indice = busqueRecur(1, 0, indi, 3, lineas, cor); //Usamos una funcion recursiva para hallar el correo
 		} while (indice == -1);
@@ -84,7 +89,7 @@ void FuncionalidadUsuario() {
 		do
 		{
 			cout << "Contraseña: ";
-			cin >> con; //Ingresamos la contraseña
+			std::cin >> con; //Ingresamos la contraseña
 			val2 = con == lineas[indice + 1]; //Validamos la contraseña registrada con la ingresada
 			if (val2 == true)
 			{
@@ -109,6 +114,7 @@ void FuncionalidadHotel() {
 	short huespedes, habitaciones;
 	long telefono;
 	bool wifi, piscina, spa, parking, mascotas, desayuno;
+	float precio, precioVIP;
 
 	while (true)
 	{
@@ -119,24 +125,24 @@ void FuncionalidadHotel() {
 		if (op == 1)
 		{
 			fflush(stdin);
-			cin.ignore();
+			std::cin.ignore();
 			cout << "Como se llama el hotel?\n";
-			getline(cin, nombre);
+			getline(std::cin, nombre);
 			cout << "Donde se ubica?\n";
-			getline(cin, ubicacion);
+			getline(std::cin, ubicacion);
 			cout << "Que tipo de cambio usa?\n";
-			getline(cin, moneda);
+			getline(std::cin, moneda);
 			cout << "Ingresar detalles del hotel en el siguiente formato:\n"
 				<< "Cantidad de huespedes - Habitaciones - Telefono\n";
-				cin >> huespedes >> habitaciones >> telefono;
+			std::cin >> huespedes >> habitaciones >> telefono;
 			cout << "Si se cuenta con el servicio ingrese un 1, caso contrario, ingrese 0:\n" <<
-				"WiFi - Piscina - Spa\n - Parking - Mascotas - Desayuno\n";
+				"WiFi - Piscina - Spa\n - Parking - Mascotas - Desayuno - precio - precioVIP\n";
 
-			cin >> wifi >> piscina >> spa >> parking >> mascotas >> desayuno; 
+			std::cin >> wifi >> piscina >> spa >> parking >> mascotas >> desayuno >>precio>>precioVIP;
 
 
 
-			objHotel = new Hotel(nombre, generarID(1, nombre, 0), ubicacion, moneda, huespedes, habitaciones, telefono, wifi, piscina, spa, parking, mascotas, desayuno);
+			objHotel = new Hotel(nombre, generarID(1, nombre, 0), ubicacion, moneda, huespedes, habitaciones, telefono, wifi, piscina, spa, parking, mascotas, desayuno, precio, precioVIP);
 			/*objHotel->set_nombre(nombre); //no deberia todo esto ser echo en un costructor?
 			objHotel->set_ubicacion(ubicacion);
 			objHotel->set_moneda(moneda);
@@ -170,7 +176,11 @@ void FuncionalidadHotel() {
 					objArreglo->get_pos(objArreglo->get_size() - 1)->get_spa() << ", " <<
 					objArreglo->get_pos(objArreglo->get_size() - 1)->get_parking() << ", " <<
 					objArreglo->get_pos(objArreglo->get_size() - 1)->get_mascotas() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_desayuno() << "\n";
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_desayuno() << "," <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_precio() << ", " <<
+					objArreglo->get_pos(objArreglo->get_size() - 1)->get_precioVIP() << "\n";
+
+
 			fout.close();
 			Console::Clear();
 			MenuHotel();
@@ -185,7 +195,7 @@ void FuncionalidadHotel() {
 		{
 			int pos;
 			int opcionM;
-			cout << "Ingrese la poscion  que desee Modificar "; cin >> pos;
+			cout << "Ingrese la poscion  que desee Modificar "; std::cin >> pos;
 			Hotel* objHotel = objArreglo->modificar(pos);
 			string nombre;
 			string ubicacion;
@@ -194,18 +204,18 @@ void FuncionalidadHotel() {
 			cout << " 1 .- El Nombre " << endl;
 			cout << " 2 .- Ubicacion " << endl;
 	
-			cin >> opcionM;
+			std::cin >> opcionM;
 
 			switch (opcionM)
 			{
 			case 1:
 
-				cout << " Nombre  : (" << objHotel->get_nombre() << ") :"; cin >> nombre;
+				cout << " Nombre  : (" << objHotel->get_nombre() << ") :"; std::cin >> nombre;
 				objHotel->set_nombre(nombre);
 				break;
 			case 2:
 
-				cout << " Ubicacion  : (" << objHotel->get_ubicacion() << ") :"; cin >> ubicacion;
+				cout << " Ubicacion  : (" << objHotel->get_ubicacion() << ") :"; std::cin >> ubicacion;
 				objHotel->set_ubicacion(ubicacion);
 				break;
 			
@@ -223,7 +233,7 @@ void FuncionalidadHotel() {
 
 			int pos;
 
-			cout << "Ingrese la posicion que desee Eliminar: "; cin >> pos;
+			cout << "Ingrese la posicion que desee Eliminar: "; std::cin >> pos;
 			objArreglo->eliminarPos(pos);
 
 		}
@@ -331,40 +341,52 @@ void Mostrar_Menu() {
 				for (int j = 0; j < COLUMNAS; j++) {
 					Console::ForegroundColor = ConsoleColor::Yellow;
 
-					if (i == 8) {
-						if (j == COLUMNAS / 2)Imprimir_Trivago();
-					}
+					if (sesionIniciada) {
+						if (i == 8) {
+							if (j == COLUMNAS / 2)Imprimir_Trivago();
+						}
 
-					else if (i == 14) {
-						if (j == COLUMNAS / 2 - 15) cout << "INICIAR SESION O CREAR CUENTA";
-						else if (j < 30) cout << ' ';
-					}
-					else if (i == 16) {
-						if (j == COLUMNAS / 2 - 6) cout << "HOTELES";
-						else if (j < 30) cout << ' ';
-					}
-					else if (i == 18) {
-						if (j == COLUMNAS / 2 - 6) cout << "CREDITOS";
-						else if (j < 30) cout << ' ';
-					}
-					else if (i == 20) {
-						if (j == COLUMNAS / 2 - 6) cout << "COMENTS";
-						else if (j < 30) cout << ' ';
-					}
-					else if (i == 22) {
-						if (j == COLUMNAS / 2 - 5) cout << "SALIR";
-						else if (j < 30) cout << ' ';
-					}
-					else if (i == 24) {
-						if (j == COLUMNAS / 2 - 10) cout << "ACTUALIZAR DATOS";
-						else if (j < 30) cout << ' ';
-					}
-					else if (i == 26) {
-						if (j == COLUMNAS / 2 - 10) cout << "RESERVAR ESTADIA";
-						else if (j < 30) cout << ' ';
+						else if (i == 14) {
+							if (j == COLUMNAS / 2 - 15) cout << "INICIAR SESION O CREAR CUENTA";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 16) {
+							if (j == COLUMNAS / 2 - 6) cout << "HOTELES";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 18) {
+							if (j == COLUMNAS / 2 - 6) cout << "CREDITOS";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 20) {
+							if (j == COLUMNAS / 2 - 6) cout << "COMENTS";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 22) {
+							if (j == COLUMNAS / 2 - 5) cout << "SALIR";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 24) {
+							if (j == COLUMNAS / 2 - 10) cout << "ACTUALIZAR DATOS";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 26) {
+							if (j == COLUMNAS / 2 - 10) cout << "RESERVAR ESTADIA";
+							else if (j < 30) cout << ' ';
+						}
+						else {
+							cout << ' ';
+						}
 					}
 					else {
-						cout << ' ';
+						if (i == 8) {
+							if (j == COLUMNAS / 2)Imprimir_Trivago();
+						}
+
+						else if (i == 14) {
+							if (j == COLUMNAS / 2 - 15) cout << "INICIAR SESION O CREAR CUENTA";
+							else if (j < 30) cout << ' ';
+						}
 					}
 				}
 
@@ -395,13 +417,13 @@ void Mostrar_Menu() {
 					cout << "\n2.Correo";
 					cout << "\n3.Usuario";
 					cout << endl;
-					cin >> n;
+					std::cin >> n;
 					switch (n) {
 					case 1:
 						cout << endl;
-						cin.ignore();
+						std::cin.ignore();
 						cout << "Ingrese nuevo correo" << endl;
-						cin >> aux;
+						std::cin >> aux;
 						cuenta->ActualizarCorr(aux);
 						cout << "Listo!";
 					}

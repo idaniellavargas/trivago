@@ -34,7 +34,7 @@ int MenuHotel() {
 		cout << "5.- Reporte de ubicacion de en Francia" << endl;
 		cout << "6.- Reporte de hoteles con desayuno" << endl;
 		cout << "7.- Salir " << endl;
-		cout << " Ingrese opcion: "; cin >> op;
+		cout << " Ingrese opcion: "; std::cin >> op;
 	} while (op < 1 || op > 7);
 	return op;
 }

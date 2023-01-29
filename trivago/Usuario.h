@@ -63,11 +63,11 @@ public:
 	void reservarHotel(Catalogo* &lista) {
 		cout << "Ingrese el dia el mes y el anho para la reserva" << endl;
 		int d, m, y;
-		cin >> d >> m >> y;
+		std::cin >> d >> m >> y;
 		Date*fecha=new Date(d, m, y);
 		cout << "Ingrese el ID del hotel a reservar:" << endl;
 		string id;
-		cin >> id;
+		std::cin >> id;
 		lista->BuscarHotel(id);
 		reservas.insert(make_pair(lista->BuscarHotel(id),fecha));
 		agendacionExitosa(id);
@@ -133,20 +133,124 @@ public:
 		return correo < rhs->correo;
 	}
 };
-
-/*
 class Cliente : public Usuario {
 private:
-	vector<Hotel*>reservas;
+	list<pair<Hotel*, Date*>> reservas = {};
 public:
-	Cliente(){}
+	Cliente(string nombre, string correo, string contrasena, int cartera) {}
+	~Cliente() {}/*
+	void reservarHotel(Catalogo* lista) {
+		Hotel* h = new Hotel();
+		string id;
+		cout << "Ingrese el dia el mes y el anho para la reserva" << endl;
+		int d, m, y;
+		std::cin >> d >> m >> y;
+		Date* fecha = new Date(d, m, y);
+		do {
+			cout << "Ingrese el ID del hotel a reservar:" << endl;
+			std::cin >> id;
+			h = lista->BuscarHotel(id);
+			cout << h->get_nombre() << endl;
+		} while (h == nullptr);
+		//cout<<h->get_ID();
+		cout << "El precio del hotel es: " << h->get_precio();
 
-	void reservarHotel() {}
-	void cancelarreserva(){]
-	void adelantarreserva
-	void posterreserva
-	void actualizarCorreo(){}
-	void actualizarContrasenha(){}
+		if (getcartera() - h->get_precio() >= 0)
+		{
+			reservas.push_front(make_pair(h, fecha));
+			agendacionExitosa(id);
+		}
+		else
+		{
+			cout << "La reserva no se puede ejecutar: " << endl;
+			cout << "Saldo insuficiente" << endl;
+		}
+		_sleep(10000);
+	}
+	void cancelarreserva() {
+		bool conf = true;
+		int ind = 0;
+		float newcart = getcartera();
+		string nombreh;
+		if (reservas.lenght() != 0)
+		{
+			cout << "Elija que reserva quiere cancelar: " << endl;
+			for (auto i : reservas)
+			{
+				cout << i.first->get_nombre() << endl;
+			}
+			do {
+				std::cin >> nombreh;
+				for (auto i : reservas)
+				{
+					if (nombreh == i.first->get_nombre())
+					{
+						newcart += i.first->get_precio();
+						setcartera(newcart);
+						reservas.erase(ind);
+						conf = false;
+					}
+				}
+				if (conf)
+				{
+					cout << "No se encontro el hotel" << endl;
+				}
+			} while (conf);
+
+		}
+		else
+		{
+			cout << "No hay reservas" << endl;
+		}
+	}
+	void cambiarfecha() {
+		bool conf = true;
+		string nombreh;
+		int d, m, y;
+		if (reservas.lenght() != 0)
+		{
+			cout << "Ingrese el nuevo dia, mes y el anho para la reserva" << endl;
+			std::cin >> d >> m >> y;
+			Date* fecha = new Date(d, m, y);
+			while (!(fecha->dateIsReal()))
+			{
+				cout << "Fecha invalida " << endl;
+				cout << "Ingrese el nuevo dia, mes y el anho para la reserva" << endl;
+				std::cin >> d >> m >> y;
+				fecha->set_day(d);
+				fecha->set_month(m);
+				fecha->set_year(y);
+			}
+			cout << "Elija que reserva quiere cambiar: " << endl;
+			for (auto i : reservas)
+			{
+				cout << i.first->get_nombre() << endl;
+			}
+			do {
+				std::cin >> nombreh;
+				for (auto i : reservas)
+				{
+					if (nombreh == i.first->get_nombre())
+					{
+						i.second->set_day(d);
+						i.second->set_day(m);
+						i.second->set_day(y);
+						conf = false;
+					}
+				}
+				if (conf)
+				{
+					cout << "No se encontro el hotel" << endl;
+				}
+			} while (conf);
+		}
+		else
+		{
+			cout << "No hay reservas" << endl;
+		}
+	}*/
+	//void posterreserva() {}
+
 };
 
 class Admnistrador : public Usuario {
@@ -156,5 +260,21 @@ public:
 	void actualizarCatalogo(){}
 	void actualizarCorreo() {}
 	void actualizarContrasenha() {}
-};*/
+};
+
+
+class DueñoHotelero : public Usuario {
+private:
+	int ganancias;
+public:
+	int get_ganancias() { return ganancias; }
+	void set_ganancias(int ganancias) { this->ganancias = ganancias; }
+	void sumarGanancias(int monto) { this->ganancias += monto; }
+	void restarGanancias(int monto) { this->ganancias -= monto; }
+	void aceptarReserva() {}
+	void rechazarReserva() {}
+	void revisarGananciasPorMes() {}
+	void actualizarServicios() {}
+};
+
 
