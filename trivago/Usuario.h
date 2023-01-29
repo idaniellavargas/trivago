@@ -1,13 +1,12 @@
 #pragma once
 #include "Recursos.h"
-
+#include <list>
 
 using namespace std;
-using namespace UPC;
 
 class Usuario
 {
-private:
+protected:
 	string nombre, correo, contrasena;
 public:
 	Usuario() {}
@@ -282,23 +281,31 @@ public:
 		for (int i = 0; i < reservas.size(); i++) reservas[i]->toString();
 	}
 
-	Reserva* BuscarReservaTitular(string nombre) { //esta funcion devuelve un Reserva con el nombre provisto, else devuelve NULL
-		Catalogo* c;
+	std::list<Reserva*> BuscarReservaTitular(string nombre) { //esta funcion devuelve un Reserva con el nombre provisto, else devuelve NULL
+		std::list<Reserva*>l;
+
 		for (auto h : reservas) {
-			if (h->get_titular() == nombre && h->get_idHotel() == c->BuscarHotel(h->get_idHotel())->get_ID())return h;
+			if (h->get_titular() == nombre)l.push_front(h);
 		}
-		return NULL;
+		return l;
 	}
 
 };
 
 class Cliente : public Usuario {
 private:
-	list<Reserva*> reservas;
+	std::list<Reserva*> reservas;
 	float cartera;
-	//pair
 public:
-	Cliente(string nombre, string correo, string contrasena, int cartera) {}
+	Cliente(string nombre, string correo, string contrasena, float cartera) {
+		this->nombre = nombre;
+		this->correo = correo;
+		this->contrasena = contrasena;
+		this->cartera = cartera;
+		Reservas* r = new Reservas();
+		reservas = r->BuscarReservaTitular(nombre);
+	}
+
 	~Cliente() {}
 	float get_cartera() { return cartera; }
 	void set_cartera(float cartera) { this->cartera = cartera; }
