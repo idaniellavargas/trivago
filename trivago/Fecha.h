@@ -27,6 +27,34 @@ public:
 	void monthLetters();
 	bool leapYear(); //anho bisiesto
 	bool dateIsReal();
+
+	bool operator>(Date* rhs) {
+		if (year > rhs->year) return true;
+		else if (year < rhs->year) return false;
+		else {
+			if (month > rhs->month) return true;
+			else if (month < rhs->month) return false;
+			else {
+				if (day > rhs->day) return true;
+				else if (day < rhs->day) return false;
+			}
+			
+		}
+	}
+
+	bool operator<(Date* rhs) {
+		if (year > rhs->year) return false;
+		else if (year < rhs->year) return true;
+		else {
+			if (month > rhs->month) return false;
+			else if (month < rhs->month) return true;
+			else {
+				if (day > rhs->day) return false;
+				else if (day <= rhs->day) return true;
+			}
+
+		}
+	}
 };
 
 Date::Date()

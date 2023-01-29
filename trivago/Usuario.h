@@ -60,7 +60,7 @@ public:
 		[](string id) { if (id != "")cout << "\nAgendacion exitosa"; }
 	};
 
-	void reservarHotel(Catalogo* lista) {
+	void reservarHotel(Catalogo* &lista) {
 		cout << "Ingrese el dia el mes y el anho para la reserva" << endl;
 		int d, m, y;
 		cin >> d >> m >> y;
@@ -69,7 +69,7 @@ public:
 		string id;
 		cin >> id;
 		lista->BuscarHotel(id);
-		reservas.push_front(make_pair(lista->BuscarHotel(id),fecha));
+		reservas.insert(make_pair(lista->BuscarHotel(id),fecha));
 		agendacionExitosa(id);
 		_sleep(2000);
 	}
@@ -79,7 +79,7 @@ public:
 		string linea;
 		ifstream larchivo("Cuentas.txt");
 		while (getline(larchivo, linea)) {
-			l.push_back(linea);
+			l.insert(linea);
 		}
 		larchivo.close();
 
@@ -124,6 +124,13 @@ public:
 	}
 	string getcorreo() {
 		return correo;
+	}
+
+	bool operator>(Usuario* rhs) {
+		return correo > rhs->correo;
+	}
+	bool operator<(Usuario* rhs) {
+		return correo < rhs->correo;
 	}
 };
 

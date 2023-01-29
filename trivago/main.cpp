@@ -288,6 +288,28 @@ void Mostrar_Creditos() {
 	// Tecla
 	GoBack();
 }
+
+void FuncionalidadComent() {
+	arrComent* objArreglo = new arrComent();
+
+	while (true)
+	{
+		Console::Clear();
+		int op;
+
+		op = MenuComent();
+		if (op == 1)
+		{
+			NuevoComentario(objArreglo, cuenta);
+		}
+		else if (op == 2)
+		{
+			mostrarComentario(objArreglo);
+		}
+		break;
+	}
+}
+
 void Mostrar_Menu() {
 	/* Inicializamos matriz */
 	int** pMenu;

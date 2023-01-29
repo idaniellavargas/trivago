@@ -67,6 +67,14 @@ public:
 		cout << "\nDesayuno: "; (desayuno) ? cout << "Si" : cout << "No";
 		cout << endl;
 	}
+
+	bool operator>(Hotel* rhs) {
+		return nombre > rhs->nombre;
+	}
+
+	bool operator<(Hotel* rhs) {
+		return nombre < rhs->nombre;
+	}
 };
 class Catalogo {
 private:
@@ -111,7 +119,7 @@ public:
 			objHotel->set_parking((bool)(stoi(parking)));
 			objHotel->set_mascotas((bool)(stoi(mascotas)));
 			objHotel->set_desayuno((bool)(stoi(desayuno)));
-			Hoteles.push_back(objHotel);
+			Hoteles.insert(objHotel);
 		}
 	}
 
@@ -120,7 +128,7 @@ public:
 	};
 
 	void agregarHotel(Hotel* hotel) {
-		Hoteles.push_back(hotel);
+		Hoteles.insert(hotel);
 		agregar(hotel->get_ID());
 	}
 	void eliminarPos(int pos) {

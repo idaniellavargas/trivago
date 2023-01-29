@@ -1,6 +1,7 @@
 #pragma once
 #include "Hotel.h"
 #include "Recursos.h"
+#include "Usuario.h"
 using namespace System;
 
 class Comentario {
@@ -26,11 +27,17 @@ public:
 		cout << "===================" << endl;
 	}
 	
-
-	
 	string guardar() {
 		_sleep(2000);
 		return "\n" + ID + "," + Usuario + "," + to_string(Puntaje) + "," + Coment ;
+	}
+
+	bool operator<(Comentario* rhs) {
+		return Usuario < rhs->Usuario;
+	}
+
+	bool operator>(Comentario* rhs) {
+		return Usuario > rhs->Usuario;
 	}
 };
 
@@ -55,7 +62,7 @@ public:
 			puntaje = stoi(p);
 			getline(stream, coment, delimitador);
 			Comentario* aux = new Comentario(ID, usuario, puntaje, coment);
-			arrc.push_back(aux);
+			arrc.insert(aux);
 		}
 	}
 
@@ -66,12 +73,12 @@ public:
 	}
 
 	void addComent(Comentario* nc) {
-		arrc.push_back(nc);
+		arrc.insert(nc);
 	}
 };
 
 
-void NuevoComentario(arrComent* arrc) {
+void NuevoComentario(arrComent* arrc, Usuario* u) {
 	Catalogo* arrh = new Catalogo();
 	Hotel* h = NULL;
 	string id;
@@ -122,7 +129,9 @@ void NuevoComentario(arrComent* arrc) {
 				getline(cin, coment);
 			}
 
-			Comentario* ncoment = new Comentario(id, "anonimo", puntaje, coment);
+			string nombre = u->getnombre();
+			if (nombre == "") nombre = "anonimo";
+			Comentario* ncoment = new Comentario(id, nombre, puntaje, coment);
 			arrc->addComent(ncoment);
 
 			fstream fout;
@@ -154,23 +163,3 @@ int MenuComent() {
 	return op;
 }
 
-void FuncionalidadComent() {
-	arrComent* objArreglo = new arrComent();
-
-	while (true)
-	{
-		Console::Clear();
-		int op;
-
-		op = MenuComent();
-		if (op == 1)
-		{
-			NuevoComentario(objArreglo);
-		}
-		else if (op == 2)
-		{
-			mostrarComentario(objArreglo);
-		}
-		break;
-	}
-}

@@ -2,13 +2,14 @@
 #include <iostream>
 #include <functional>
 
-#define func std::function<bool(T, T)>
+#define func std::function<bool(T&, T&)>
 
 
 namespace UPC {
 
 	//version 5.0: ahora con menos crash
 	//version 6.0: agregué los sorts. Insertion sort para lista y vector implementados en las clases.
+	//version 6.1: problemas de memoria.
 
 	template <typename T>  class vector {
 	public:
@@ -21,7 +22,7 @@ namespace UPC {
 			vec = new T[1];
 			len = 0;
 			is_sorted = true;
-			comp = [](T a, T b) -> bool {return a < b; };
+			comp = [](T &a, T &b) -> bool {return a < b; };
 		}
 		~vector() {
 			delete[]vec;
@@ -197,7 +198,7 @@ namespace UPC {
 			ini = nullptr;
 			len = 0;
 			is_sorted = true;
-			comp = [](T a, T b) { return a < b; };
+			comp = [](T &a, T &b) { return a < b; };
 		}
 
 		~list() {
@@ -996,7 +997,7 @@ namespace UPC {
 			bool ok = false;
 			T* aux = new T[len + 1];
 			for (int i = 0; i < len + 1; i++) {
-				if (!ok && !comp(vec[i], data)) {
+				if (len == 0 || (!ok && !comp(vec[i], data))) {
 					ok = true;
 					aux[i] = data;
 				}
@@ -1019,7 +1020,7 @@ namespace UPC {
 			bool ok = false;
 			node* prev = nullptr;
 			
-			if (comp(data, ini->data)) { 
+			if (len == 0 || comp(data, ini->data)) { 
 				push_front(data);
 				return;
 			}
