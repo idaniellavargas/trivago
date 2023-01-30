@@ -61,11 +61,11 @@ void FuncionalidadUsuario() {
 		cout << "---------Registrarse---------" << endl;
 		cout << "Nombre: ";
 		std::cin >> nom;
-		if (tipo == 2) {
+		if (tipo == 3) {
 			cout << "ID: ";
 			cin >> id;
 		}
-		else if (tipo == 3) {
+		else if (tipo == 2) {
 			cout << "Hotel: ";
 			cin >> hot;
 		}
@@ -81,7 +81,7 @@ void FuncionalidadUsuario() {
 			fout << cuenta->guardar();
 			fout.close();
 		}
-		else if (tipo == 2) {
+		else if (tipo == 3) {
 			cuenta = new Administrador(nom, cor, con, id, true);
 			ofstream fout;
 			fout.open(ARCHIVO_ADMINS, ios::out | ios::app);

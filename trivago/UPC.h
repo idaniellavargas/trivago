@@ -444,15 +444,17 @@ namespace UPC {
 		}
 
 		stack(const stack& nl) {
-			Top = copyList(nl.Top);
 			len = nl.len;
+			if (nl.Top == nullptr) Top = nullptr;
+			else Top = copyList(nl.Top);
 		}
 
 		stack<T>& operator= (const stack<T>& rhs) {
 			if (this == &rhs) return *this;
-			while (len != 0) pop();
-			Top = copyList(rhs.ini);
 			len = rhs.len;
+			while (len != 0) pop();
+			if (rhs.Top == nullptr) Top = nullptr;
+			else Top = copyList(rhs.Top);
 			return *this;
 		}
 
@@ -530,18 +532,6 @@ namespace UPC {
 			while (!empty()) pop();
 		}
 
-		queue(const stack<T>& nq) {
-			Front = new node(*nq.Front);
-			node* crawlerNew = Front, crawlerOld = nq.Front;
-			while (crawlerOld->next != nullptr) {
-				crawlerNew->next = new node(*crawlerOld->next);
-				crawlerNew = crawlerNew->next;
-				crawlerOld = crawlerOld->next;
-			}
-			len = nq.len;
-			Back = crawlerNew;
-		}
-
 		node* copyList(node* nn) {
 			if (nn->next == nullptr) {
 				Back = new node(nn->data);
@@ -553,15 +543,17 @@ namespace UPC {
 		}
 
 		queue(const queue& nl) {
-			Front = copyList(nl.Front);
+			if (nl.Front != nullptr) Front = copyList(nl.Front);
+			else Front = nullptr;
 			len = nl.len;
 		}
 
 		queue<T>& operator= (const queue<T>& rhs) {
 			if (this == &rhs) return *this;
 			while (len != 0) pop();
-			Front = copyList(rhs.Front);
 			len = rhs.len;
+			if (rhs.Front != nullptr) Front = copyList(rhs.Front);
+			else Front = nullptr;
 			return *this;
 		}
 

@@ -67,7 +67,7 @@ public:
 			}
 			larchivo1.close();
 		}
-		else if (numArch==2)
+		else if (numArch==3)
 		{
 			ifstream larchivo1(ARCHIVO_ADMINS);
 			getline(larchivo1, linea);
@@ -141,7 +141,7 @@ public:
 			remove(ARCHIVO_CLIENTES);
 			rename("archivo2.csv", ARCHIVO_CLIENTES);
 		}
-		else if (numArch == 2)
+		else if (numArch == 3)
 		{
 			remove(ARCHIVO_ADMINS);
 			rename("archivo2.csv", ARCHIVO_ADMINS);
