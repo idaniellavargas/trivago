@@ -1,6 +1,10 @@
 #pragma once
 #include "Recursos.h"
 
+#define ARCHIVO_CLIENTES "clientes.csv"
+#define ARCHIVO_ADMINS "admins.csv"
+#define ARCHIVO_DUEÑOS "duenhos.csv"
+
 class Usuario
 {
 protected:
@@ -34,6 +38,122 @@ public:
 	string getcorreo() {
 		return correo;
 	}
+
+	void ActualizarCorr(string corr, short numArch) {
+		int opc;
+		vector<string> l;
+		string nomb, corrv, cont, vr1, vr2;
+		string nombreArch;
+		char delimitador = ',';
+		string linea;
+		ifstream larchivo1;
+
+		if (numArch==1)
+		{
+			ifstream larchivo1(ARCHIVO_CLIENTES);
+			getline(larchivo1, linea);
+			while (getline(larchivo1, linea)) {
+				stringstream stream(linea);
+				getline(stream, nomb, delimitador);
+				getline(stream, corrv, delimitador);
+				getline(stream, cont, delimitador);
+				getline(stream, vr1, delimitador);
+				getline(stream, vr2, delimitador);
+				l.push_back(nomb);
+				l.push_back(corrv);
+				l.push_back(cont);
+				l.push_back(vr1);
+				l.push_back(vr2);
+			}
+			larchivo1.close();
+		}
+		else if (numArch==2)
+		{
+			ifstream larchivo1(ARCHIVO_ADMINS);
+			getline(larchivo1, linea);
+			while (getline(larchivo1, linea)) {
+				stringstream stream(linea);
+				getline(stream, nomb, delimitador);
+				getline(stream, corrv, delimitador);
+				getline(stream, cont, delimitador);
+				getline(stream, vr1, delimitador);
+				getline(stream, vr2, delimitador);
+				l.push_back(nomb);
+				l.push_back(corrv);
+				l.push_back(cont);
+				l.push_back(vr1);
+				l.push_back(vr2);
+			}
+			larchivo1.close();
+		}
+		else
+		{
+			ifstream larchivo1(ARCHIVO_DUEÑOS);
+			getline(larchivo1, linea);
+			while (getline(larchivo1, linea)) {
+				stringstream stream(linea);
+				getline(stream, nomb, delimitador);
+				getline(stream, corrv, delimitador);
+				getline(stream, cont, delimitador);
+				getline(stream, vr1, delimitador);
+				getline(stream, vr2, delimitador);
+				l.push_back(nomb);
+				l.push_back(corrv);
+				l.push_back(cont);
+				l.push_back(vr1);
+				l.push_back(vr2);
+			}
+			larchivo1.close();
+		}
+
+		//cout << l.size() << endl;
+		for (int i = 1; i < l.size(); i += 5)
+		{
+			//cout << l[i] << "=======" << this->correo << endl;
+			if (l[i] == this->correo)
+			{
+				//cout << "&&&&&" << endl;
+				//cout << "se encontro" << endl;
+				//cout << l[i + 1] << "=====" << corr << endl;
+				l[i] = corr;
+				this->correo = corr;
+				//cout << l[i + 1] << "=====" << corr << endl;
+				//cout << "&&&&&" << endl;
+				break;
+			}
+		}
+
+		ofstream archivo;
+		archivo.open("archivo2.csv", ios::out);
+		
+		archivo << endl;
+		
+		for (int i = 0; i < l.size(); i += 5)
+		{
+			
+			//cout << l[i] << "===" << l[i + 1] << "====" << l[i + 2] << "====" << l[i + 3] << "====" << l[i + 4] << endl;
+			archivo << l[i] << "," << l[i + 1] << "," << l[i + 2] << "," << l[i + 3] << "," << l[i + 4] << endl;
+			
+		}
+		archivo.close();
+		if (numArch == 1)
+		{
+			remove(ARCHIVO_CLIENTES);
+			rename("archivo2.csv", ARCHIVO_CLIENTES);
+		}
+		else if (numArch == 2)
+		{
+			remove(ARCHIVO_ADMINS);
+			rename("archivo2.csv", ARCHIVO_ADMINS);
+		}
+		else
+		{
+			remove(ARCHIVO_DUEÑOS);
+			rename("archivo2.csv", ARCHIVO_DUEÑOS);
+		}
+		//cin>>opc;
+	}
+
 	bool operator>(Usuario* rhs) {
 		return correo > rhs->correo;
 	}
@@ -339,7 +459,7 @@ public:
 	}
 };
 
-#define ARCHIVO_ADMINS "admins.csv"
+//#define ARCHIVO_ADMINS "admins.csv"
 class Administradores {
 private:
 	vector<Administrador*>admins;
@@ -434,7 +554,7 @@ public:
 	}
 };
 
-#define ARCHIVO_DUEÑOS "duenhos.csv"
+//#define ARCHIVO_DUEÑOS "duenhos.csv"
 class Dueños {
 private:
 	vector<DueñoHotelero*>dueños;
@@ -650,7 +770,7 @@ public:
 	}
 };
 
-#define ARCHIVO_CLIENTES "clientes.csv"
+//#define ARCHIVO_CLIENTES "clientes.csv"
 class Clientela {
 private:
 	vector<Cliente*>clientela;

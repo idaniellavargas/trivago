@@ -18,3 +18,5 @@ C:\Users\I.C.G\Desktop\ea\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyRefe
 C:\Users\I.C.G\Desktop\ea\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
 C:\Users\I.C.G\Desktop\eee\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
 C:\Users\I.C.G\Desktop\eee\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\Usuario\Desktop\Nueva carpeta (7)\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\Usuario\Desktop\Nueva carpeta (7)\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache

@@ -85,7 +85,7 @@ void FuncionalidadUsuario() {
 			cuenta = new Administrador(nom, cor, con, id, true);
 			ofstream fout;
 			fout.open(ARCHIVO_ADMINS, ios::out | ios::app);
-			fout << admin->guardar();
+			fout << cuenta->guardar();
 			fout.close();
 		}
 		else {
@@ -506,12 +506,12 @@ void Mostrar_Menu() {
 					cout << endl;
 					std::cin >> n;
 					switch (n) {
-					case 1:
+					case 2:
 						cout << endl;
 						std::cin.ignore();
 						cout << "Ingrese nuevo correo" << endl;
 						std::cin >> aux;
-						//cuenta->ActualizarCorr(aux);
+						cuenta->ActualizarCorr(aux, tipo);
 						cout << "Listo!";
 					}
 				}
