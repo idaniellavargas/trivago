@@ -2,7 +2,7 @@
 #include "Comentarios.h"
 #include "Usuario.h"
 using namespace std;
-// puntero a funcion
+
 typedef void (*fp)();
 Usuario* cuenta = NULL;
 Cliente* cliente;
@@ -10,12 +10,11 @@ DueñoHotelero* dueño;
 Administrador* admin;
 bool sesionIniciada = false;
 short tipo = 0;
-
 UPC::stack<fp>s;
-auto funcion=&Mostrar_Logo;
+auto funcion = &Mostrar_Logo;
+
 // forward declaration
 void Mostrar_Menu();
-
 void FuncionalidadUsuario() {
 	Console::Clear();
 	char opc;
@@ -27,15 +26,6 @@ void FuncionalidadUsuario() {
 	Usuario* temp = NULL;
 	int id;
 
-	//Revisamos si existe un archivo para las cuentas
-	ifstream Parchivo("Cuentas.txt");
-	if (Parchivo.fail())
-	{
-		crearArch(); //Si no existe un archivo se crea
-	}
-	Parchivo.close(); //Cerramos la validacion de existencia del archivo
-
-	//Pedimos que se registre o inicie sesion
 	do
 	{
 		cout << "¿Registrarse (R) o Iniciar sesión (I)?" << endl;
@@ -101,7 +91,7 @@ void FuncionalidadUsuario() {
 	else if (opc == 'I')
 	{
 		do {
-			cout << "¿Desea iniciar sesión como cliente(1), dueño hotelero(2), o administrador(3)?" << endl;
+			cout << "¿Desea iniciar sesión como cliente(1), administrador(2), o dueño hotelero(3)?" << endl;
 			std::cin >> tipo;
 		} while (tipo > 3 || tipo < 0);
 
@@ -116,22 +106,6 @@ void FuncionalidadUsuario() {
 			arrHotel = new Dueños();
 			break;
 		}
-		
-		/*
-		int indi = 0, indice;
-		bool val2;
-		string linea;
-		vector<string> lineas;
-		ifstream larchivo("Cuentas.txt");
-
-		//obtenemos los datos del archivo en un contenedor
-		while (getline(larchivo, linea)) {
-			lineas.push_back(linea);
-		}
-		larchivo.close(); //cerramos el archivo
-
-		*/
-		//Verificamos si el correo es correcto
 		do
 		{
 			switch (tipo) {
@@ -139,16 +113,19 @@ void FuncionalidadUsuario() {
 				cout << "Correo: ";
 				std::cin >> cor; //Ingresamos el correo
 				temp = arrCliente->BuscarCliente(cor);
+				cliente = arrCliente->BuscarCliente(cor);
 				break;
 			case 2:
 				cout << "ID: ";
 				cin >> id;
 				temp = arrAdmin->BuscarAdmin(id);
+				admin = arrAdmin->BuscarAdmin(id);
 				break;
 			case 3:
 				cout << "Hotel: ";
 				cin >> hot;
 				temp = arrHotel->BuscarDueño(hot);
+				dueño= arrHotel->BuscarDueño(hot);
 				break;
 			default:
 				break;
@@ -390,7 +367,7 @@ void FuncionalidadReservas() {
 		op = MenuReservas();
 		if (op == 1)
 		{
-			cliente->reservarHotel(c, objArreglo);
+			cliente->reservarHotel(c, objArreglo, cliente);
 		}
 		else if (op == 2)
 		{

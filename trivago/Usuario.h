@@ -613,23 +613,25 @@ public:
 class Cliente : public Usuario {
 private:
 	list<Reserva*> reservas;
-	float cartera;
+	int cartera;
 public:
 	Cliente(string nombre, string correo, string contrasena, float cartera) {
 		this->nombre = nombre;
 		this->correo = correo;
 		this->contrasena = contrasena;
-		this->cartera = cartera;
+		this->cartera = 10000;
 		Reservas* r = new Reservas();
 		reservas = r->BuscarReservaTitular(nombre);
 	}
 	~Cliente() {}
-	float get_cartera() { return cartera; }
+	int get_cartera() { return cartera; }
 	void set_cartera(float cartera) { this->cartera = cartera; }
 	void sumarCartera(float cartera) { this->cartera += cartera; }
 	void restarCartera(float cartera) { this->cartera -= cartera; }
-
-	void reservarHotel(Catalogo* lista, Reservas* re) {
+	void agregarReserva(Reserva* reserva) {
+		reservas.push_front(reserva);
+	}
+	void reservarHotel(Catalogo* lista, Reservas* re, Cliente*c) {
 		Hotel* h = new Hotel();
 		string id;
 		cout << "Ingrese el dia el mes y el año para la reserva" << endl;
@@ -643,42 +645,41 @@ public:
 			cout << "Usted ha elegido: Hotel" << h->get_nombre() << endl;
 		} while (h == nullptr);
 		//cout<<h->get_ID();
+		cout << "Usted tiene:" << c->get_cartera() << endl;
+
 		cout << "El precio del hotel por persona es: " << h->get_precio() << endl;
 		cout << "El precio VIP es de: " << h->get_precioVIP() << endl;
 		cout << "Nota* el precio VIP incluye atencion y servicios preferenciales, ademas de la posibilidad de poder cancelar o postergar su reserva hasta 24 horas antes de que se consuma" << endl;
 		cout << "¿Desea pagar por el precio normal (1) o el VIP (2)?" << endl;
 		short categoria;
 		cout << "Ingrese su eleccion: "; cin >> categoria;
+		float costo;
+		if (categoria == 1)costo = h->get_precio();
+		else costo = h->get_precioVIP();
 		cout << endl;
-		if (categoria == 1 && get_cartera() - h->get_precio() >= 0)
+		float diff;
+		diff = cartera - costo;
+		if (diff >= 0)
 		{
-			Reserva* reserva = new Reserva(getnombre(), h, fecha->getDate(), 0, getcorreo());
-			reservas.push_front(reserva);
-			agendacionExitosa(id);
+			Reserva* reserva = new Reserva(c->getnombre(), h, fecha->getDate(), 0, c->getcorreo());
+			cout << "Reserva creada" << endl;
+			_sleep(2000);
+			c->agregarReserva(reserva);
+			// no se esta guardando
+			cout << "Lista de reserva de cliente actualizada" << endl;
+			_sleep(2000);
+
+			//agendacionExitosa(id);
 			re->agregarReserva(reserva);
+			cout << "Reserva agregada al vector" << endl;
 			fstream fout;
 			fout.open(ARCHIVO_RESERVAS, ios::out | ios::app);
 			fout << reserva->guardar();
 			fout.close();
-			restarCartera(h->get_precio());
+			cout << "Archivo creado" << endl;
+			c->restarCartera(costo);
 			Dueños* d = new Dueños();
-			d->pagar(h->get_ID(), h->get_precio());
-			h->quitarHabitacion(1);
-			agendacionExitosa(id);
-		}
-		else if (categoria == 2 && get_cartera() - h->get_precioVIP() >= 0)
-		{
-			Reserva* reserva = new Reserva(getnombre(), h, fecha->getDate(), 1, getcorreo());
-			reservas.push_front(reserva);
-			agendacionExitosa(id);
-			re->agregarReserva(reserva);
-			fstream fout;
-			fout.open(ARCHIVO_RESERVAS, ios::out | ios::app);
-			fout << reserva->guardar();
-			fout.close();
-			restarCartera(h->get_precioVIP());
-			Dueños* d = new Dueños();
-			d->pagar(h->get_ID(), h->get_precioVIP());
+			d->pagar(h->get_ID(), costo);
 			h->quitarHabitacion(1);
 			agendacionExitosa(id);
 		}
@@ -769,7 +770,6 @@ public:
 	}
 };
 
-//#define ARCHIVO_CLIENTES "clientes.csv"
 class Clientela {
 private:
 	vector<Cliente*>clientela;
@@ -790,7 +790,7 @@ public:
 
 
 			if (nombre != "") {
-				Cliente* cliente = new Cliente(nombre, correo, contrasena, stof(cartera));
+				Cliente* cliente = new Cliente(nombre, correo, contrasena, stoi(cartera));
 				clientela.insert(cliente);
 
 			}

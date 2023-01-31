@@ -145,8 +145,8 @@ public:
 			objHotel->set_parking((bool)(stoi(parking)));
 			objHotel->set_mascotas((bool)(stoi(mascotas)));
 			objHotel->set_desayuno((bool)(stoi(desayuno)));
-			objHotel->set_precio((float)(stoi(desayuno)));
-			objHotel->set_precioVIP((float)(stoi(desayuno)));
+			objHotel->set_precio((int)(stoi(precio)));
+			objHotel->set_precioVIP((int)(stoi(precioVIP)));
 
 			Hoteles.insert(objHotel);
 			Hotel* h;

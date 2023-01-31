@@ -200,7 +200,7 @@ namespace UPC {
 			ini = nullptr;
 			len = 0;
 			is_sorted = true;
-			comp = [](T &a, T &b) { return a < b; };
+			//comp = [](T &a, T &b) { return a < b; };
 		}
 
 		~list() {
