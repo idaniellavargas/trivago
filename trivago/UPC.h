@@ -23,7 +23,7 @@ namespace UPC {
 			vec = new T[1];
 			len = 0;
 			is_sorted = true;
-			comp = [](T &a, T &b) -> bool {return a < b; };
+			comp = [](T& a, T& b) -> bool {return a < b; };
 		}
 		~vector() {
 			delete[]vec;
@@ -45,9 +45,9 @@ namespace UPC {
 			vec = new T[rhs.len];
 			len = rhs.len;
 			is_sorted = rhs.is_sorted;
-				for (int i = 0; i < len; i++) {
-					vec[i] = rhs.vec[i];
-				}
+			for (int i = 0; i < len; i++) {
+				vec[i] = rhs.vec[i];
+			}
 			return *this;
 		}
 
@@ -166,7 +166,7 @@ namespace UPC {
 		struct node {
 			T data;
 			node* next;
-			
+
 			node(T d, node* n = nullptr) {
 				data = d;
 				next = n;
@@ -175,7 +175,7 @@ namespace UPC {
 			node(const node& d) {
 				data = d.data;
 				next = d.next;
-				
+
 			}
 
 			bool operator>(node rhs) {
@@ -200,7 +200,7 @@ namespace UPC {
 			ini = nullptr;
 			len = 0;
 			is_sorted = true;
-			//comp = [](T &a, T &b) { return a < b; };
+			comp = [](T& a, T& b) { return a < b; };
 		}
 
 		~list() {
@@ -224,7 +224,7 @@ namespace UPC {
 				ini = nullptr;
 			}
 			else {
-			ini = copyList(nl.ini);
+				ini = copyList(nl.ini);
 			}
 		}
 
@@ -308,11 +308,16 @@ namespace UPC {
 		}
 
 		void push_front(T data) {
-			node* n = new node(data);
-			if(!comp(data, ini->data)) is_sorted = false;
-			n->next = ini;
-			ini = n;
-			if (len == 0) back = ini;
+			if (len == 0) {
+				ini = new node(data);
+				back = ini;
+			}
+			else {
+				if (!comp(data, ini->data)) is_sorted = false;
+				node* n = new node(data);
+				n->next = ini;
+				ini = n;
+			}
 			len++;
 		}
 
@@ -989,19 +994,19 @@ namespace UPC {
 		}
 	}
 
-	template <typename T> void rbsort(vector<T>&v, int n = v.size()) {
+	template <typename T> void rbsort(vector<T>& v, int n = v.size()) {
 		if (n == 1) return;
 
-		bool ok = false;
+		bool ok = true;
 
 		for (int i = 0; i < n - 1; i++) {
-			if (arr[i] > arr[i + 1]) {
-				swap(arr[i], arr[i + 1]);
-				count = true;
+			if (v[i] > v[i + 1]) {
+				swap(v[i], v[i + 1]);
+				ok = false;
 			}
 		}
 
-		if (count) return;
+		if (ok) return;
 
 		rbsort(v, n - 1);
 	}
@@ -1039,8 +1044,8 @@ namespace UPC {
 		if (is_sorted) {
 			bool ok = false;
 			node* prev = nullptr;
-			
-			if (len == 0 || comp(data, ini->data)) { 
+
+			if (len == 0 || comp(data, ini->data)) {
 				push_front(data);
 				return;
 			}

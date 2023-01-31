@@ -568,6 +568,7 @@ public:
 			string nombre, correo, contrasena, ganancias, hotel;
 			// Extraer todos los valores de esa fila con getline
 			getline(stream, nombre, delimitador);
+			if (nombre == "") continue;
 			getline(stream, correo, delimitador);
 			getline(stream, contrasena, delimitador);
 			getline(stream, ganancias, delimitador);
@@ -641,8 +642,9 @@ public:
 		do {
 			cout << "Ingrese el ID del hotel a reservar:" << endl;
 			std::cin >> id;
+			std::transform(id.begin(), id.end(), id.begin(), std::toupper);
 			h = lista->BuscarHotel(id);
-			cout << "Usted ha elegido: Hotel" << h->get_nombre() << endl;
+			if(h != nullptr) cout << "Usted ha elegido: Hotel" << h->get_nombre() << endl;
 		} while (h == nullptr);
 		//cout<<h->get_ID();
 		cout << "Usted tiene:" << c->get_cartera() << endl;
