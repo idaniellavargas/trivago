@@ -21,8 +21,8 @@ using namespace System;
 using namespace UPC;
 
 
-int MenuHotel() {
-	int op;
+short MenuHotel() {
+	short op;
 	do {
 		cout << " Menu de Opciones " << endl;
 		cout << "1.- Registrar Hotel" << endl; //nombres compuestas
@@ -31,9 +31,10 @@ int MenuHotel() {
 		cout << "4.- Eliminar Un Registro de Hotel " << endl; //
 		cout << "5.- Reporte de ubicacion de en Francia" << endl;
 		cout << "6.- Reporte de hoteles con desayuno" << endl;
-		cout << "7.- Salir " << endl;
+		cout << "7.- Ver ofertas disponibles" << endl;
+		cout << "8.- Salir " << endl;
 		cout << " Ingrese opcion: "; std::cin >> op;
-	} while (op < 1 || op > 7);
+	} while (op < 1 || op > 8);
 	return op;
 }
 

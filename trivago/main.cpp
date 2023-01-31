@@ -13,7 +13,6 @@ short tipo = 0;
 UPC::stack<fp>s;
 auto funcion = &Mostrar_Logo;
 
-
 void FuncionalidadUsuario() {
 	Console::Clear();
 	char opc;
@@ -164,8 +163,7 @@ void FuncionalidadHotel() {
 	while (true)
 	{
 		Console::Clear();
-		int op;
-
+		short op, pos;
 		op = MenuHotel();
 		if (op == 1)
 		{
@@ -175,48 +173,31 @@ void FuncionalidadHotel() {
 				return;
 			}
 			fflush(stdin);
-			std::cin.ignore();
-			cout << "Como se llama el hotel?\n";
-			getline(std::cin, nombre);
-			cout << "Donde se ubica?\n";
-			getline(std::cin, ubicacion);
-			cout << "Que tipo de cambio usa?\n";
-			getline(std::cin, moneda);
-			cout << "Ingresar detalles del hotel en el siguiente formato:\n"
-				<< "Cantidad de huespedes - Habitaciones - Telefono\n";
-			std::cin >> huespedes >> habitaciones >> telefono;
-			cout << "Si se cuenta con el servicio ingrese un 1, caso contrario, ingrese 0:\n" <<
-				"WiFi - Piscina - Spa\n - Parking - Mascotas - Desayuno - precio - precioVIP\n";
-
-			std::cin >> wifi >> piscina >> spa >> parking >> mascotas >> desayuno >>precio>>precioVIP;
-
-
+			cin.ignore();
+			cout << "¿Cómo se llama el hotel?\n"; getline(cin, nombre);
+			cout << "¿Dónde se ubica?\n"; getline(cin, ubicacion);
+			cout << "¿Qué tipo de cambio usa?\n"; getline(cin, moneda);
+			cout << "\nIngrese el límite de huéspedes por habitación: "; cin >> huespedes;
+			cout << "\nIngrese la cantidad de habitaciones disponibles: "; cin >> habitaciones;
+			cout << "\nIngrese un teléfono de contacto: "; cin >> telefono;
+			cout << "\nSi se cuenta con el servicio ingrese un 1, caso contrario 0:";
+			cout << "\nWiFi: "; cin >> wifi;
+			cout << "\nPiscina: "; cin >> piscina;
+			cout << "\nSpa: "; cin >> spa;
+			cout << "\nParking: "; cin >> parking;
+			cout << "\nMascotas: "; cin >> mascotas;
+			cout << "\nDesayuno: "; cin >> desayuno;
+			cout << "\nAhora, ingrese el precio regular de alojamiento: "; cin >> precio;
+			cout << "\nFinalmente, digite el precio de habitaciones VIP: "; cin >> precioVIP;
 
 			objHotel = new Hotel(nombre, generarID(1, nombre, 0), ubicacion, moneda, huespedes, habitaciones, telefono, wifi, piscina, spa, parking, mascotas, desayuno, precio, precioVIP);
 			objArreglo->agregarHotel(objHotel);
 			_sleep(2000);
-			//cout<<confirmar(objHotel->get_ID());
+			
 			fstream fout;
 			fout.open(ARCHIVO_HOTELES, ios::out | ios::app);
-			//insertar datos en el archivo en formato csv
 			
-				fout << objArreglo->get_pos(objArreglo->get_size()-1)->get_nombre() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_ID() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_ubicacion() << ", "<<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_moneda() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_huespedes() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_habitaciones() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_telefono() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_wifi() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_piscina() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_spa() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_parking() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_mascotas() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_desayuno() << "," <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_precio() << ", " <<
-					objArreglo->get_pos(objArreglo->get_size() - 1)->get_precioVIP() << "\n";
-
-
+			fout << objArreglo->get_pos(objArreglo->get_size() - 1)->get_nombre() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_ID() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_ubicacion() << ", "<< objArreglo->get_pos(objArreglo->get_size() - 1)->get_moneda() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_huespedes() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_habitaciones() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_telefono() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_wifi() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_piscina() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_spa() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_parking() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_mascotas() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_desayuno() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_precio() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_precioVIP() << "\n";
 			fout.close();
 			Console::Clear();
 			MenuHotel();
@@ -226,22 +207,22 @@ void FuncionalidadHotel() {
 			objArreglo->mostrar();
 			GoBack();
 		}
-
 		if (op == 3)
 		{
-			int pos;
+			if (tipo != 2 && tipo != 3) {
+				cout << "ACCESO DENEGADO";
+				_sleep(1000);
+				return;
+			}
 			int opcionM;
 			cout << "Ingrese la poscion  que desee Modificar "; std::cin >> pos;
 			Hotel* objHotel = objArreglo->modificar(pos);
 			string nombre;
 			string ubicacion;
-
 			cout << "Que desea Modificar del Objeto: " << endl;
 			cout << " 1 .- El Nombre " << endl;
 			cout << " 2 .- Ubicacion " << endl;
-	
 			std::cin >> opcionM;
-
 			switch (opcionM)
 			{
 			case 1:
@@ -260,27 +241,44 @@ void FuncionalidadHotel() {
 				cout << " Ha digitado un numero invalido " << endl;
 				break;
 			}
-
-
 		}
-
 		if (op == 4)
 		{
-
-			int pos;
-
+			if (tipo != 2 && tipo != 3) {
+				cout << "ACCESO DENEGADO";
+				_sleep(1000);
+				return;
+			}
 			cout << "Ingrese la posicion que desee Eliminar: "; std::cin >> pos;
 			objArreglo->eliminarPos(pos);
-
 		}
-
-		if (op == 7)
+		if (op == 5) //busqueda francia
+		{
+			if (tipo != 2 && tipo != 3) {
+				cout << "ACCESO DENEGADO";
+				_sleep(1000);
+				return;
+			}
+			cout << "Ingrese la posicion que desee Eliminar: "; std::cin >> pos;
+			objArreglo->eliminarPos(pos);
+		}
+		if (op == 6) //busqueda desayuno
+		{
+			cout << "Ingrese la posicion que desee Eliminar: "; cin >> pos;
+			objArreglo->eliminarPos(pos);
+		}
+		if (op == 7) // visualizacion de ofertas
+		{
+			cout << "Ingrese la posicion que desee Eliminar: "; cin >> pos;
+			objArreglo->eliminarPos(pos);
+		}
+		if (op == 8)
 		{
 			delete objArreglo, objHotel;
 			cout << "Nos vemos pronto!";
 			_sleep(1000);
 			break;
-		}break;
+		}
 	}
 }
 void Mostrar_Creditos() {
@@ -332,7 +330,6 @@ void Mostrar_Creditos() {
 	}
 	GoBack();
 }
-
 void FuncionalidadComent() {
 	arrComent* objArreglo = new arrComent();
 
@@ -344,7 +341,6 @@ void FuncionalidadComent() {
 		break;
 	}
 }
-
 void FuncionalidadReservas() {
 	Catalogo* c = new Catalogo();
 	Reservas* objArreglo = new Reservas();
@@ -373,7 +369,6 @@ void FuncionalidadReservas() {
 		break;
 	}
 }
-
 void Mostrar_Menu() {
 	/* Inicializamos matriz */
 	int** pMenu;
@@ -501,7 +496,6 @@ void Mostrar_Menu() {
 	}
 }
 
-
 int main()
 {
 	setlocale(LC_ALL, "spanish"); 
@@ -519,10 +513,7 @@ int main()
 	delete cuenta;
 	return 0;
 }
-
-
-
-//funcionalidad resrva, mostrar menu y hoteles
+//funcionalidad reserva, hoteles
 //inicio sesion dueño, inicio de sesion admin
 //mostrar ofertas
 
