@@ -13,8 +13,7 @@ short tipo = 0;
 UPC::stack<fp>s;
 auto funcion = &Mostrar_Logo;
 
-// forward declaration
-void Mostrar_Menu();
+
 void FuncionalidadUsuario() {
 	Console::Clear();
 	char opc;
@@ -173,6 +172,7 @@ void FuncionalidadHotel() {
 			if (tipo != 2 && tipo != 3) {
 				cout << "ACCESO DENEGADO";
 				_sleep(1000);
+				return;
 			}
 			fflush(stdin);
 			std::cin.ignore();
@@ -284,11 +284,8 @@ void FuncionalidadHotel() {
 	}
 }
 void Mostrar_Creditos() {
-	/* Inicializamos matriz */
 	int** pCreditos;
 	Iniciar_Arreglos_Creditos(pCreditos);
-
-	/* Limpieza de la consola */
 	Console::Clear();
 
 	for (int i = 0; i < FILAS; i++) {
@@ -299,9 +296,8 @@ void Mostrar_Creditos() {
 			}
 			else if (pCreditos[i][j] == 3) {
 				Console::ForegroundColor = ConsoleColor::White;
-				cout << (char)219;
+				cout << "@";
 			}
-			
 			else if (i == 16) {
 				if (j == 14) cout << "DESARROLLADO POR:        ";
 				else if (j < 27) cout << ' ';
@@ -315,7 +311,11 @@ void Mostrar_Creditos() {
 				else if (j < 27) cout << ' ';
 			}
 			else if (i == 23) {
-				if (j == 14) cout << "x Daniella  Vargas       ";
+				if (j == 14) cout << "x Daniella Vargas        ";
+				else if (j < 27) cout << ' ';
+			}
+			else if (i == 25) {
+				if (j == 14) cout << "x Juliana Yauricasa      ";
 				else if (j < 27) cout << ' ';
 			}
 		
@@ -328,10 +328,8 @@ void Mostrar_Creditos() {
 				cout << ' ';
 			}
 		}
-
 		cout << endl;
 	}
-	// Tecla
 	GoBack();
 }
 
@@ -340,17 +338,9 @@ void FuncionalidadComent() {
 
 	while (true)
 	{
-		int op;
-
-		op = MenuComent();
-		if (op == 1)
-		{
-			NuevoComentario(objArreglo, cuenta);
-		}
-		else if (op == 2)
-		{
-			mostrarComentario(objArreglo);
-		}
+		int op = MenuComent();
+		if (op == 1) NuevoComentario(objArreglo, cuenta);
+		else if (op == 2) mostrarComentario(objArreglo);
 		break;
 	}
 }
@@ -391,7 +381,7 @@ void Mostrar_Menu() {
 	bool mostrarMenu = true;
 	int tecla, x = 20, y = 8;
 
-	while (1) {
+	while (true) {
 
 		if (mostrarMenu) {
 			mostrarMenu = false;
@@ -476,20 +466,20 @@ void Mostrar_Menu() {
 					Console::Clear();
 					int n;
 					string aux;
-					cout << "Ingrese el numero de su seleccion: ";
-					cout << "\n1.Contrasenha";
-					cout << "\n2.Correo";
-					cout << "\n3.Usuario";
+					cout << "Seleccione lo que desee actualizar: ";
+					cout << "\n1.Correo";
+
 					cout << endl;
 					std::cin >> n;
 					switch (n) {
-					case 2:
+					case 1:
 						cout << endl;
 						std::cin.ignore();
-						cout << "Ingrese nuevo correo" << endl;
+						cout << "Ingrese el nuevo correo:" << endl;
 						std::cin >> aux;
 						cuenta->ActualizarCorr(aux, tipo);
 						cout << "Listo!";
+						_sleep(2000);
 					}
 				}
 				if (x == 32) funcion = &FuncionalidadReservas;
@@ -529,3 +519,11 @@ int main()
 	delete cuenta;
 	return 0;
 }
+
+
+
+//funcionalidad resrva, mostrar menu y hoteles
+//inicio sesion dueño, inicio de sesion admin
+//mostrar ofertas
+
+//actualizar datos

@@ -130,7 +130,7 @@ void NuevoComentario(arrComent* arrc, Usuario* u) {
 
 			if (c == 'n') coment = "";
 			else {
-				getline(cin, coment);
+				cin.ignore();
 				getline(cin, coment);
 			}
 
@@ -138,9 +138,11 @@ void NuevoComentario(arrComent* arrc, Usuario* u) {
 			if (nombre == "") nombre = "anonimo";
 			Comentario* ncoment = new Comentario(id, nombre, puntaje, coment);
 			arrc->addComent(ncoment);
+			cout << endl;
 			agregar(puntaje);
 			fstream fout;
 			fout.open(ARCHIVO_COMENT, ios::out | ios::app);
+			cout << endl;
 			fout << ncoment->guardar();
 			fout.close();
 			break;
@@ -160,10 +162,10 @@ int MenuComent() {
 	Console::Clear();
 	int op;
 	do {
-		cout << " Menu de Opciones " << endl;
+		cout << "=======::Menu de Opciones::=======" << endl;
 		cout << "1.- Agregar nuevo Comentario" << endl;
 		cout << "2.- Mostrar Comentarios" << endl;
-		cout << " Ingrese opcion: "; cin >> op;
+		cout << "Ingrese opcion: "; cin >> op;
 	} while (op < 1 || op > 2);
 	return op;
 }
