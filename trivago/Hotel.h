@@ -1,3 +1,4 @@
+#pragma once
 #include <functional>
 class Hotel {
 private:
@@ -148,6 +149,10 @@ public:
 			objHotel->set_precioVIP((float)(stoi(desayuno)));
 
 			Hoteles.insert(objHotel);
+			Hotel* h;
+			for (int i = 0; i < Hoteles.size(); i++) {
+				h = Hoteles[i];
+			}
 		}
 	}
 
@@ -166,7 +171,7 @@ public:
 	int get_size() { return Hoteles.size(); }
 	Hotel* get_pos(int i) { return Hoteles[i]; }
 	void actualizar() {
-		sort(Hoteles.begin(), Hoteles.end(), [](Hotel* hotel1, Hotel* hotel2)
+		shsort(Hoteles, [](Hotel* hotel1, Hotel* hotel2)
 		{
 		if (hotel1->get_ID() != hotel2->get_ID()) return hotel1->get_ID() < hotel2->get_ID(); // IDs incrementandose
 		else hotel2->set_ID(generarID(2, hotel2->get_nombre(), 0)); }); //rehacer id si son iguales
@@ -183,8 +188,11 @@ public:
 	}
 
 	void mostrar() {
-		actualizar();
-		for (int i = 0; i < Hoteles.size(); i++) Hoteles[i]->toString();
+		/*
+		*/
+		for (int i = 0; i < Hoteles.size(); i++) {
+			Hoteles[i]->toString();
+		}
 	}
 
 	Hotel* BuscarHotel(string id) { //esta funcion devuelve un hotel con la id provista, else devuelve NULL

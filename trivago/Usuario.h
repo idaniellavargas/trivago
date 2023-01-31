@@ -430,7 +430,6 @@ public:
 
 };
 
-
 class Administrador : public Usuario {
 private:
 	int credencial;

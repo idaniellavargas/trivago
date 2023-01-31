@@ -1010,8 +1010,12 @@ namespace UPC {
 		if (is_sorted) { //1
 			bool ok = false;  //2
 			T* aux = new T[len + 1]; //1
-			for (int i = 0; i < len + 1; i++) { //n + 2
-				if (len == 0 || (!ok && !comp(vec[i], data))) { //bc: 1 | wc: 4
+			for (int i = 0; i <= len; i++) { //n + 2
+				if (i > len - 1 && !ok) {
+					aux[i] = data;
+					break;
+				}
+				else if (len == 0 || (!ok && !comp(vec[i], data))) { //bc: 1 | wc: 4
 					ok = true; //1
 					aux[i] = data; //1
 				}

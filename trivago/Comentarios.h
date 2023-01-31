@@ -54,12 +54,12 @@ public:
 		char delimitador = ',';
 		while (getline(archivo, linea))
 		{
-			if (linea == "") continue;
 			stringstream stream(linea); // Convertir la cadena a un stream
 			string ID, usuario, coment, p;
 			short puntaje;
 			// Extraer todos los valores de esa fila con getline
 			getline(stream, ID, delimitador);
+			if (ID == "") continue;
 			getline(stream, usuario, delimitador);
 			getline(stream, p, delimitador);
 			puntaje = stoi(p);
