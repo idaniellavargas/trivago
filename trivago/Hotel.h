@@ -194,7 +194,16 @@ public:
 			Hoteles[i]->toString();
 		}
 	}
-
+	void HotelesPeruanos() {
+		for (int i = 0; i < Hoteles.size(); i++) {
+			if(Hoteles[i]->get_ubicacion()==" Peru")Hoteles[i]->toString();
+		}
+	}
+	void HotelesDesayuno() {
+		for (int i = 0; i < Hoteles.size(); i++) {
+			if (Hoteles[i]->get_desayuno() == true)Hoteles[i]->toString();
+		}
+	}
 	Hotel* BuscarHotel(string id) { //esta funcion devuelve un hotel con la id provista, else devuelve NULL
 		for (auto h : Hoteles) {
 			if (h->get_ID() == id) return h;

@@ -45,7 +45,7 @@ public:
 		while (getline(archivo, linea))
 		{
 			if (linea == "") continue;
-			stringstream stream(linea); 
+			stringstream stream(linea);
 			string validez, mensaje, monto;
 			getline(stream, validez, delimitador);
 			getline(stream, mensaje, delimitador);
@@ -65,11 +65,13 @@ public:
 	void addOferta(Oferta* o) {
 		ofertas.push_front(o);
 	}
-};
 
-function<void(string)> agregar{
-		[](string mensaje) { if (mensaje != "")cout << "\nRegistro de oferta exitoso"; }
-};
+
+	function<void(string)> agregar{
+			[](string mensaje) { if (mensaje != "")cout << "\nRegistro de oferta exitoso"; }
+	};
+
+
 void NuevaOferta(Ofertas* ofertas) {
 	string mensaje;
 	float monto;
@@ -128,5 +130,5 @@ int MenuOfertasAll() {
 	} while (op < 1 || op > 2);
 	return op;
 }
-
+};
 

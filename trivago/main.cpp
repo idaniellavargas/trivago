@@ -1,6 +1,7 @@
 #include "Recursos.h"
 #include "Comentarios.h"
 #include "Usuario.h"
+#include "Ofertas.h"
 using namespace std;
 
 typedef void (*fp)();
@@ -252,25 +253,29 @@ void FuncionalidadHotel() {
 			cout << "Ingrese la posicion que desee Eliminar: "; std::cin >> pos;
 			objArreglo->eliminarPos(pos);
 		}
-		if (op == 5) //busqueda francia
+		if (op == 5) 
 		{
-			if (tipo != 2 && tipo != 3) {
-				cout << "ACCESO DENEGADO";
-				_sleep(1000);
-				return;
-			}
-			cout << "Ingrese la posicion que desee Eliminar: "; std::cin >> pos;
-			objArreglo->eliminarPos(pos);
+			objArreglo->HotelesPeruanos();
+			GoBack();
+			break;
+
 		}
-		if (op == 6) //busqueda desayuno
+		if (op == 6)
 		{
-			cout << "Ingrese la posicion que desee Eliminar: "; cin >> pos;
-			objArreglo->eliminarPos(pos);
+			objArreglo->HotelesDesayuno();
+			GoBack();
+			break;
 		}
-		if (op == 7) // visualizacion de ofertas
+		if (op == 7) 
 		{
-			cout << "Ingrese la posicion que desee Eliminar: "; cin >> pos;
-			objArreglo->eliminarPos(pos);
+			int choice;
+			Ofertas* ofertas=new Ofertas();
+			if (tipo == 1)choice = ofertas->MenuOfertasAll();
+			else choice = ofertas->MenuOfertas();
+			if (choice == 1)ofertas->toString();
+			else if (choice == 2)ofertas->NuevaOferta(ofertas);
+			GoBack();
+			break;
 		}
 		if (op == 8)
 		{
@@ -513,8 +518,6 @@ int main()
 	delete cuenta;
 	return 0;
 }
-//funcionalidad reserva, hoteles
+//funcionalidad reserva ofertas
 //inicio sesion dueño, inicio de sesion admin
-//mostrar ofertas
-
 //actualizar datos

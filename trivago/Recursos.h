@@ -29,7 +29,7 @@ short MenuHotel() {
 		cout << "2.- Mostrar Registro de Hoteles " << endl; //monedas
 		cout << "3.- Modificar un Registro de Hotel " << endl; //ubicacion
 		cout << "4.- Eliminar Un Registro de Hotel " << endl; //
-		cout << "5.- Reporte de ubicacion de en Francia" << endl;
+		cout << "5.- Reporte de ubicacion de en Peru" << endl;
 		cout << "6.- Reporte de hoteles con desayuno" << endl;
 		cout << "7.- Ver ofertas disponibles" << endl;
 		cout << "8.- Salir " << endl;
