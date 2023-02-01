@@ -23,7 +23,7 @@ void FuncionalidadUsuario() {
 	Administradores* arrAdmin;
 	Dueños* arrHotel;
 	Usuario* temp = NULL;
-	int id;
+	string id;
 
 	do
 	{

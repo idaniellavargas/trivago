@@ -648,17 +648,17 @@ public:
 
 class Administrador : public Usuario {
 private:
-	int credencial;
+	string credencial;
 	bool permisoCatalogo;
 public:
 	Administrador() {
 		nombre = "";
 		correo = "";
 		contrasena = "";
-		credencial = 0;
+		credencial = "";
 		permisoCatalogo = false;
 	}
-	Administrador(string nombre, string correo, string contrasena, int credencial, bool permisoCatalogo) {
+	Administrador(string nombre, string correo, string contrasena, string credencial, bool permisoCatalogo) {
 		this->nombre = nombre;
 		this->correo = correo;
 		this->contrasena = contrasena;
@@ -666,11 +666,11 @@ public:
 		this->permisoCatalogo = permisoCatalogo;
 	}
 
-	int get_credencial() { return credencial; }
+	string get_credencial() { return credencial; }
 	bool actualizarCatalogo() { return permisoCatalogo; }
 
 	string guardar() {
-		return "\n" + nombre + "," + correo + "," + contrasena + "," + to_string(credencial) + "," + to_string(permisoCatalogo);
+		return "\n" + nombre + "," + correo + "," + contrasena + "," + credencial + "," + to_string(permisoCatalogo);
 	}
 
 	bool operator<(const Administrador& rhs) {
@@ -700,7 +700,7 @@ public:
 			getline(stream, credencial, delimitador);
 			getline(stream, permisoCatalogo, delimitador);
 
-			Administrador* admin = new Administrador(nombre, correo, contrasena, stoi(credencial),(bool)(stoi(permisoCatalogo)));
+			Administrador* admin = new Administrador(nombre, correo, contrasena, credencial,(bool)(stoi(permisoCatalogo)));
 			admins.insert(admin);
 		}
 	}
@@ -721,7 +721,7 @@ public:
 	Administrador* get_pos(int i) { return admins[i]; }
 
 
-	Administrador* BuscarAdmin(int credencial) { 
+	Administrador* BuscarAdmin(string credencial) { 
 		for (auto a : admins) {
 			if (a->get_credencial() == credencial) return a;
 		}

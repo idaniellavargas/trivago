@@ -8,9 +8,9 @@ class Oferta {
 private:
 	string validez;
 	string mensaje;
-	float monto;
+	string monto;
 public:
-	Oferta(string validez, string mensaje, float monto) {
+	Oferta(string validez, string mensaje, string monto) {
 		this->validez = validez;
 		this->mensaje = mensaje;
 		this->monto = monto;
@@ -29,7 +29,7 @@ public:
 	string guardar() {
 		save(mensaje);
 		_sleep(2000);
-		return validez + "," + mensaje + "," + to_string(monto) + "\n";
+		return validez + "," + mensaje + "," + monto + "\n";
 	}
 
 };
@@ -50,7 +50,7 @@ public:
 			getline(stream, validez, delimitador);
 			getline(stream, mensaje, delimitador);
 			getline(stream, monto, delimitador);
-			Oferta* aux = new Oferta(validez, mensaje, stof(monto));
+			Oferta* aux = new Oferta(validez, mensaje, monto);
 			ofertas.push_front(aux);
 		}
 		shuffle(ofertas);
@@ -74,7 +74,7 @@ public:
 
 void NuevaOferta(Ofertas* ofertas) {
 	string mensaje;
-	float monto;
+	string monto;
 
 	Console::Clear();
 	while (1) {
