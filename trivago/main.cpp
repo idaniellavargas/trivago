@@ -349,28 +349,58 @@ void FuncionalidadReservas() {
 	Catalogo* c = new Catalogo();
 	Reservas* objArreglo = new Reservas();
 	
-	while (true)
-	{
-		Console::Clear();
-		int op;
+	if (tipo == 1) {
+		while (true)
+		{
+			Console::Clear();
+			int op;
 
-		op = MenuReservas();
-		if (op == 1)
+			op = MenuReservas();
+			if (op == 1)
+			{
+				cliente->reservarHotel(c, objArreglo, cliente);
+			}
+			else if (op == 2)
+			{
+				objArreglo->visualizarReservas(cliente->getcorreo());
+			}
+			else if (op == 3)
+			{
+				cliente->cancelarReserva(objArreglo);
+			}
+			else if (op == 4) {
+				cliente->cambiarfecha(objArreglo);
+			}
+			break;
+		}
+	}
+	if (tipo == 3) {
+		Console::Clear();
+
+		while (true)
 		{
-			cliente->reservarHotel(c, objArreglo, cliente);
+			int op;
+			do {
+				cout << " Menú de Opciones " << endl;
+				cout << "1.- Visualizar lista de espera" << endl;
+				cout << "2. Aceptar reserva" << endl;
+				cout << "3. Rechazar reserva" << endl;
+				cout << " Ingrese opcion: "; cin >> op;
+			} while (op < 1 || op > 4);
+			if (op == 1)
+			{
+				dueño->visualizarWaitingList();
+			}
+			if (op == 2)
+			{
+				dueño->aceptarReserva(dueño);
+			}
+			if (op == 3)
+			{
+				dueño->rechazarReserva(dueño);
+			}
+			break;
 		}
-		else if (op == 2)
-		{
-			objArreglo->visualizarReservas(cliente->getcorreo());
-		}
-		else if (op == 3)
-		{
-			cliente->cancelarReserva(objArreglo);
-		}
-		else if(op==4){
-			cliente->cambiarfecha(objArreglo);
-		}
-		break;
 	}
 }
 void Mostrar_Menu() {

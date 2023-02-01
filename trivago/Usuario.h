@@ -589,14 +589,20 @@ public:
 		}
 		return l;
 	}
+
 	UPC::queue<Reserva*> BuscarWaitingList(string hotel) {
 		UPC::queue<Reserva*>q;
-
+		string ID;
+		ID = hotel.substr(0, 3);
+		for (auto& c : ID) {
+			c = toupper(c);
+		}
 		for (auto r : reservas) {
-			if (r->get_idHotel() == hotel)q.push(r);
+			if (r->get_idHotel() == ID)q.push(r);
 		}
 		return q;
 	}
+
 	void delete_record(int o)
 	{
 		fstream fin, fout;
@@ -731,7 +737,7 @@ public:
 };
 
 class DueñoHotelero : public Usuario {
-private:
+public:
 	int ganancias;
 	UPC::queue<Reserva*>waitingList;
 	string hotel;
@@ -750,14 +756,14 @@ public:
 	void set_ganancias(int ganancias) { this->ganancias = ganancias; }
 	void sumarGanancias(int monto) { this->ganancias += monto; }
 	void restarGanancias(int monto) { this->ganancias -= monto; }
-	void aceptarReserva() {
-		waitingList.front()->set_estado("Aceptada");
-		waitingList.pop();
+	void aceptarReserva(DueñoHotelero*d) {
+		d->waitingList.front()->set_estado("Aceptada");
+		d->waitingList.pop();
 	}
-	void rechazarReserva() {
-		waitingList.front()->set_estado("Rechazada");
-		restarGanancias(waitingList.front()->get_monto());
-		waitingList.pop();
+	void rechazarReserva(DueñoHotelero* d) {
+		d->waitingList.front()->set_estado("Rechazada");
+		d->restarGanancias(waitingList.front()->get_monto());
+		d->waitingList.pop();
 	}
 
 	void visualizarWaitingList() {
@@ -767,6 +773,7 @@ public:
 			cout << endl;
 			q.pop();
 		}
+		GoBack();
 	}
 
 	bool actualizarServicios() { return true; }
