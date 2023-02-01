@@ -45,7 +45,7 @@ private:
 	vector<Comentario*> arrc;
 public:
 	arrComent() {
-		arrc.setComp([](Comentario* a, Comentario* b) {return a < b; });
+		arrc.setComp([](Comentario* a, Comentario* b) {return *a < *b; });
 		ifstream archivo(ARCHIVO_COMENT);
 		string linea;
 		char delimitador = ',';

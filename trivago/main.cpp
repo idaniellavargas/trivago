@@ -337,14 +337,13 @@ void Mostrar_Creditos() {
 }
 void FuncionalidadComent() {
 	arrComent* objArreglo = new arrComent();
-
-	while (true)
+	int op;
+	do
 	{
-		int op = MenuComent();
+		op = MenuComent();
 		if (op == 1) NuevoComentario(objArreglo, cuenta);
 		else if (op == 2) mostrarComentario(objArreglo);
-		break;
-	}
+	} while (op != 1 && op != 2);
 }
 void FuncionalidadReservas() {
 	Catalogo* c = new Catalogo();
@@ -363,7 +362,6 @@ void FuncionalidadReservas() {
 		else if (op == 2)
 		{
 			objArreglo->visualizarReservas(cliente->getcorreo());
-			_getch();
 		}
 		else if (op == 3)
 		{
@@ -470,7 +468,7 @@ void Mostrar_Menu() {
 					cout << "Seleccione lo que desee actualizar: ";
 					cout << "\n1. Correo";
 					cout << "\n2. Contraseña";
-					cout << "\n3. Usuario";
+					cout << "\n3. Usuario\n\n";
 					std::cin >> n;
 					switch (n) {
 					case 1:
