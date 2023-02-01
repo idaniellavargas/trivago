@@ -42,7 +42,7 @@ void FuncionalidadUsuario() {
 	if (opc == 'R')
 	{
 		do {
-			cout << "¿Desea registrarse como cliente(1), dueño hotelero(2), o administrador(3)?" << endl;
+			cout << "¿Desea registrarse como cliente(1), administrado(2), o dueño hotelero(3)?" << endl;
 			std::cin >> tipo;
 		} while (tipo > 3 || tipo < 0);
 
@@ -50,11 +50,11 @@ void FuncionalidadUsuario() {
 		cout << "---------Registrarse---------" << endl;
 		cout << "Nombre: ";
 		std::cin >> nom;
-		if (tipo == 3) {
+		if (tipo == 2) {
 			cout << "ID: ";
 			cin >> id;
 		}
-		else if (tipo == 2) {
+		else if (tipo == 3) {
 			cout << "Hotel: ";
 			cin >> hot;
 		}
@@ -70,7 +70,7 @@ void FuncionalidadUsuario() {
 			fout << cuenta->guardar();
 			fout.close();
 		}
-		else if (tipo == 3) {
+		else if (tipo == 2) {
 			cuenta = new Administrador(nom, cor, con, id, true);
 			ofstream fout;
 			fout.open(ARCHIVO_ADMINS, ios::out | ios::app);
@@ -98,10 +98,10 @@ void FuncionalidadUsuario() {
 		case 1:
 			arrCliente = new Clientela();
 			break;
-		case 3:
+		case 2:
 			arrAdmin = new Administradores();
 			break;
-		case 2:
+		case 3:
 			arrHotel = new Dueños();
 			break;
 		}
@@ -114,13 +114,13 @@ void FuncionalidadUsuario() {
 				temp = arrCliente->BuscarCliente(cor);
 				cliente = arrCliente->BuscarCliente(cor);
 				break;
-			case 3:
+			case 2:
 				cout << "ID: ";
 				cin >> id;
 				temp = arrAdmin->BuscarAdmin(id);
 				admin = arrAdmin->BuscarAdmin(id);
 				break;
-			case 2:
+			case 3:
 				cout << "Hotel: ";
 				cin >> hot;
 				temp = arrHotel->BuscarDueño(hot);
@@ -198,7 +198,7 @@ void FuncionalidadHotel() {
 			fstream fout;
 			fout.open(ARCHIVO_HOTELES, ios::out | ios::app);
 			
-			fout << objArreglo->get_pos(objArreglo->get_size() - 1)->get_nombre() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_ID() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_ubicacion() << ", "<< objArreglo->get_pos(objArreglo->get_size() - 1)->get_moneda() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_huespedes() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_habitaciones() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_telefono() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_wifi() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_piscina() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_spa() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_parking() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_mascotas() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_desayuno() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_precio() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_precioVIP() << "\n";
+			fout << objArreglo->get_pos(objArreglo->get_size() - 1)->get_nombre() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_ID() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_ubicacion() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_moneda() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_huespedes() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_habitaciones() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_telefono() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_wifi() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_piscina() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_spa() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_parking() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_mascotas() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_desayuno() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_precio() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_precioVIP() << "\n";
 			fout.close();
 			Console::Clear();
 			MenuHotel();
@@ -363,6 +363,7 @@ void FuncionalidadReservas() {
 		else if (op == 2)
 		{
 			objArreglo->visualizarReservas(cliente->getcorreo());
+			_getch();
 		}
 		else if (op == 3)
 		{

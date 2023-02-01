@@ -201,6 +201,7 @@ namespace UPC {
 
 		list() {
 			ini = nullptr;
+			back = nullptr;
 			len = 0;
 			is_sorted = true;
 			comp = [](T& a, T& b) { return a < b; };
@@ -227,7 +228,7 @@ namespace UPC {
 				ini = nullptr;
 			}
 			else {
-				ini = copyList(nl.ini);
+				if (nl.ini != nullptr) ini = copyList(nl.ini);
 			}
 		}
 
@@ -534,6 +535,7 @@ namespace UPC {
 
 		queue() {
 			Front = nullptr;
+			Back = nullptr;
 			len = 0;
 		}
 		~queue() {

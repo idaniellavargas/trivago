@@ -17,7 +17,7 @@ public:
 		this->contrasena = contrasena;
 	}
 	~Usuario() {}
-	
+
 	function<void(string)> agendacionExitosa{
 		[](string id) { if (id != "")cout << "\nAgendacion exitosa"; }
 	};
@@ -258,7 +258,7 @@ public:
 		string linea;
 		ifstream larchivo1;
 
-		if (numArch==1)
+		if (numArch == 1)
 		{
 			ifstream larchivo1(ARCHIVO_CLIENTES);
 			getline(larchivo1, linea);
@@ -277,7 +277,7 @@ public:
 			}
 			larchivo1.close();
 		}
-		else if (numArch==3)
+		else if (numArch == 3)
 		{
 			ifstream larchivo1(ARCHIVO_ADMINS);
 			getline(larchivo1, linea);
@@ -335,15 +335,15 @@ public:
 
 		ofstream archivo;
 		archivo.open("archivo2.csv", ios::out);
-		
+
 		archivo << endl;
-		
+
 		for (int i = 0; i < l.size(); i += 5)
 		{
-			
+
 			//cout << l[i] << "===" << l[i + 1] << "====" << l[i + 2] << "====" << l[i + 3] << "====" << l[i + 4] << endl;
 			archivo << l[i] << "," << l[i + 1] << "," << l[i + 2] << "," << l[i + 3] << "," << l[i + 4] << endl;
-			
+
 		}
 		archivo.close();
 		if (numArch == 1)
@@ -422,7 +422,7 @@ public:
 	void set_mascotas(bool d) { mascotas = d; }
 	void set_correo(string d) { correo = d; }
 	void set_fecha(string d) { fecha = d; }
-	
+
 
 	Reserva(string titular, Hotel* h, string f, bool VIP, string correo) {
 		this->hotel = h;
@@ -446,10 +446,10 @@ public:
 	string guardar() {
 		save(correo);
 		_sleep(2000);
-		return fecha + "," + hotel->get_ID() + "," + titular + "," + correo + "," + estado + "," + moneda + ","
-			+ to_string(huespedes) + "," + to_string(habitacion) + ","  + to_string(wifi)+
-			","+to_string(piscina)+","+to_string(spa) + "," + to_string(parking) + "," + to_string(mascotas) +
-			"," + to_string(desayuno) + "," + to_string(monto) + "\n";
+		return "\n" + fecha + "," + hotel->get_ID() + "," + titular + "," + correo + "," + estado + "," + moneda + ","
+			+ to_string(huespedes) + "," + to_string(habitacion) + "," + to_string(wifi) +
+			"," + to_string(piscina) + "," + to_string(spa) + "," + to_string(parking) + "," + to_string(mascotas) +
+			"," + to_string(desayuno) + "," + to_string(monto);
 	}
 	void toString() {
 		cout << "\n::===========================::";
@@ -466,7 +466,7 @@ public:
 		cout << "\nMascotas: "; (mascotas) ? cout << "Si" : cout << "No";
 		cout << "\nDesayuno: "; (desayuno) ? cout << "Si" : cout << "No";
 		cout << "\nMonto a pagar: " << monto;
-		cout<< "\nEstado: " << estado;
+		cout << "\nEstado: " << estado;
 		cout << endl;
 	}
 
@@ -503,6 +503,7 @@ public:
 
 			// Extraer todos los valores de esa fila con getline
 			getline(stream, fecha, delimitador);
+			if (fecha == "") continue;
 			getline(stream, ID, delimitador);
 			getline(stream, titular, delimitador);
 			getline(stream, correo, delimitador);
@@ -575,12 +576,12 @@ public:
 	void visualizarReservas(string correo) {
 		for (int i = 0; i < reservas.size(); i++) {
 			if (reservas[i]->get_correo() == correo)
-			reservas[i]->toString();
+				reservas[i]->toString();
 		}
 		GoBack();
 	}
 
-	UPC::list<Reserva*> BuscarReservaTitular(string nombre) { 
+	UPC::list<Reserva*> BuscarReservaTitular(string nombre) {
 		UPC::list<Reserva*>l;
 
 		for (Reserva** h = reservas.begin(); h != reservas.end(); h++) {
@@ -588,7 +589,7 @@ public:
 		}
 		return l;
 	}
-	UPC::queue<Reserva*>& BuscarWaitingList(string hotel) { 
+	UPC::queue<Reserva*> BuscarWaitingList(string hotel) {
 		UPC::queue<Reserva*>q;
 
 		for (auto r : reservas) {
@@ -643,7 +644,7 @@ public:
 		rename("reservasnew.csv", ARCHIVO_RESERVAS);
 	}
 
-	
+
 };
 
 class Administrador : public Usuario {
@@ -700,7 +701,7 @@ public:
 			getline(stream, credencial, delimitador);
 			getline(stream, permisoCatalogo, delimitador);
 
-			Administrador* admin = new Administrador(nombre, correo, contrasena, credencial,(bool)(stoi(permisoCatalogo)));
+			Administrador* admin = new Administrador(nombre, correo, contrasena, credencial, (bool)(stoi(permisoCatalogo)));
 			admins.insert(admin);
 		}
 	}
@@ -721,7 +722,7 @@ public:
 	Administrador* get_pos(int i) { return admins[i]; }
 
 
-	Administrador* BuscarAdmin(string credencial) { 
+	Administrador* BuscarAdmin(string credencial) {
 		for (auto a : admins) {
 			if (a->get_credencial() == credencial) return a;
 		}
@@ -812,7 +813,7 @@ public:
 
 	void agregarDueño(DueñoHotelero* duenho) {
 		dueños.insert(duenho);
-		
+
 		agregar(duenho->getcorreo());
 	}
 	void eliminarPos(int pos) {
@@ -831,10 +832,12 @@ public:
 	}
 
 	void pagar(string hotel, float monto) {
-		BuscarDueño(hotel)->sumarGanancias(monto);
+		DueñoHotelero* x = BuscarDueño(hotel);
+		if (x != NULL) x->sumarGanancias(monto);
 	}
 	void quitar(string hotel, float monto) {
-		BuscarDueño(hotel)->restarGanancias(monto);
+		DueñoHotelero* d = BuscarDueño(hotel);
+		if (d != NULL) d->restarGanancias(monto);
 	}
 };
 
@@ -859,7 +862,7 @@ public:
 	void agregarReserva(Reserva* reserva) {
 		reservas.push_front(reserva);
 	}
-	void reservarHotel(Catalogo* lista, Reservas* re, Cliente*c) {
+	void reservarHotel(Catalogo* lista, Reservas* re, Cliente* c) {
 		Hotel* h = new Hotel();
 		string id;
 		cout << "Ingrese el dia el mes y el año para la reserva" << endl;
@@ -871,7 +874,7 @@ public:
 			std::cin >> id;
 			std::transform(id.begin(), id.end(), id.begin(), std::toupper);
 			h = lista->BuscarHotel(id);
-			if(h != nullptr) cout << "Usted ha elegido: Hotel" << h->get_nombre() << endl;
+			if (h != nullptr) cout << "Usted ha elegido: Hotel" << h->get_nombre() << endl;
 		} while (h == nullptr);
 		//cout<<h->get_ID();
 		cout << "Usted tiene:" << c->get_cartera() << endl;
@@ -900,12 +903,12 @@ public:
 
 			//agendacionExitosa(id);
 			re->agregarReserva(reserva);
-			cout << "Reserva agregada al vector" << endl;
+			cout << "\n\nReserva agregada al vector" << endl;
 			fstream fout;
 			fout.open(ARCHIVO_RESERVAS, ios::out | ios::app);
 			fout << reserva->guardar();
 			fout.close();
-			cout << "Archivo creado" << endl;
+			cout << "\n\nArchivo creado" << endl;
 			c->restarCartera(costo);
 			Dueños* d = new Dueños();
 			d->pagar(h->get_ID(), costo);
@@ -949,7 +952,7 @@ public:
 			pos = r->buscar(p);
 			r->eliminarPos(pos);
 			r->delete_record(pos);
-			
+
 		}
 	}
 	// postergar reserva
