@@ -50,11 +50,11 @@ void FuncionalidadUsuario() {
 		cout << "---------Registrarse---------" << endl;
 		cout << "Nombre: ";
 		std::cin >> nom;
-		if (tipo == 2) {
+		if (tipo == 3) {
 			cout << "ID: ";
 			cin >> id;
 		}
-		else if (tipo == 3) {
+		else if (tipo == 2) {
 			cout << "Hotel: ";
 			cin >> hot;
 		}
@@ -64,13 +64,13 @@ void FuncionalidadUsuario() {
 		std::cin >> con;
 		if(cuenta != NULL) delete cuenta;
 		if (tipo == 1) {
-			cuenta = new Cliente(nom, cor, con, 0); //Registramos al usuario
+			cuenta = new Cliente(nom, cor, con, 10000); //Registramos al usuario
 			ofstream fout;
 			fout.open(ARCHIVO_CLIENTES, ios::out | ios::app);
 			fout << cuenta->guardar();
 			fout.close();
 		}
-		else if (tipo == 2) {
+		else if (tipo == 3) {
 			cuenta = new Administrador(nom, cor, con, id, true);
 			ofstream fout;
 			fout.open(ARCHIVO_ADMINS, ios::out | ios::app);
@@ -98,10 +98,10 @@ void FuncionalidadUsuario() {
 		case 1:
 			arrCliente = new Clientela();
 			break;
-		case 2:
+		case 3:
 			arrAdmin = new Administradores();
 			break;
-		case 3:
+		case 2:
 			arrHotel = new Dueños();
 			break;
 		}
@@ -114,13 +114,13 @@ void FuncionalidadUsuario() {
 				temp = arrCliente->BuscarCliente(cor);
 				cliente = arrCliente->BuscarCliente(cor);
 				break;
-			case 2:
+			case 3:
 				cout << "ID: ";
 				cin >> id;
 				temp = arrAdmin->BuscarAdmin(id);
 				admin = arrAdmin->BuscarAdmin(id);
 				break;
-			case 3:
+			case 2:
 				cout << "Hotel: ";
 				cin >> hot;
 				temp = arrHotel->BuscarDueño(hot);
