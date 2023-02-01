@@ -38,7 +38,217 @@ public:
 	string getcorreo() {
 		return correo;
 	}
+	void ActualizarUsuario(string usua, short numArch) {
+		int opc;
+		vector<string> l;
+		string nomb, corrv, cont, vr1, vr2;
+		string nombreArch;
+		char delimitador = ',';
+		string linea;
+		ifstream larchivo1;
 
+		if (numArch == 1)
+		{
+			ifstream larchivo1(ARCHIVO_CLIENTES);
+			getline(larchivo1, linea);
+			while (getline(larchivo1, linea)) {
+				stringstream stream(linea);
+				getline(stream, nomb, delimitador);
+				getline(stream, corrv, delimitador);
+				getline(stream, cont, delimitador);
+				getline(stream, vr1, delimitador);
+				getline(stream, vr2, delimitador);
+				l.push_back(nomb);
+				l.push_back(corrv);
+				l.push_back(cont);
+				l.push_back(vr1);
+				l.push_back(vr2);
+			}
+			larchivo1.close();
+		}
+		else if (numArch == 2)
+		{
+			ifstream larchivo1(ARCHIVO_ADMINS);
+			getline(larchivo1, linea);
+			while (getline(larchivo1, linea)) {
+				stringstream stream(linea);
+				getline(stream, nomb, delimitador);
+				getline(stream, corrv, delimitador);
+				getline(stream, cont, delimitador);
+				getline(stream, vr1, delimitador);
+				getline(stream, vr2, delimitador);
+				l.push_back(nomb);
+				l.push_back(corrv);
+				l.push_back(cont);
+				l.push_back(vr1);
+				l.push_back(vr2);
+			}
+			larchivo1.close();
+		}
+		else
+		{
+			ifstream larchivo1(ARCHIVO_DUEÑOS);
+			getline(larchivo1, linea);
+			while (getline(larchivo1, linea)) {
+				stringstream stream(linea);
+				getline(stream, nomb, delimitador);
+				getline(stream, corrv, delimitador);
+				getline(stream, cont, delimitador);
+				getline(stream, vr1, delimitador);
+				getline(stream, vr2, delimitador);
+				l.push_back(nomb);
+				l.push_back(corrv);
+				l.push_back(cont);
+				l.push_back(vr1);
+				l.push_back(vr2);
+			}
+			larchivo1.close();
+		}
+
+		for (int i = 1; i < l.size(); i += 5)
+		{
+			if (l[i] == this->correo)
+			{
+				l[i - 1] = usua;
+				this->nombre = usua;
+				break;
+			}
+		}
+
+		ofstream archivo;
+		archivo.open("archivo2.csv", ios::out);
+
+		archivo << endl;
+
+		for (int i = 0; i < l.size(); i += 5)
+		{
+
+			//cout << l[i] << "===" << l[i + 1] << "====" << l[i + 2] << "====" << l[i + 3] << "====" << l[i + 4] << endl;
+			archivo << l[i] << "," << l[i + 1] << "," << l[i + 2] << "," << l[i + 3] << "," << l[i + 4] << endl;
+
+		}
+		archivo.close();
+		if (numArch == 1)
+		{
+			remove(ARCHIVO_CLIENTES);
+			rename("archivo2.csv", ARCHIVO_CLIENTES);
+		}
+		else if (numArch == 2)
+		{
+			remove(ARCHIVO_ADMINS);
+			rename("archivo2.csv", ARCHIVO_ADMINS);
+		}
+		else
+		{
+			remove(ARCHIVO_DUEÑOS);
+			rename("archivo2.csv", ARCHIVO_DUEÑOS);
+		}
+	}
+
+	void ActualizarContra(string contra, short numArch) {
+		int opc;
+		vector<string> l;
+		string nomb, corrv, cont, vr1, vr2;
+		string nombreArch;
+		char delimitador = ',';
+		string linea;
+		ifstream larchivo1;
+
+		if (numArch == 1)
+		{
+			ifstream larchivo1(ARCHIVO_CLIENTES);
+			getline(larchivo1, linea);
+			while (getline(larchivo1, linea)) {
+				stringstream stream(linea);
+				getline(stream, nomb, delimitador);
+				getline(stream, corrv, delimitador);
+				getline(stream, cont, delimitador);
+				getline(stream, vr1, delimitador);
+				getline(stream, vr2, delimitador);
+				l.push_back(nomb);
+				l.push_back(corrv);
+				l.push_back(cont);
+				l.push_back(vr1);
+				l.push_back(vr2);
+			}
+			larchivo1.close();
+		}
+		else if (numArch == 2)
+		{
+			ifstream larchivo1(ARCHIVO_ADMINS);
+			getline(larchivo1, linea);
+			while (getline(larchivo1, linea)) {
+				stringstream stream(linea);
+				getline(stream, nomb, delimitador);
+				getline(stream, corrv, delimitador);
+				getline(stream, cont, delimitador);
+				getline(stream, vr1, delimitador);
+				getline(stream, vr2, delimitador);
+				l.push_back(nomb);
+				l.push_back(corrv);
+				l.push_back(cont);
+				l.push_back(vr1);
+				l.push_back(vr2);
+			}
+			larchivo1.close();
+		}
+		else
+		{
+			ifstream larchivo1(ARCHIVO_DUEÑOS);
+			getline(larchivo1, linea);
+			while (getline(larchivo1, linea)) {
+				stringstream stream(linea);
+				getline(stream, nomb, delimitador);
+				getline(stream, corrv, delimitador);
+				getline(stream, cont, delimitador);
+				getline(stream, vr1, delimitador);
+				getline(stream, vr2, delimitador);
+				l.push_back(nomb);
+				l.push_back(corrv);
+				l.push_back(cont);
+				l.push_back(vr1);
+				l.push_back(vr2);
+			}
+			larchivo1.close();
+		}
+
+		for (int i = 1; i < l.size(); i += 5)
+		{
+			if (l[i] == this->correo)
+			{
+				l[i + 1] = contra;
+				this->contrasena = contra;
+				break;
+			}
+		}
+
+		ofstream archivo;
+		archivo.open("archivo2.csv", ios::out);
+
+		archivo << endl;
+
+		for (int i = 0; i < l.size(); i += 5)
+		{
+			archivo << l[i] << "," << l[i + 1] << "," << l[i + 2] << "," << l[i + 3] << "," << l[i + 4] << endl;
+
+		}
+		archivo.close();
+		if (numArch == 1)
+		{
+			remove(ARCHIVO_CLIENTES);
+			rename("archivo2.csv", ARCHIVO_CLIENTES);
+		}
+		else if (numArch == 2)
+		{
+			remove(ARCHIVO_ADMINS);
+			rename("archivo2.csv", ARCHIVO_ADMINS);
+		}
+		else
+		{
+			remove(ARCHIVO_DUEÑOS);
+			rename("archivo2.csv", ARCHIVO_DUEÑOS);
+		}
+	}
 	void ActualizarCorr(string corr, short numArch) {
 		int opc;
 		vector<string> l;
@@ -367,7 +577,7 @@ public:
 			if (reservas[i]->get_correo() == correo)
 			reservas[i]->toString();
 		}
-
+		GoBack();
 	}
 
 	UPC::list<Reserva*> BuscarReservaTitular(string nombre) { 

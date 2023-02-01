@@ -467,9 +467,9 @@ void Mostrar_Menu() {
 					int n;
 					string aux;
 					cout << "Seleccione lo que desee actualizar: ";
-					cout << "\n1.Correo";
-
-					cout << endl;
+					cout << "\n1. Correo";
+					cout << "\n2. Contraseña";
+					cout << "\n3. Usuario";
 					std::cin >> n;
 					switch (n) {
 					case 1:
@@ -480,6 +480,25 @@ void Mostrar_Menu() {
 						cuenta->ActualizarCorr(aux, tipo);
 						cout << "Listo!";
 						_sleep(2000);
+						break;
+					case 2:
+						cout << endl;
+						cin.ignore();
+						cout << "Ingrese la nueva contraseña:" << endl;
+						cin >> aux;
+						cuenta->ActualizarContra(aux, tipo);
+						cout << "Listo!";
+						_sleep(2000);
+						break;
+					case 3:
+						cout << endl;
+						std::cin.ignore();
+						cout << "Ingrese el nuevo nombre de usuario:" << endl;
+						std::cin >> aux;
+						cuenta->ActualizarUsuario(aux, tipo);
+						cout << "Listo!";
+						_sleep(2000);
+						break;
 					}
 				}
 				if (x == 32) funcion = &FuncionalidadReservas;
