@@ -379,7 +379,7 @@ private:
 	string fecha;
 	Hotel* hotel;
 	string titular, correo, estado, moneda;
-	short huespedes, habitacion;
+	int huespedes, habitacion;
 	bool wifi, piscina, spa, parking, mascotas, desayuno, VIP;
 	float monto;
 public:
@@ -397,8 +397,8 @@ public:
 	string get_correo() { return correo; }
 	string get_estado() { return estado; }
 	string get_moneda() { return moneda; }
-	short get_huespedes() { return huespedes; }
-	short get_habitacion() { return habitacion; }
+	int get_huespedes() { return huespedes; }
+	int get_habitacion() { return habitacion; }
 	bool get_wifi() { return wifi; }
 	bool get_piscina() { return piscina; }
 	bool get_spa() { return spa; }
@@ -412,8 +412,8 @@ public:
 	void set_titular(string n) { titular = n; }
 	void set_hotel(Hotel* h) { hotel = h; }
 	void set_moneda(string moneda) { this->moneda = moneda; }
-	void set_huespedes(short huespedes) { this->huespedes = huespedes; }
-	void set_habitacion(short habitaciones) { this->habitacion = habitacion; }
+	void set_huespedes(int huespedes) { this->huespedes = huespedes; }
+	void set_habitacion(int habitaciones) { this->habitacion = habitacion; }
 	void set_wifi(bool b) { wifi = b; }
 	void set_piscina(bool b) { piscina = b; }
 	void set_spa(bool b) { parking = b; }
@@ -426,6 +426,8 @@ public:
 
 	Reserva(string titular, Hotel* h, string f, bool VIP, string correo) {
 		this->hotel = h;
+		this->huespedes = h->get_huespedes();
+		this->habitacion = 30;
 		fecha = f;
 		this->titular = titular;
 		this->moneda = h->get_moneda();

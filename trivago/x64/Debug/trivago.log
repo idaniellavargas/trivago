@@ -6,22 +6,22 @@ C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Hotel.h(159,38): warning C4
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(42,7): warning C4101: 'opc': variable local sin referencia
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(149,7): warning C4101: 'opc': variable local sin referencia
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(253,7): warning C4101: 'opc': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(448,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(614,14): warning C4101: 'new_marks': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(614,7): warning C4101: 'index': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(613,8): warning C4101: 'sub': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(612,23): warning C4101: 'marks': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(765,52): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(843,36): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(847,37): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(866,52): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(867,54): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(868,55): warning C4244: '-=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(905,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(909,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(930,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(957,15): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(1037,68): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(450,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(616,14): warning C4101: 'new_marks': variable local sin referencia
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(616,7): warning C4101: 'index': variable local sin referencia
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(615,8): warning C4101: 'sub': variable local sin referencia
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(614,23): warning C4101: 'marks': variable local sin referencia
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(767,52): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(845,36): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(849,37): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(868,52): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(869,54): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(870,55): warning C4244: '-=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(907,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(911,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(932,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(959,15): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(1039,68): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Comentarios.h(30,48): warning C4129: 'C': secuencia de escape de carácter no reconocida
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Comentarios.h(34,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Ofertas.h(31,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
@@ -44,7 +44,7 @@ C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(529,7): warning C4
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Fecha.h(145): warning C4715: 'Date::dateIsReal': no todas las rutas de acceso de control devuelven un valor
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\UPC.h(266): warning C4172: devolución de dirección de la variable local o temporal: iterator
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Hotel.h(194): warning C4715: 'Catalogo::modificar': no todas las rutas de acceso de control devuelven un valor
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(570): warning C4715: 'Reservas::buscar': no todas las rutas de acceso de control devuelven un valor
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(572): warning C4715: 'Reservas::buscar': no todas las rutas de acceso de control devuelven un valor
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\UPC.h(266): warning C4172: devolución de dirección de la variable local o temporal: iterator
 C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Recursos.h(147): warning C4715: 'generarID': no todas las rutas de acceso de control devuelven un valor
   main.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
