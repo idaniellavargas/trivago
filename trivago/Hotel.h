@@ -90,19 +90,29 @@ public:
 	}
 
 
-	bool operator>(Hotel* rhs) {
+	bool operator>(const Hotel* rhs) {
 		return nombre > rhs->nombre;
 	}
 
-	bool operator<(Hotel* rhs) {
+	bool operator<(const Hotel* &rhs) {
 		return nombre < rhs->nombre;
 	}
+
+	bool operator<(const Hotel* rhs) {
+		return nombre < rhs->nombre;
+	}
+
+	bool operator<(const Hotel &rhs) {
+		return nombre < rhs.nombre;
+	}
+
 };
 class Catalogo {
 private:
 	vector<Hotel*>Hoteles;
 public:
 	Catalogo() {
+		Hoteles.setComp([](Hotel* a, Hotel* b) { return *a < *b; });
 		ifstream archivo(ARCHIVO_HOTELES);
 		string linea;
 		char delimitador = ',';
@@ -149,10 +159,6 @@ public:
 			objHotel->set_precioVIP((int)(stoi(precioVIP)));
 
 			Hoteles.insert(objHotel);
-			Hotel* h;
-			for (int i = 0; i < Hoteles.size(); i++) {
-				h = Hoteles[i];
-			}
 		}
 	}
 

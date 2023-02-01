@@ -50,11 +50,11 @@ void FuncionalidadUsuario() {
 		cout << "---------Registrarse---------" << endl;
 		cout << "Nombre: ";
 		std::cin >> nom;
-		if (tipo == 3) {
+		if (tipo == 2) {
 			cout << "ID: ";
 			cin >> id;
 		}
-		else if (tipo == 2) {
+		else if (tipo == 3) {
 			cout << "Hotel: ";
 			cin >> hot;
 		}
@@ -70,7 +70,7 @@ void FuncionalidadUsuario() {
 			fout << cuenta->guardar();
 			fout.close();
 		}
-		else if (tipo == 3) {
+		else if (tipo == 2) {
 			cuenta = new Administrador(nom, cor, con, id, true);
 			ofstream fout;
 			fout.open(ARCHIVO_ADMINS, ios::out | ios::app);
@@ -168,8 +168,8 @@ void FuncionalidadHotel() {
 		op = MenuHotel();
 		if (op == 1)
 		{
-			if (tipo != 2 && tipo != 3) {
-				cout << "ACCESO DENEGADO";
+			if (tipo == 1) {
+				cout << "\nACCESO DENEGADO";
 				_sleep(1000);
 				return;
 			}

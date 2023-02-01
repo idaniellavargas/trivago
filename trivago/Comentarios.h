@@ -35,12 +35,8 @@ public:
 		return "\n" + ID + "," + Usuario + "," + to_string(Puntaje) + "," + Coment ;
 	}
 
-	bool operator<(Comentario* rhs) {
-		return Usuario < rhs->Usuario;
-	}
-
-	bool operator>(Comentario* rhs) {
-		return Usuario > rhs->Usuario;
+	bool operator<(const Comentario &rhs) {
+		return Usuario < rhs.Usuario;
 	}
 };
 
@@ -49,6 +45,7 @@ private:
 	vector<Comentario*> arrc;
 public:
 	arrComent() {
+		arrc.setComp([](Comentario* a, Comentario* b) {return a < b; });
 		ifstream archivo(ARCHIVO_COMENT);
 		string linea;
 		char delimitador = ',';

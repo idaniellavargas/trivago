@@ -266,6 +266,10 @@ public:
 	bool operator<(Reserva* rhs) {
 		return fecha < rhs->fecha;
 	}
+
+	bool operator<(const Reserva rhs) {
+		return fecha < rhs.fecha;
+	}
 };
 #define ARCHIVO_RESERVAS "reservas.csv"
 class Reservas {
@@ -273,6 +277,7 @@ private:
 	vector<Reserva*>reservas;
 public:
 	Reservas() {
+		reservas.setComp([](Reserva* a, Reserva* b) {return *a < *b; });
 		ifstream archivo(ARCHIVO_RESERVAS);
 		string linea;
 		char delimitador = ',';
@@ -428,6 +433,7 @@ public:
 		rename("reservasnew.csv", ARCHIVO_RESERVAS);
 	}
 
+	
 };
 
 class Administrador : public Usuario {
@@ -456,6 +462,10 @@ public:
 	string guardar() {
 		return "\n" + nombre + "," + correo + "," + contrasena + "," + to_string(credencial) + "," + to_string(permisoCatalogo);
 	}
+
+	bool operator<(const Administrador& rhs) {
+		return credencial < rhs.credencial;
+	}
 };
 
 //#define ARCHIVO_ADMINS "admins.csv"
@@ -464,6 +474,7 @@ private:
 	vector<Administrador*>admins;
 public:
 	Administradores() {
+		admins.setComp([](Administrador* a, Administrador* b) {return *a < *b; });
 		ifstream archivo(ARCHIVO_ADMINS);
 		string linea;
 		char delimitador = ',';
@@ -473,6 +484,7 @@ public:
 			string nombre, correo, contrasena, credencial, permisoCatalogo;
 			// Extraer todos los valores de esa fila con getline
 			getline(stream, nombre, delimitador);
+			if (nombre == "") continue;
 			getline(stream, correo, delimitador);
 			getline(stream, contrasena, delimitador);
 			getline(stream, credencial, delimitador);
@@ -551,6 +563,10 @@ public:
 	string guardar() {
 		return "\n" + nombre + "," + correo + "," + contrasena + "," + to_string(ganancias) + "," + hotel;
 	}
+
+	bool operator<(const DueñoHotelero& rhs) {
+		return hotel < rhs.hotel;
+	}
 };
 
 //#define ARCHIVO_DUEÑOS "duenhos.csv"
@@ -559,6 +575,7 @@ private:
 	vector<DueñoHotelero*>dueños;
 public:
 	Dueños() {
+		dueños.setComp([](DueñoHotelero* a, DueñoHotelero* b) {return *a < *b; });
 		ifstream archivo(ARCHIVO_DUEÑOS);
 		string linea;
 		char delimitador = ',';
@@ -770,6 +787,10 @@ public:
 	string guardar() {
 		return "\n" + nombre + "," + correo + "," + contrasena + "," + to_string(cartera);
 	}
+
+	bool operator<(Cliente rhs) {
+		return correo < rhs.correo;
+	}
 };
 
 class Clientela {
@@ -777,6 +798,7 @@ private:
 	vector<Cliente*>clientela;
 public:
 	Clientela() {
+		clientela.setComp([](Cliente* a, Cliente* b) {return *a < *b; });
 		ifstream archivo(ARCHIVO_CLIENTES);
 		string linea;
 		char delimitador = ',';

@@ -17,13 +17,16 @@ namespace UPC {
 		T* vec;
 		int len;
 		bool is_sorted;
+		bool point;
 		func comp;
 
 		vector() {
 			vec = new T[1];
 			len = 0;
 			is_sorted = true;
-			comp = [](T& a, T& b) -> bool {return a < b; };
+			comp = [](T& a, T& b) -> bool {
+				return a < b;
+			};
 		}
 		~vector() {
 			delete[]vec;
@@ -53,7 +56,7 @@ namespace UPC {
 
 		void push_back(T elem) {
 			T* aux = new T[len + 1];
-			if (comp(elem, vec[len - 1])) is_sorted = false;
+			if (len != 0 && comp(elem, vec[len - 1])) is_sorted = false;
 			for (int i = 0; i < len; i++) {
 				aux[i] = vec[i];
 			}
@@ -64,7 +67,7 @@ namespace UPC {
 
 		void push_front(T elem) {
 			T* aux = new T[len + 1];
-			if (!comp(elem, vec[0])) is_sorted = false;
+			if (len != 0 && !comp(elem, vec[0])) is_sorted = false;
 			aux[0] = elem;
 			for (int i = 1; i <= len; i++) {
 				aux[i] = vec[i - 1];
@@ -1020,7 +1023,7 @@ namespace UPC {
 					aux[i] = data;
 					break;
 				}
-				else if (len == 0 || (!ok && !comp(vec[i], data))) { //bc: 1 | wc: 4
+				else if (!ok && comp(data, vec[i])) { //bc: 1 | wc: 4
 					ok = true; //1
 					aux[i] = data; //1
 				}
