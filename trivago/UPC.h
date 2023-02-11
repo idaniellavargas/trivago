@@ -16,13 +16,14 @@ namespace UPC {
 	public:
 		T* vec;
 		int len;
+		int capacity;
 		bool is_sorted;
-		bool point;
 		func comp;
 
 		vector() {
 			vec = new T[1];
 			len = 0;
+			capacity = 1;
 			is_sorted = true;
 			comp = [](T& a, T& b) -> bool {
 				return a < b;
@@ -33,8 +34,9 @@ namespace UPC {
 		};
 
 		vector(const vector& nv) {
-			vec = new T[nv.len];
+			vec = new T[nv.capacity];
 			len = nv.len;
+			capacity = nv.capacity;
 			is_sorted = nv.sorted;
 			for (int i = 0; i < len; i++) {
 				vec[i] = nv.vec[i];
@@ -45,8 +47,9 @@ namespace UPC {
 		vector<T>& operator= (const vector<T>& rhs) {
 			if (this == &rhs) return *this;
 			delete[]vec;
-			vec = new T[rhs.len];
+			vec = new T[rhs.capacity];
 			len = rhs.len;
+			capacity = rhs.capacity;
 			is_sorted = rhs.is_sorted;
 			for (int i = 0; i < len; i++) {
 				vec[i] = rhs.vec[i];
@@ -55,99 +58,86 @@ namespace UPC {
 		}
 
 		void push_back(T elem) {
-			T* aux = new T[len + 1];
 			if (len != 0 && comp(elem, vec[len - 1])) is_sorted = false;
-			for (int i = 0; i < len; i++) {
-				aux[i] = vec[i];
+			if (len == capacity) {
+				capacity *= 2;
+				T* aux = new T[capacity];
+				for (int i = 0; i < len; i++) aux[i] = vec[i];
+				aux[len] = elem;
+				vec = aux;
 			}
-			aux[len] = elem;
-			vec = aux;
+			else {
+				vec[len] = elem;
+			}
 			len++;
 		}
 
 		void push_front(T elem) {
-			T* aux = new T[len + 1];
 			if (len != 0 && !comp(elem, vec[0])) is_sorted = false;
-			aux[0] = elem;
-			for (int i = 1; i <= len; i++) {
-				aux[i] = vec[i - 1];
+			if (len == capacity) {
+				capacity *= 2;
+				T* aux = new T[capacity];
+				for (int i = 0; i < len; i++) {
+					aux[i + 1] = vec[i];
+				}
+				aux[0] = elem;
+				vec = aux;
 			}
-			vec = aux;
+			else {
+				for (int i = len; i > 0; i--) {
+					vec[i] = vec[i - 1];
+				}
+				vec[0] = elem;
+			}
 			len++;
 		}
 
 		void pop_back() {
 			if (len == 0) return;
-			T* aux = new T[len - 1];
-			for (int i = 0; i < len - 1; i++) {
-				aux[i] = vec[i];
-			}
-
-			T* to_delete = vec[len - 1];
-			delete to_delete;
-			vec = aux;
+			vec[len - 1] = NULL;
 			len--;
 		}
 
 		void pop_front() {
-			if (len == 0) return;
-			T* aux = new T[len - 1];
-			for (int i = 1; i < len; i++) {
-				aux[i - 1] = vec[i];
-			}
-
-			T* to_delete = vec[0];
-			delete to_delete;
-			vec = aux;
+			for (int i = 0; i < len - 1; i++) vec[i] = vec[i + 1];
+			vec[len - 1] = NULL;
 			len--;
 		}
 
 		void erase(int x) {
 			if (len == 0) return;
-			T* aux = new T[len - 1];
-			int j = 0;
+			bool erased = false;
 			for (int i = 0; i < len; i++) {
-				if (i == x) continue;
-				aux[j] = vec[i];
-				j++;
+				if (i == x) erased = true;
+				if (erased) vec[i] = vec[i + 1];
 			}
-			vec = aux;
 			len--;
 		}
 
 		void erase(T* it) {
 			if (len == 0) return;
-			T* aux = new T[len - 1];
-			int j = 0;
+			bool erased = false;
 			for (int i = 0; i < len; i++) {
-				if ((begin() + i) == it) continue;
-				aux[j] = vec[i];
-				j++;
+				if (begin() + i == it) erased = true;
+				if (erased) vec[i] = vec[i + 1];
 			}
-
-			vec = aux;
 			len--;
 		}
 
 		void erase(T* ini, T* fin) {
 			if (ini > fin || len == 0) return;
-
-			T* aux = new T[len - (fin - ini)];
 			int j = 0;
-			bool er = false;
+			bool er = false, erased = false;
 			for (int i = 0; i < len; i++) {
 				if ((begin() + i) == ini) er = true;
 				else if ((begin() + i) == fin) {
 					er = false;
-					continue;
+					erased = true;
 				}
-				if (er) continue;
-				aux[j] = vec[i];
-				j++;
+				if (er) j++;
+				if (erased) vec[i - j] = vec[i];
 			}
-
-			vec = aux;
-			len -= (fin - ini) + 1;
+			len -= (fin - ini);
 		}
 
 		T* begin() { return &vec[0]; }
@@ -180,6 +170,9 @@ namespace UPC {
 				next = d.next;
 
 			}
+			~node() {
+				delete next;
+			}
 
 			bool operator>(node rhs) {
 				return data > rhs.data;
@@ -208,7 +201,7 @@ namespace UPC {
 		}
 
 		~list() {
-			while (len != 0) pop_front();
+			delete ini;
 		}
 
 		node* copyList(node* nn) {
@@ -294,6 +287,7 @@ namespace UPC {
 			}
 
 			void erase() {
+				cn->next = nullptr;
 				delete cn;
 			}
 
@@ -348,6 +342,7 @@ namespace UPC {
 				crawler = crawler->next;
 			}
 			prev->next = nullptr;
+			crawler->next = nullptr;
 			delete crawler;
 			len--;
 		}
@@ -355,6 +350,7 @@ namespace UPC {
 		void pop_front() {
 			node* aux = ini;
 			ini = ini->next;
+			aux->next = nullptr;
 			delete aux;
 			len--;
 		}
@@ -379,6 +375,7 @@ namespace UPC {
 				crawler = crawler->next;
 			}
 			prev->next = crawler->next;
+			crawler->next = nullptr;
 			delete crawler;
 			len--;
 		}
@@ -430,6 +427,10 @@ namespace UPC {
 				data = d.data;
 				next = d.next;
 			}
+
+			~node() {
+				delete next;
+			}
 		};
 
 		node* Top;
@@ -441,7 +442,7 @@ namespace UPC {
 			Top = nullptr;
 			len = 0;
 		}
-		~stack() { while (!empty()) pop(); }
+		~stack() { delete Top; }
 
 		node* copyList(node* nn) {
 			if (nn->next == nullptr) {
@@ -479,6 +480,7 @@ namespace UPC {
 			else {
 				node* aux = Top;
 				Top = Top->next;
+				aux->next = nullptr;
 				delete aux;
 			}
 			len--;
@@ -510,6 +512,7 @@ namespace UPC {
 				crawler = crawler->next;
 			}
 			prev->next = crawler->next;
+			crawler->next = nullptr;
 			delete crawler;
 
 		}
@@ -524,6 +527,9 @@ namespace UPC {
 			node(T d, node* n = nullptr) {
 				data = d;
 				next = n;
+			}
+			~node() {
+				delete next;
 			}
 		};
 
@@ -584,6 +590,7 @@ namespace UPC {
 			else {
 				node* aux = Front;
 				Front = Front->next;
+				aux->next = nullptr;
 				delete aux;
 			}
 			len--;

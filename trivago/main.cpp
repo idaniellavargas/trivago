@@ -9,6 +9,15 @@ Usuario* cuenta = NULL;
 Cliente* cliente;
 DueñoHotelero* dueño;
 Administrador* admin;
+//arrays
+//independientes:
+Administradores* arrAdmin = new Administradores;
+Catalogo* arrCat = new Catalogo();
+arrComent* arrCom = new arrComent();
+//relativos:
+Reservas* arrRes = new Reservas(arrCat);
+Clientela* arrCliente = new Clientela(arrRes);
+Dueños* arrHotel = new Dueños(arrRes);
 bool sesionIniciada = false;
 short tipo = 0;
 UPC::stack<fp>s;
@@ -19,9 +28,6 @@ void FuncionalidadUsuario() {
 	char opc;
 	string nom, opc2, cor, con, hot;
 	vector<string> lista;
-	Clientela* arrCliente;
-	Administradores* arrAdmin;
-	Dueños* arrHotel;
 	Usuario* temp = NULL;
 	string id;
 
@@ -64,25 +70,13 @@ void FuncionalidadUsuario() {
 		std::cin >> con;
 		if(cuenta != NULL) delete cuenta;
 		if (tipo == 1) {
-			cuenta = new Cliente(nom, cor, con, 10000); //Registramos al usuario
-			ofstream fout;
-			fout.open(ARCHIVO_CLIENTES, ios::out | ios::app);
-			fout << cuenta->guardar();
-			fout.close();
+			cuenta = new Cliente(nom, cor, con, 10000, arrRes); //Registramos al usuario
 		}
 		else if (tipo == 2) {
 			cuenta = new Administrador(nom, cor, con, id, true);
-			ofstream fout;
-			fout.open(ARCHIVO_ADMINS, ios::out | ios::app);
-			fout << cuenta->guardar();
-			fout.close();
 		}
 		else {
-			cuenta = new DueñoHotelero(nom, cor, con, 0, hot);
-			ofstream fout;
-			fout.open(ARCHIVO_DUEÑOS, ios::out | ios::app);
-			fout << cuenta->guardar();
-			fout.close();
+			cuenta = new DueñoHotelero(nom, cor, con, 0, hot, arrRes);
 		}
 		sesionIniciada = true;
 		_sleep(1000);
@@ -93,18 +87,6 @@ void FuncionalidadUsuario() {
 			cout << "¿Desea iniciar sesión como cliente(1), administrador(2), o dueño hotelero(3)?" << endl;
 			std::cin >> tipo;
 		} while (tipo > 3 || tipo < 0);
-
-		switch (tipo) {
-		case 1:
-			arrCliente = new Clientela();
-			break;
-		case 2:
-			arrAdmin = new Administradores();
-			break;
-		case 3:
-			arrHotel = new Dueños();
-			break;
-		}
 		do
 		{
 			switch (tipo) {
@@ -153,7 +135,6 @@ void FuncionalidadUsuario() {
 	}
 }
 void FuncionalidadHotel() {
-	Catalogo* objArreglo = new Catalogo();
 	Hotel* objHotel  = NULL;
 	string nombre, ID, ubicacion, moneda;
 	short huespedes, habitaciones;
@@ -190,22 +171,16 @@ void FuncionalidadHotel() {
 			cout << "\nDesayuno: "; cin >> desayuno;
 			cout << "\nAhora, ingrese el precio regular de alojamiento: "; cin >> precio;
 			cout << "\nFinalmente, digite el precio de habitaciones VIP: "; cin >> precioVIP;
-
-			objHotel = new Hotel(nombre, generarID(1, nombre, 0), ubicacion, moneda, huespedes, habitaciones, telefono, wifi, piscina, spa, parking, mascotas, desayuno, precio, precioVIP);
-			objArreglo->agregarHotel(objHotel);
+			ID = generarID(1, nombre, 0);
+			objHotel = new Hotel(nombre, ID, ubicacion, moneda, huespedes, habitaciones, telefono, wifi, piscina, spa, parking, mascotas, desayuno, precio, precioVIP);
+			arrCat->agregarHotel(objHotel);
 			_sleep(2000);
-			
-			fstream fout;
-			fout.open(ARCHIVO_HOTELES, ios::out | ios::app);
-			
-			fout << objArreglo->get_pos(objArreglo->get_size() - 1)->get_nombre() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_ID() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_ubicacion() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_moneda() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_huespedes() << ", " << objArreglo->get_pos(objArreglo->get_size() - 1)->get_habitaciones() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_telefono() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_wifi() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_piscina() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_spa() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_parking() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_mascotas() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_desayuno() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_precio() << "," << objArreglo->get_pos(objArreglo->get_size() - 1)->get_precioVIP() << "\n";
-			fout.close();
 			Console::Clear();
 			MenuHotel();
 		}
 		if (op == 2)
 		{
-			objArreglo->mostrar();
+			arrCat->mostrar();
 			GoBack();
 		}
 		if (op == 3)
@@ -217,7 +192,7 @@ void FuncionalidadHotel() {
 			}
 			int opcionM;
 			cout << "Ingrese la poscion  que desee Modificar "; std::cin >> pos;
-			Hotel* objHotel = objArreglo->modificar(pos);
+			Hotel* objHotel = arrCat->modificar(pos);
 			string nombre;
 			string ubicacion;
 			cout << "Que desea Modificar del Objeto: " << endl;
@@ -251,18 +226,18 @@ void FuncionalidadHotel() {
 				return;
 			}
 			cout << "Ingrese la posicion que desee Eliminar: "; std::cin >> pos;
-			objArreglo->eliminarPos(pos);
+			arrCat->eliminarPos(pos);
 		}
 		if (op == 5) 
 		{
-			objArreglo->HotelesPeruanos();
+			arrCat->HotelesPeruanos();
 			GoBack();
 			break;
 
 		}
 		if (op == 6)
 		{
-			objArreglo->HotelesDesayuno();
+			arrCat->HotelesDesayuno();
 			GoBack();
 			break;
 		}
@@ -279,7 +254,7 @@ void FuncionalidadHotel() {
 		}
 		if (op == 8)
 		{
-			delete objArreglo, objHotel;
+			delete objHotel;
 			cout << "Nos vemos pronto!";
 			_sleep(1000);
 			break;
@@ -336,18 +311,17 @@ void Mostrar_Creditos() {
 	GoBack();
 }
 void FuncionalidadComent() {
-	arrComent* objArreglo = new arrComent();
+	
 	int op;
 	do
 	{
 		op = MenuComent();
-		if (op == 1) NuevoComentario(objArreglo, cuenta);
-		else if (op == 2) mostrarComentario(objArreglo);
+		if (op == 1) NuevoComentario(arrCom, cuenta);
+		else if (op == 2) mostrarComentario(arrCom);
 	} while (op != 1 && op != 2);
 }
 void FuncionalidadReservas() {
-	Catalogo* c = new Catalogo();
-	Reservas* objArreglo = new Reservas();
+	
 	
 	if (tipo == 1) {
 		while (true)
@@ -358,18 +332,18 @@ void FuncionalidadReservas() {
 			op = MenuReservas();
 			if (op == 1)
 			{
-				cliente->reservarHotel(c, objArreglo, cliente);
+				cliente->reservarHotel(arrCat, arrRes, cliente, arrHotel);
 			}
 			else if (op == 2)
 			{
-				objArreglo->visualizarReservas(cliente->getcorreo());
+				arrRes->visualizarReservas(cliente->getcorreo());
 			}
 			else if (op == 3)
 			{
-				cliente->cancelarReserva(objArreglo);
+				cliente->cancelarReserva(arrRes, arrHotel);
 			}
 			else if (op == 4) {
-				cliente->cambiarfecha(objArreglo);
+				cliente->cambiarfecha(arrRes);
 			}
 			break;
 		}
@@ -446,7 +420,7 @@ void Mostrar_Menu() {
 							else if (j < 30) cout << ' ';
 						}
 						else if (i == 22) {
-							if (j == COLUMNAS / 2 - 5) cout << "SALIR";
+							if (j == COLUMNAS / 2 - 10) cout << "GUARDAR Y SALIR";
 							else if (j < 30) cout << ' ';
 						}
 						else if (i == 24) {
@@ -490,7 +464,21 @@ void Mostrar_Menu() {
 				if (x == 22) funcion = &FuncionalidadHotel;
 				if (x == 24) funcion = &Mostrar_Creditos;
 				if (x == 26) funcion = &FuncionalidadComent;
-				if (x == 28) exit(0);
+				if (x == 28){
+					arrAdmin->guardar();
+					delete arrAdmin;
+					arrCat->guardar();
+					delete arrCat;
+					arrCom->guardar();
+					delete arrCom;
+					arrRes->guardar();
+					delete arrRes;
+					arrCliente->guardar();
+					delete arrCliente;
+					arrHotel->guardar();
+					delete arrHotel;
+					exit(0);
+				}
 				if (x == 30) {
 					Console::Clear();
 					int n;

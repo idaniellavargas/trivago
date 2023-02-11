@@ -106,6 +106,12 @@ public:
 		return nombre < rhs.nombre;
 	}
 
+	string guardar() {
+		return  nombre + "," + ID + "," + ubicacion + "," + moneda + "," + to_string(huespedes) + "," + to_string(habitaciones) + "," + to_string(telefono) + "," + 
+			to_string(wifi) + "," + to_string(piscina) + "," + to_string(spa) + "," + to_string(parking) + "," + to_string(mascotas) + "," + to_string(desayuno)+ "," 
+			+ to_string(precio) + "," + to_string(precioVIP) + "\n";
+	}
+
 };
 class Catalogo {
 private:
@@ -183,8 +189,6 @@ public:
 		else hotel2->set_ID(generarID(2, hotel2->get_nombre(), 0)); }); //rehacer id si son iguales
 	}
 
-	
-	
 	Hotel* modificar(int pos) {
 		for (int i = 0; i < Hoteles.size(); i++)
 		{
@@ -215,5 +219,14 @@ public:
 			if (h->get_ID() == id) return h;
 		}
 		return NULL;
+	}
+
+	void guardar() {
+		ofstream fout;
+		fout.open(ARCHIVO_HOTELES);
+		for (int i = 0; i < Hoteles.size(); i++) {
+			fout << Hoteles[i]->guardar();
+		}
+		fout.close();
 	}
 };

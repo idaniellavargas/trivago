@@ -26,12 +26,7 @@ public:
 		if (Coment != "") cout << "Comentario:\n" << Coment << "\n";
 		cout << "===================" << endl;
 	}
-	function<void(short)> save{
-		[](short Puntaje) { if (Puntaje != 0)cout << "\Comentario guardado en el sistema"; }
-	};
 	string guardar() {
-		save(Puntaje);
-		_sleep(2000);
 		return "\n" + ID + "," + Usuario + "," + to_string(Puntaje) + "," + Coment ;
 	}
 
@@ -74,6 +69,15 @@ public:
 
 	void addComent(Comentario* nc) {
 		arrc.insert(nc);
+	}
+
+	void guardar() {
+		fstream fout;
+		fout.open(ARCHIVO_COMENT);
+		for (int i = 0; i < arrc.size(); i++) {
+			fout << arrc[i]->guardar();
+		}
+		fout.close();
 	}
 };
 
@@ -137,11 +141,6 @@ void NuevoComentario(arrComent* arrc, Usuario* u) {
 			arrc->addComent(ncoment);
 			cout << endl;
 			agregar(puntaje);
-			fstream fout;
-			fout.open(ARCHIVO_COMENT, ios::out | ios::app);
-			cout << endl;
-			fout << ncoment->guardar();
-			fout.close();
 			break;
 		}
 		GoBack();

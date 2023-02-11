@@ -4,6 +4,7 @@
 #define ARCHIVO_CLIENTES "clientes.csv"
 #define ARCHIVO_ADMINS "admins.csv"
 #define ARCHIVO_DUEÑOS "duenhos.csv"
+#define ARCHIVO_RESERVAS "reservas.csv"
 
 class Usuario
 {
@@ -442,12 +443,7 @@ public:
 		else monto = h->get_precio();
 		this->estado = "En espera";
 	}
-	function<void(string)> save{
-		[](string correo) { if (correo != "")cout << "\nReserva guardada en el sistema"; }
-	};
 	string guardar() {
-		save(correo);
-		_sleep(2000);
 		return "\n" + fecha + "," + hotel->get_ID() + "," + titular + "," + correo + "," + estado + "," + moneda + ","
 			+ to_string(huespedes) + "," + to_string(habitacion) + "," + to_string(wifi) +
 			"," + to_string(piscina) + "," + to_string(spa) + "," + to_string(parking) + "," + to_string(mascotas) +
@@ -483,12 +479,11 @@ public:
 		return fecha < rhs.fecha;
 	}
 };
-#define ARCHIVO_RESERVAS "reservas.csv"
 class Reservas {
 private:
 	vector<Reserva*>reservas;
 public:
-	Reservas() {
+	Reservas(Catalogo* cat) {
 		reservas.setComp([](Reserva* a, Reserva* b) {return *a < *b; });
 		ifstream archivo(ARCHIVO_RESERVAS);
 		string linea;
@@ -522,7 +517,6 @@ public:
 			getline(stream, monto, delimitador);
 
 			Reserva* objReserva = new Reserva();
-			Catalogo* cat = new Catalogo();
 			objReserva->set_titular(titular);
 			objReserva->set_hotel(cat->BuscarHotel(ID));
 			objReserva->set_correo(correo);
@@ -606,7 +600,7 @@ public:
 	}
 
 	void delete_record(int o)
-	{
+	{ // falta hacer esto mas corto
 		fstream fin, fout;
 		fin.open(ARCHIVO_RESERVAS, ios::in);
 		fout.open("reservasnew.csv", ios::out);
@@ -652,6 +646,14 @@ public:
 		rename("reservasnew.csv", ARCHIVO_RESERVAS);
 	}
 
+	void guardar() {
+		fstream fout;
+		fout.open(ARCHIVO_RESERVAS);
+		for (int i = 0; i < reservas.size(); i++) {
+			fout << reservas[i]->guardar();
+		}
+		fout.close();
+	}
 
 };
 
@@ -736,6 +738,15 @@ public:
 		}
 		return NULL;
 	}
+
+	void guardar() {
+		fstream fout;
+		fout.open(ARCHIVO_ADMINS);
+		for (int i = 0; i < admins.size(); i++) {
+			fout << admins[i]->guardar();
+		}
+		fout.close();
+	}
 };
 
 class DueñoHotelero : public Usuario {
@@ -744,8 +755,7 @@ public:
 	UPC::queue<Reserva*>waitingList;
 	string hotel;
 public:
-	DueñoHotelero(string nombre, string correo, string contrasena, int ganancias, string hotel) {
-		Reservas* r = new Reservas();
+	DueñoHotelero(string nombre, string correo, string contrasena, int ganancias, string hotel, Reservas* r) {
 		waitingList = r->BuscarWaitingList(hotel);
 		this->nombre = nombre;
 		this->correo = correo;
@@ -794,7 +804,7 @@ class Dueños {
 private:
 	vector<DueñoHotelero*>dueños;
 public:
-	Dueños() {
+	Dueños(Reservas* r) {
 		dueños.setComp([](DueñoHotelero* a, DueñoHotelero* b) {return *a < *b; });
 		ifstream archivo(ARCHIVO_DUEÑOS);
 		string linea;
@@ -811,7 +821,7 @@ public:
 			getline(stream, ganancias, delimitador);
 			getline(stream, hotel, delimitador);
 
-			DueñoHotelero* dueño = new DueñoHotelero(nombre, correo, contrasena, stoi(ganancias), hotel);
+			DueñoHotelero* dueño = new DueñoHotelero(nombre, correo, contrasena, stoi(ganancias), hotel, r);
 			dueños.insert(dueño);
 		}
 	}
@@ -848,6 +858,15 @@ public:
 		DueñoHotelero* d = BuscarDueño(hotel);
 		if (d != NULL) d->restarGanancias(monto);
 	}
+
+	void guardar() {
+		fstream fout;
+		fout.open(ARCHIVO_DUEÑOS);
+		for (int i = 0; i < dueños .size(); i++) {
+			fout << dueños[i]->guardar();
+		}
+		fout.close();
+	}
 };
 
 class Cliente : public Usuario {
@@ -855,12 +874,11 @@ private:
 	list<Reserva*> reservas;
 	int cartera;
 public:
-	Cliente(string nombre, string correo, string contrasena, float cartera) {
+	Cliente(string nombre, string correo, string contrasena, float cartera, Reservas* r) {
 		this->nombre = nombre;
 		this->correo = correo;
 		this->contrasena = contrasena;
 		this->cartera = 10000;
-		Reservas* r = new Reservas();
 		reservas = r->BuscarReservaTitular(nombre);
 	}
 	~Cliente() {}
@@ -871,7 +889,7 @@ public:
 	void agregarReserva(Reserva* reserva) {
 		reservas.push_front(reserva);
 	}
-	void reservarHotel(Catalogo* lista, Reservas* re, Cliente* c) {
+	void reservarHotel(Catalogo* lista, Reservas* re, Cliente* c, Dueños* du) {
 		Hotel* h = new Hotel();
 		string id;
 		cout << "Ingrese el dia el mes y el año para la reserva" << endl;
@@ -913,14 +931,8 @@ public:
 			//agendacionExitosa(id);
 			re->agregarReserva(reserva);
 			cout << "\n\nReserva agregada al vector" << endl;
-			fstream fout;
-			fout.open(ARCHIVO_RESERVAS, ios::out | ios::app);
-			fout << reserva->guardar();
-			fout.close();
-			cout << "\n\nArchivo creado" << endl;
 			c->restarCartera(costo);
-			Dueños* d = new Dueños();
-			d->pagar(h->get_ID(), costo);
+			du->pagar(h->get_ID(), costo);
 			h->quitarHabitacion(1);
 			agendacionExitosa(id);
 		}
@@ -931,7 +943,7 @@ public:
 		}
 		_sleep(2000);
 	}
-	void cancelarReserva(Reservas* r) {
+	void cancelarReserva(Reservas* r, Dueños* d) {
 		bool conf = true;
 		int ind = 0;
 		int n;
@@ -953,7 +965,6 @@ public:
 			Catalogo* h = new Catalogo();
 			h->BuscarHotel(p->get_idHotel())->agregarHabitacion(1);
 			reembolso = p->get_monto();
-			Dueños* d = new Dueños();
 			d->quitar(p->get_idHotel(), reembolso);
 			reservas.erase(it);
 			cartera += reembolso;
@@ -1019,7 +1030,7 @@ class Clientela {
 private:
 	vector<Cliente*>clientela;
 public:
-	Clientela() {
+	Clientela(Reservas* r) {
 		clientela.setComp([](Cliente* a, Cliente* b) {return *a < *b; });
 		ifstream archivo(ARCHIVO_CLIENTES);
 		string linea;
@@ -1036,7 +1047,7 @@ public:
 
 
 			if (nombre != "") {
-				Cliente* cliente = new Cliente(nombre, correo, contrasena, stoi(cartera));
+				Cliente* cliente = new Cliente(nombre, correo, contrasena, stoi(cartera), r);
 				clientela.insert(cliente);
 
 			}
@@ -1065,5 +1076,14 @@ public:
 			if (c->getcorreo() == correo) return c;
 		}
 		return NULL;
+	}
+
+	void guardar() {
+		fstream fout;
+		fout.open(ARCHIVO_CLIENTES);
+		for (int i = 0; i < clientela.size(); i++) {
+			fout << clientela[i]->guardar();
+		}
+		fout.close();
 	}
 };

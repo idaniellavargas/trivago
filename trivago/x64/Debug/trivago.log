@@ -1,51 +1,48 @@
 ﻿  main.cpp
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Recursos.h(114,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Recursos.h(180,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Hotel.h(158,35): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Hotel.h(159,38): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(42,7): warning C4101: 'opc': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(149,7): warning C4101: 'opc': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(253,7): warning C4101: 'opc': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(450,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(616,14): warning C4101: 'new_marks': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(616,7): warning C4101: 'index': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(615,8): warning C4101: 'sub': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(614,23): warning C4101: 'marks': variable local sin referencia
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(767,52): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(845,36): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(849,37): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(868,52): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(869,54): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(870,55): warning C4244: '-=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(907,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(911,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(932,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(959,15): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(1039,68): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Comentarios.h(30,48): warning C4129: 'C': secuencia de escape de carácter no reconocida
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Comentarios.h(34,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Ofertas.h(31,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Ofertas.h(94,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(36,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(88,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(142,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(146,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(151,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(173,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(196,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(215,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(250,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(284,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(484,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(486,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(511,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(520,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\main.cpp(529,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Fecha.h(145): warning C4715: 'Date::dateIsReal': no todas las rutas de acceso de control devuelven un valor
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\UPC.h(266): warning C4172: devolución de dirección de la variable local o temporal: iterator
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Hotel.h(194): warning C4715: 'Catalogo::modificar': no todas las rutas de acceso de control devuelven un valor
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Usuario.h(572): warning C4715: 'Reservas::buscar': no todas las rutas de acceso de control devuelven un valor
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\UPC.h(266): warning C4172: devolución de dirección de la variable local o temporal: iterator
-C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\Recursos.h(147): warning C4715: 'generarID': no todas las rutas de acceso de control devuelven un valor
-  main.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
-  trivago.vcxproj -> C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\x64\Debug\trivago.exe
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Recursos.h(114,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Recursos.h(180,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Hotel.h(164,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Hotel.h(165,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(43,7): warning C4101: 'opc': unreferenced local variable
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(150,7): warning C4101: 'opc': unreferenced local variable
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(254,7): warning C4101: 'opc': unreferenced local variable
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(610,14): warning C4101: 'new_marks': unreferenced local variable
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(610,7): warning C4101: 'index': unreferenced local variable
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(609,8): warning C4101: 'sub': unreferenced local variable
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(608,23): warning C4101: 'marks': unreferenced local variable
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(777,52): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(855,36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(859,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(886,52): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(887,54): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(888,55): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(925,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(929,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(944,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(970,15): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(1050,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Ofertas.h(31,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Ofertas.h(94,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(42,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(82,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(124,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(128,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(133,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(154,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(177,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(190,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(225,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(259,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(458,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(460,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(499,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(508,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\main.cpp(517,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Fecha.h(145): warning C4715: 'Date::dateIsReal': not all control paths return a value
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\UPC.h(259): warning C4172: returning address of local variable or temporary: iterator
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Hotel.h(198): warning C4715: 'Catalogo::modificar': not all control paths return a value
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Usuario.h(566): warning C4715: 'Reservas::buscar': not all control paths return a value
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\UPC.h(259): warning C4172: returning address of local variable or temporary: iterator
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\Recursos.h(147): warning C4715: 'generarID': not all control paths return a value
+  main.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  trivago.vcxproj -> D:\Universidad\2023-0\AyEdD\final\trivago\x64\Debug\trivago.exe
