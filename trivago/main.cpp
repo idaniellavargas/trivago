@@ -70,13 +70,19 @@ void FuncionalidadUsuario() {
 		std::cin >> con;
 		if(cuenta != NULL) delete cuenta;
 		if (tipo == 1) {
-			cuenta = new Cliente(nom, cor, con, 10000, arrRes); //Registramos al usuario
+			Cliente*aux = new Cliente(nom, cor, con, 10000, arrRes); //Registramos al usuario
+			cuenta = aux;
+			arrCliente->agregarCliente(aux);
 		}
 		else if (tipo == 2) {
-			cuenta = new Administrador(nom, cor, con, id, true);
+			Administrador*aux = new Administrador(nom, cor, con, id, true);
+			cuenta = aux;
+			arrAdmin->agregarAdmin(aux);
 		}
 		else {
-			cuenta = new DueñoHotelero(nom, cor, con, 0, hot, arrRes);
+			DueñoHotelero*aux = new DueñoHotelero(nom, cor, con, 0, hot, arrRes);
+			cuenta = aux;
+			arrHotel->agregarDueño(aux);
 		}
 		sesionIniciada = true;
 		_sleep(1000);
