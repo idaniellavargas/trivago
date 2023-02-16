@@ -1,4 +1,5 @@
 #pragma once
+#define ARCHIVO_HOTELES "hoteles.csv"
 #include <functional>
 class Hotel {
 private:
@@ -25,7 +26,7 @@ public:
 	bool get_parking() { return parking; }
 	bool get_mascotas() { return mascotas; }
 	bool get_desayuno() { return desayuno; }
-	void set_nombre(string n) { nombre = n; }
+	void set_nombre(const string& n) { nombre = n; }
 	void set_ID(string id) { ID = id; }
 	void set_ubicacion(string ubicacion) { this->ubicacion = ubicacion; }
 	void set_moneda(string moneda) { this->moneda = moneda; }
@@ -43,31 +44,20 @@ public:
 	void agregarHabitacion(short cantidad) { habitaciones += cantidad; }
 	void quitarHabitacion(short cantidad) { habitaciones -= cantidad; }
 
-	Hotel(string nombre, string ID, string ubicacion, string moneda, short huespedes, short habitaciones, long telefono, bool wifi, bool piscina, bool spa, bool parking, bool mascotas, bool desayuno, float precio, float precioVIP) {
-		this->nombre = nombre;
-		this->ID = ID;
-		this->ubicacion = ubicacion;
-		this->huespedes = huespedes;
-		this->habitaciones = habitaciones;
-		this->telefono = telefono;
-		this->piscina = piscina;
-		this->spa = spa;
-		this->desayuno = desayuno;
-		this->parking = parking;
-		this->mascotas = mascotas;
-		this->wifi = wifi;
-		this->precio = precio;
-		this->precioVIP = precioVIP;
-	}
+	Hotel(const string& nombre, const string& ID, const string& ubicacion, const string& moneda,
+		short huespedes, short habitaciones, long telefono, bool wifi, bool piscina,
+		bool spa, bool parking, bool mascotas, bool desayuno, float precio, float precioVIP)
+		: nombre(nombre), ID(ID), ubicacion(ubicacion), moneda(moneda),
+		huespedes(huespedes), habitaciones(habitaciones), telefono(telefono),
+		wifi(wifi), piscina(piscina), spa(spa), parking(parking),
+		mascotas(mascotas), desayuno(desayuno), precio(precio), precioVIP(precioVIP) {}
+	
 
 	function<void(string)> bordes{
 		[](string nombre) {
 			if (nombre != "") {
-				transform(nombre.begin(), nombre.end(), nombre.begin(), ::toupper);
-				cout << "\n/============  " << nombre << "  ============/";
-
-			}}
-	};
+				for (auto &s : nombre) s = toupper(s);
+				cout << "\n/============  " << nombre << "  ============/"; }}};
 
 	void toString() {
 		bordes(nombre);
@@ -90,26 +80,28 @@ public:
 	}
 
 
-	bool operator>(const Hotel* rhs) {
+	bool operator>(const Hotel* rhs) const {
 		return nombre > rhs->nombre;
 	}
 
-	bool operator<(const Hotel*& rhs) {
+	bool operator<(const Hotel*& rhs) const {
 		return nombre < rhs->nombre;
 	}
 
-	bool operator<(const Hotel* rhs) {
+	bool operator<(const Hotel* rhs) const {
 		return nombre < rhs->nombre;
 	}
 
-	bool operator<(const Hotel& rhs) {
+	bool operator<(const Hotel& rhs) const {
 		return nombre < rhs.nombre;
 	}
 
 	string guardar() {
-		return  nombre + "," + ID + "," + ubicacion + "," + moneda + "," + to_string(huespedes) + "," + to_string(habitaciones) + "," + to_string(telefono) + "," +
-			to_string(wifi) + "," + to_string(piscina) + "," + to_string(spa) + "," + to_string(parking) + "," + to_string(mascotas) + "," + to_string(desayuno) + ","
-			+ to_string(precio) + "," + to_string(precioVIP) + "\n";
+		return nombre + "," + ID + "," + ubicacion + "," + moneda + "," +
+			to_string(huespedes) + "," + to_string(habitaciones) + "," + to_string(telefono) + "," +
+			(wifi ? "1" : "0") + "," + (piscina ? "1" : "0") + "," + (spa ? "1" : "0") + "," +
+			(parking ? "1" : "0") + "," + (mascotas ? "1" : "0") + "," + (desayuno ? "1" : "0") +
+			"," + to_string(precio) + "," + to_string(precioVIP) + "\n";
 	}
 
 };
