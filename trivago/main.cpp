@@ -198,7 +198,7 @@ void FuncionalidadHotel() {
 			}
 			int opcionM;
 			cout << "Ingrese la poscion  que desee Modificar "; std::cin >> pos;
-			Hotel* objHotel = arrCat->modificar(pos);
+			//Hotel* objHotel = arrCat->modificar(pos);
 			string nombre;
 			string ubicacion;
 			cout << "Que desea Modificar del Objeto: " << endl;
@@ -232,7 +232,7 @@ void FuncionalidadHotel() {
 				return;
 			}
 			cout << "Ingrese la posicion que desee Eliminar: "; std::cin >> pos;
-			arrCat->eliminarPos(pos);
+			//arrCat->eliminarPos(pos);
 		}
 		if (op == 5) 
 		{

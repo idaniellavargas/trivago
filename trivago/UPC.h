@@ -57,6 +57,22 @@ namespace UPC {
 			return *this;
 		}
 
+		bool& operator<(const vector<T>& rhs) {
+			if (len < rhs.len) return true;
+			else if (len > rhs.len) return false;
+			else {
+				for (int i = 0; i < len; i++) {
+					if (vec[i] < rhs[i]) return true;
+					else if (vec[i] > rhs[i]) return false;
+				}
+				return false;
+			}
+		}
+
+		bool& operator>(const vector<T>& rhs) {
+			return !this < rhs;
+		}
+
 		void push_back(T elem) {
 			if (len != 0 && comp(elem, vec[len - 1])) is_sorted = false;
 			if (len == capacity) {
@@ -303,6 +319,44 @@ namespace UPC {
 
 		Iterator rbegin() {
 			return Iterator(back);
+		}
+
+		bool operator==(list<T>& rhs) {
+			if (len != rhs.len) return false;
+			else {
+				auto it1 = begin(), it2 = rhs.begin();
+				while (it1 != end()) {
+					if (*it1 != *it2) return false;
+				}
+				return true;
+			}
+		}
+
+		bool operator<(list<T>& rhs) {
+			if (len < rhs.len) return true;
+			else if (len > rhs.len) return false;
+			else {
+				auto it1 = begin(), it2 = rhs.begin();
+				while (it1 != end()) {
+					if ((*it1) < (*it2)) return true;
+					else if ((*it1) > (*it2)) return false;
+					++it1;
+					++it2;
+				}
+				return false;
+			}
+		}
+
+		bool operator>(list<T>& rhs) {
+			return !(this < rhs);
+		}
+
+		bool operator<=(list<T>& rhs) {
+			return (this < rhs) || (this == rhs);
+		}
+
+		bool operator>=(list<T>& rhs) {
+			return (this > rhs) || (this == rhs);
 		}
 
 		void push_front(T data) {
@@ -1022,6 +1076,638 @@ namespace UPC {
 
 		rbsort(v, n - 1);
 	}
+
+	template <class T>
+	class List
+	{
+	private:
+		struct Node
+		{
+			T data;
+			Node* next;
+			Node* prev;
+			Node(T data, Node* next = nullptr, Node* prev = nullptr) : data(data), next(next), prev(prev) { }
+			~Node() { };
+		};
+		Node* head;
+		Node* tail;
+		size_t sz;
+
+	public:
+		List()
+		{
+			this->head = nullptr;
+			this->tail = nullptr;
+			this->sz = 0;
+		}
+		List(std::initializer_list<T> list)
+		{
+			this->head = nullptr;
+			this->tail = nullptr;
+			this->sz = 0;
+
+			for (const T& val : list)
+			{
+				this->push_back(val);
+			}
+		}
+		~List()
+		{
+			this->_destroyList(this->head);
+			this->head = nullptr;
+			this->tail = nullptr;
+		}
+		size_t size() { return this->sz; }
+		bool empty() { return this->sz == 0; }
+		T& front()
+		{
+			if (this->head == nullptr) throw "Error: Empty list";
+			return this->head->data;
+		}
+		auto top() { return head; }
+		T& back()
+		{
+			if (this->tail == nullptr) throw "Error: Empty list";
+			return this->tail->data;
+		}
+		T& operator[](size_t i) {
+			if (i < 0 || i >= sz) {
+				throw std::out_of_range("Index out of range");
+			}
+			Node* current = head;
+			for (size_t j = 0; j < i; ++j) {
+				current = current->next;
+			}
+			return current->data;
+		}
+		void print() {
+			Node* current = head;
+			while (current != nullptr) {
+				std::cout << current->data << " ";
+				current = current->next;
+			}
+			std::cout << std::endl;
+		}
+		T& middle()
+		{
+			if (this->head == nullptr) throw "Error: Empty list";
+
+			Node* it = this->head;
+			size_t mid = this->sz / 2;
+
+			for (size_t i = 0; i < mid; ++i) it = it->next;
+			return it->data;
+		}
+		void insert(size_t index, T data)
+		{
+			if (index < 0 || index > this->sz) return;
+
+			++this->sz;
+
+			if (this->head == nullptr)
+			{
+				if (index != 0) return;
+
+				this->head = new Node(data, this->head);
+				this->tail = this->head;
+				return;
+			}
+
+			if (index == 0)
+			{
+				this->head = new Node(data, this->head);
+				this->head->next->prev = this->head;
+				return;
+			}
+
+			if (index == this->sz - 1)
+			{
+				this->tail->next = new Node(data);
+				this->tail->next->prev = this->tail;
+				this->tail = this->tail->next;
+				return;
+			}
+
+			Node* before = nullptr;
+			Node* it = this->head;
+
+			for (std::size_t i = 0; i < index; ++i)
+			{
+				before = it;
+				it = it->next;
+			}
+
+			before->next = new Node(data, it, before);
+			it->prev = before->next;
+		}
+		void push_front(T data)
+		{
+			this->head = new Node(data, this->head);
+
+			if (this->sz == 0) this->tail = this->head;
+
+			else this->head->next->prev = this->head;
+
+			++this->sz;
+		}
+		void push_back(T data)
+		{
+			++this->sz;
+
+			if (this->head == nullptr)
+			{
+				this->head = new Node(data);
+				this->tail = this->head;
+				return;
+			}
+
+			this->tail->next = new Node(data, nullptr, this->tail);
+			this->tail = this->tail->next;
+		}
+		void erase(size_t index)
+		{
+			if (index < 0 || index >= this->sz) return;
+
+
+			if (index == 0)
+			{
+				this->pop_front();
+				return;
+			}
+
+			if (index == this->sz - 1)
+			{
+				this->pop_back();
+				return;
+			}
+
+			Node* before = nullptr;
+			Node* it = this->head;
+
+			for (std::size_t i = 0; i < index; ++i)
+			{
+				before = it;
+				it = it->next;
+			}
+
+			before->next = it->next;
+			it->next->prev = before;
+
+			it->next = nullptr;
+			it->prev = nullptr;
+			delete it;
+
+			--this->sz;
+		}
+		void reverse(Node* start, Node* end) {
+			Node* current = start;
+			Node* prev = nullptr;
+			Node* next = nullptr;
+			while (current != end) {
+				next = current->next;
+				current->next = prev;
+				prev = current;
+				current->prev = next;
+				current = next;
+			}
+			end->next = prev;
+			if (start == head) {
+				head = end;
+			}
+			else {
+				start->prev->next = end;
+			}
+			Node* temp = start->prev;
+			start->prev = end;
+			end->prev = temp;
+		}
+		void pop_front()
+		{
+			if (this->head == nullptr)
+			{
+				return;
+			}
+
+			--this->sz;
+			Node* toDelete = this->head;
+			this->head = this->head->next;
+
+			toDelete->next = nullptr;
+			delete toDelete;
+
+			if (this->head == nullptr)
+			{
+				this->tail = nullptr;
+			}
+			else
+			{
+				this->head->prev = nullptr;
+			}
+		}
+		void resize(std::size_t new_size)
+		{
+			if (new_size < 0 || new_size >= this->sz)
+			{
+				return;
+			}
+
+			if (new_size == 0)
+			{
+				this->clear();
+				return;
+			}
+
+			Node* before = nullptr;
+			Node* it = this->head;
+
+			for (std::size_t i = 0; i < new_size; ++i)
+			{
+				before = it;
+				it = it->next;
+			}
+
+			before->next = nullptr;
+			it->prev = nullptr;
+			this->tail = before;
+			this->_destroyList(it);
+
+			this->sz = new_size;
+		}
+		void clear()
+		{
+			this->_destroyList(this->head);
+			this->head = nullptr;
+			this->tail = nullptr;
+			this->sz = 0;
+		}
+		void filter(bool(*condition)(T data), void(*doThis)(T data))
+		{
+			Node* it = this->head;
+
+			while (it != nullptr)
+			{
+				if (condition(it->data))
+				{
+					doThis(it->data);
+				}
+				it = it->next;
+			}
+		}
+		bool search(T value, bool(*compare)(T first_val, T second_val) = [](T a, T b) { return a == b; })
+		{
+			Node* it = this->head;
+
+			while (it != nullptr)
+			{
+				if (compare(it->value, value))
+				{
+					return true;
+				}
+				it = it->next;
+			}
+
+			return false;
+		}
+		bool search_if(bool(*condition)(T value))
+		{
+			Node* it = this->head;
+
+			while (it != nullptr)
+			{
+				if (condition(it->data))
+				{
+					return true;
+				}
+				it = it->next;
+			}
+
+			return false;
+		}
+		T* find(T data, bool(*comparison)(T a, T b) = [](T a, T b) { return a == b; })
+		{
+			Node* it = this->head;
+
+			while (it != nullptr)
+			{
+				if (comparison(data, it->data))
+				{
+					return &it->data;
+				}
+				it = it->next;
+			}
+
+			return nullptr;
+		}
+		void _destroyList(Node*& node)
+		{
+			if (node == nullptr)
+			{
+				return;
+			}
+
+			this->_destroyList(node->next);
+			delete node;
+		}
+		void _end(Node*& node)
+		{
+			while (node->next != nullptr)
+			{
+				node = node->next;
+			}
+		}
+		void heap_sort() {
+			int n = size() + 1;
+			n -= 1;
+			Node* temp = head;
+			for (int i = n / 2 - 1; i >= 0; i--)
+				heapify(temp, n, i);
+
+			for (int i = n - 1; i >= 0; i--)
+			{
+				swap(0, i, temp);
+
+
+				heapify(temp, i, 0);
+			}
+		}
+
+		void heapify(Node* temp, int n, int i) {
+			int largest = i;
+			int l = 2 * i + 1;
+			int r = 2 * i + 2;
+			Node* largesti = temp;
+			for (int k = 0; k < largest; k++) {
+				largesti = largesti->next;
+			}
+			Node* li = temp;
+			for (int k = 0; k < l; k++) {
+				if (li == NULL)
+					break;
+				li = li->next;
+			}
+			Node* ri = NULL;
+			if (li != NULL) ri = li->next;
+
+			if (li != NULL)
+				if (l < n && li->data > largesti->data) {
+					largest = l;
+					largesti = li;
+				}
+			if (ri != NULL)
+				if (r < n && ri->data > largesti->data)
+					largest = r;
+
+			if (largest != i)
+			{
+				swap(i, largest, temp);
+				heapify(temp, n, largest);
+			}
+		}
+
+		void quicksort(Node* low, Node* high) {
+			if (high != nullptr && low != high && low != high->next) {
+				Node* p = partition(low, high);
+				quicksort(low, p->prev);
+				quicksort(p->next, high);
+			}
+		}
+
+		void merge(List<T>& left, List<T>& right)
+		{
+			List<T> result;
+
+			auto left_it = left.top();
+			auto right_it = right.top();
+
+			while (left_it != nullptr && right_it != nullptr)
+			{
+				if (left_it->data < right_it->data)
+				{
+					result.push_back(left_it->data);
+					left_it = left_it->next;
+				}
+				else
+				{
+					result.push_back(right_it->data);
+					right_it = right_it->next;
+				}
+			}
+
+			while (left_it != nullptr)
+			{
+				result.push_back(left_it->data);
+				left_it = left_it->next;
+			}
+
+			while (right_it != nullptr)
+			{
+				result.push_back(right_it->data);
+				right_it = right_it->next;
+			}
+
+			this->head = result.top();
+			this->tail = result.top();
+			this->sz = result.sz;
+
+			result.head = nullptr;
+			result.tail = nullptr;
+			result.sz = 0;
+		}
+		void merge_sort()
+		{
+			if (this->sz <= 1) return;
+
+			List<T> left_half;
+			List<T> right_half;
+			auto it = this->top();
+			for (size_t i = 0; i < this->sz; ++i)
+			{
+				if (i < this->sz / 2) left_half.push_back(it->data);
+				else right_half.push_back(it->data);
+				it = it->next;
+			}
+
+			left_half.merge_sort();
+			right_half.merge_sort();
+
+			this->merge(left_half, right_half);
+		}
+		void swap(int i, int k, Node* swapList) {
+			Node* temp1 = swapList, * temp2 = swapList;
+			for (int j = 0; j < i; j++) {
+				temp1 = temp1->next;
+			}
+			for (int j = 0; j < k; j++) {
+				temp2 = temp2->next;
+			}
+			int number = temp1->data;
+			temp1->data = temp2->data;
+
+			temp2->data = number;
+
+		}
+		void printList(Node* node)
+		{
+			while (node != NULL) {
+				std::cout << node->data << " ";
+				node = node->next;
+			}
+		}
+		void pop_back() {
+			if (sz == 0) {
+				return;
+			}
+
+			if (sz == 1) {
+				delete tail;
+				head = tail = nullptr;
+			}
+			else {
+				Node* new_tail = tail->prev;
+				new_tail->next = nullptr;
+				delete tail;
+				tail = new_tail;
+			}
+
+			--sz;
+		}
+		void swap(Node* node1, Node* node2) {
+			T temp = node1->data;
+			node1->data = node2->data;
+			node2->data = temp;
+		}
+
+
+		T quickSelect(int k) {
+			if (sz == 0) {
+				throw std::out_of_range("List is empty");
+			}
+
+			T* arr = new T[sz];
+			int i = 0;
+			for (Node* node = head; node != nullptr; node = node->next) {
+				arr[i++] = node->data;
+			}
+
+			T result = quickSelectHelper(arr, 0, sz - 1, k);
+
+			delete[] arr;
+
+			return result;
+		}
+
+		T quickSelectHelper(T* arr, int left, int right, int k) {
+			if (left == right) {
+				return arr[left];
+			}
+
+			int pivotIndex = (left + right) / 2;
+			pivotIndex = partition(arr, left, right, pivotIndex);
+
+			if (k == pivotIndex) {
+				return arr[k];
+			}
+			else if (k < pivotIndex) {
+				return quickSelectHelper(arr, left, pivotIndex - 1, k);
+			}
+			else {
+				return quickSelectHelper(arr, pivotIndex + 1, right, k);
+			}
+		}
+
+		int partition(T* arr, int left, int right, int pivotIndex) {
+			T pivotValue = arr[pivotIndex];
+
+			std::swap(arr[pivotIndex], arr[right]);
+
+			int storeIndex = left;
+			for (int i = left; i < right; i++) {
+				if (arr[i] < pivotValue) {
+					std::swap(arr[i], arr[storeIndex]);
+					storeIndex++;
+				}
+			}
+			std::swap(arr[storeIndex], arr[right]);
+
+			return storeIndex;
+		}
+
+		void timsort() {
+			const int minRun = 32;
+
+			auto mergeRun = [this](Node* start, Node* end) {
+				int len = end == nullptr ? sz : (end - start + 1);
+				if (len < 2) {
+					return;
+				}
+				int run = 1;
+				while (run * run < len) {
+					run <<= 1;
+				}
+				int left = 0, mid = left + run, right = mid + run;
+				if (mid >= len) {
+					mid = len;
+				}
+				if (right >= len) {
+					right = len;
+				}
+				if (run < minRun) {
+					insertionSort(start);
+					return;
+				}
+				while (right <= len) {
+					if (right < len && end != nullptr && end->data < getNode(right)->data) {
+						right = len;
+					}
+					if (end == nullptr || end->data >= getNode(right - 1)->data) {
+						reverse(getNode(left), getNode(mid));
+						reverse(getNode(mid), getNode(right));
+						reverse(getNode(left), getNode(right));
+					}
+					left += run;
+					mid += run;
+					right += run;
+					if (mid >= len) {
+						mid = len;
+					}
+					if (right >= len) {
+						right = len;
+					}
+				}
+			}
+
+			Node * current = head;
+			Node* prev = nullptr;
+			int count = 1;
+			std::vector<Node*> runStack;
+			while (current != nullptr) {
+				if (prev == nullptr || prev->data <= current->data) {
+					count++;
+				}
+				else {
+					if (count > 1) {
+						runStack.push_back(prev);
+						mergeRun(prev, current->prev);
+						prev = current;
+						count = 1;
+					}
+				}
+				prev = current;
+				current = current->next;
+			}
+			if (count > 1) {
+				runStack.push_back(prev);
+				mergeRun(prev, tail);
+			}
+
+			while (runStack.size() > 1) {
+				Node* right = runStack.back();
+				runStack.pop_back();
+				Node* left = runStack.back();
+				mergeRun(left, right);
+			}
+		}
+	};
 
 	template <typename T> void vector<T>::insert(T data) {
 		if (is_sorted) { //1

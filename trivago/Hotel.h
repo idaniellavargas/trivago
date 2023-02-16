@@ -61,7 +61,7 @@ public:
 	}
 
 	function<void(string)> bordes{
-		[](string nombre) { 
+		[](string nombre) {
 			if (nombre != "") {
 				transform(nombre.begin(), nombre.end(), nombre.begin(), ::toupper);
 				cout << "\n/============  " << nombre << "  ============/";
@@ -94,7 +94,7 @@ public:
 		return nombre > rhs->nombre;
 	}
 
-	bool operator<(const Hotel* &rhs) {
+	bool operator<(const Hotel*& rhs) {
 		return nombre < rhs->nombre;
 	}
 
@@ -102,23 +102,243 @@ public:
 		return nombre < rhs->nombre;
 	}
 
-	bool operator<(const Hotel &rhs) {
+	bool operator<(const Hotel& rhs) {
 		return nombre < rhs.nombre;
 	}
 
 	string guardar() {
-		return  nombre + "," + ID + "," + ubicacion + "," + moneda + "," + to_string(huespedes) + "," + to_string(habitaciones) + "," + to_string(telefono) + "," + 
-			to_string(wifi) + "," + to_string(piscina) + "," + to_string(spa) + "," + to_string(parking) + "," + to_string(mascotas) + "," + to_string(desayuno)+ "," 
+		return  nombre + "," + ID + "," + ubicacion + "," + moneda + "," + to_string(huespedes) + "," + to_string(habitaciones) + "," + to_string(telefono) + "," +
+			to_string(wifi) + "," + to_string(piscina) + "," + to_string(spa) + "," + to_string(parking) + "," + to_string(mascotas) + "," + to_string(desayuno) + ","
 			+ to_string(precio) + "," + to_string(precioVIP) + "\n";
 	}
 
 };
+
+template <class T, class S> class HashTable
+{
+public:
+	size_t bucketSize;
+	vector<list<pair<T, S>>> table;
+	HashTable() {}
+	HashTable(std::size_t initial_size, bool strict_mode = false)
+	{
+		this->bucketSize = strict_mode ? initial_size : this->_next_prime(initial_size);
+		for (std::size_t i = 0; i < this->bucketSize; ++i)
+		{
+			list<std::pair<T, S>> l;
+			this->table.push_back(l);
+		}
+	}
+
+	~HashTable() {}
+
+	std::size_t size() { return bucketSize; }
+
+	void insert(T key, S value)
+	{
+		if (this->search(key)) return;
+		std::size_t index = this->_hash_function(key);
+		this->table[index].push_back(std::make_pair(key, value));
+	}
+
+	void remove(T key)
+	{
+		std::size_t index = this->_hash_function(key);
+		list<std::pair<T, S>>& temp = this->table[index];
+		//temp.remove_if([&key](std::pair<T, S> p) { return key == p.first; });
+	}
+
+	S get(T key) {
+		if (!search(key)) return NULL;
+		std::size_t index = _hash_function(key);
+		list<std::pair<T, S>>& items = table[index];
+
+		for (std::pair<T, S>& it : items)
+		{
+			if (it.first == key)
+			{
+				return it.second;
+			}
+		}
+	}
+
+	void sort_table() {
+		for (std::size_t i = 0; i < this->bucketSize; ++i)
+		{
+			if (this->table[i].size() == 0) continue;
+
+
+			list<std::pair<std::string, Hotel*>>& temp = this->table[i];
+
+			for (std::pair<std::string, Hotel*>& it : temp)
+			{
+				if (it.second->get_ubicacion() == "Peru")it.second->toString();
+			}
+		}
+	}
+
+	void print_all() {
+		for (std::size_t i = 0; i < this->bucketSize; ++i)
+		{
+			if (this->table[i].size() == 0) continue;
+
+
+			list<std::pair<std::string, Hotel*>>& temp = this->table[i];
+
+			for (std::pair<std::string, Hotel*>& it : temp)
+			{
+				it.second->toString();
+			}
+		}
+	}
+
+	void save() {
+		for (std::size_t i = 0; i < this->bucketSize; ++i)
+		{
+			if (this->table[i].size() == 0) continue;
+
+			list<std::pair<std::string, Hotel*>>& temp = this->table[i];
+
+			for (std::pair<std::string, Hotel*>& it : temp)
+			{
+				it.second->guardar();
+			}
+		}
+	}
+
+	void reporte_PE() {
+		for (std::size_t i = 0; i < this->bucketSize; ++i)
+		{
+			if (this->table[i].size() == 0) continue;
+
+
+			list<std::pair<std::string, Hotel*>>& temp = this->table[i];
+
+			for (std::pair<std::string, Hotel*>& it : temp)
+			{
+				if (it.second->get_ubicacion() == "Peru")it.second->toString();
+			}
+		}
+	}
+
+	void reporte_breakfast() {
+		for (std::size_t i = 0; i < this->bucketSize; ++i)
+		{
+			if (this->table[i].size() == 0) continue;
+
+			list<std::pair<std::string, Hotel*>>& temp = this->table[i];
+
+			for (std::pair<std::string, Hotel*>& it : temp)
+			{
+				if (it.second->get_desayuno())it.second->toString();
+			}
+		}
+	}
+
+	bool search(T key)
+	{
+		std::size_t ind = this->_hash_function(key);
+		list<std::pair<T, S>>& items = this->table[ind];
+
+		for (std::pair<T, S>& it : items)
+		{
+			if (it.first == key)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	std::size_t count_collisions()
+	{
+		std::size_t count = 0;
+
+		for (std::size_t i = 0; i < this->bucketSize; ++i)
+		{
+			if (this->table[i].size() == 0)
+			{
+				continue;
+			}
+			count += this->table[i].size() - 1;
+		}
+
+		return count;
+	}
+
+private:
+	bool _is_prime(std::size_t num)
+	{
+		for (std::size_t i = 2; i * i <= num; ++i)
+		{
+			if (num % i == 0)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	std::size_t _next_prime(std::size_t num)
+	{
+		if (num <= 2)
+		{
+			return 3;
+		}
+
+		std::size_t init, end, ans;
+
+		init = num + 1 + (num % 2);
+		end = 2 * init - 2;
+
+		for (ans = init; ans < end; ans = ans + 2)
+		{
+			if (this->_is_prime(ans))
+			{
+				break;
+			}
+		}
+		return ans;
+	}
+
+	std::size_t _hash_function(int key)
+	{
+		return key % this->bucketSize;
+	}
+
+	std::size_t _hash_function(std::string key)
+	{
+		return this->_horner_polinomial_hash(key);
+	}
+
+	std::size_t _horner_polinomial_hash(std::string key)
+	{
+		for (char& c : key)
+		{
+			c = tolower(c);
+		}
+
+		const int C = 31;
+		std::size_t index = key.at(0) - 'a' + 1;
+		std::size_t n = key.size();
+
+		for (std::size_t i = 1; i < n; ++i)
+		{
+			index = (((index % this->bucketSize * C % this->bucketSize) % this->bucketSize) + ((key.at(i) - 'a' + 1) % this->bucketSize)) % this->bucketSize;
+		}
+
+		return index % this->bucketSize;
+	}
+};
+
+
 class Catalogo {
 private:
-	vector<Hotel*>Hoteles;
+	HashTable<string, Hotel*>Hoteles;
 public:
 	Catalogo() {
-		Hoteles.setComp([](Hotel* a, Hotel* b) { return *a < *b; });
+		this->Hoteles = HashTable<string, Hotel*>(1000);
 		ifstream archivo(ARCHIVO_HOTELES);
 		string linea;
 		char delimitador = ',';
@@ -164,7 +384,7 @@ public:
 			objHotel->set_precio((int)(stoi(precio)));
 			objHotel->set_precioVIP((int)(stoi(precioVIP)));
 
-			Hoteles.insert(objHotel);
+			Hoteles.insert(objHotel->get_ID(), objHotel);
 		}
 	}
 
@@ -173,60 +393,42 @@ public:
 	};
 
 	void agregarHotel(Hotel* hotel) {
-		Hoteles.insert(hotel);
+		Hoteles.insert(hotel->get_ID(), hotel);
 		agregar(hotel->get_ID());
 	}
-	void eliminarPos(int pos) {
-		Hoteles.erase(Hoteles.begin() + pos);
+	void eliminarPos(string id) {
+		Hoteles.remove(id);
 	}
 
 	int get_size() { return Hoteles.size(); }
-	Hotel* get_pos(int i) { return Hoteles[i]; }
+
 	void actualizar() {
-		shsort(Hoteles, [](Hotel* hotel1, Hotel* hotel2)
+		/*shsort(Hoteles, [](Hotel* hotel1, Hotel* hotel2)
 		{
 		if (hotel1->get_ID() != hotel2->get_ID()) return hotel1->get_ID() < hotel2->get_ID(); // IDs incrementandose
-		else hotel2->set_ID(generarID(2, hotel2->get_nombre(), 0)); }); //rehacer id si son iguales
-	}
-
-	Hotel* modificar(int pos) {
-		for (int i = 0; i < Hoteles.size(); i++)
-		{
-			return Hoteles[pos];
-		}
-
+		else hotel2->set_ID(generarID(2, hotel2->get_nombre(), 0)); }); //rehacer id si son iguales*/
 	}
 
 	void mostrar() {
-		/*
-		*/
-		for (int i = 0; i < Hoteles.size(); i++) {
-			Hoteles[i]->toString();
-		}
+		Hoteles.print_all();
 	}
+
 	void HotelesPeruanos() {
-		for (int i = 0; i < Hoteles.size(); i++) {
-			if(Hoteles[i]->get_ubicacion()==" Peru")Hoteles[i]->toString();
-		}
+		Hoteles.reporte_PE();
 	}
 	void HotelesDesayuno() {
-		for (int i = 0; i < Hoteles.size(); i++) {
-			if (Hoteles[i]->get_desayuno() == true)Hoteles[i]->toString();
-		}
+		Hoteles.reporte_breakfast();
 	}
+	/*
+	*/
 	Hotel* BuscarHotel(string id) { //esta funcion devuelve un hotel con la id provista, else devuelve NULL
-		for (auto h : Hoteles) {
-			if (h->get_ID() == id) return h;
-		}
-		return NULL;
+		return Hoteles.get(id);
 	}
 
 	void guardar() {
 		ofstream fout;
 		fout.open(ARCHIVO_HOTELES);
-		for (int i = 0; i < Hoteles.size(); i++) {
-			fout << Hoteles[i]->guardar();
-		}
+		Hoteles.save();
 		fout.close();
 	}
 };

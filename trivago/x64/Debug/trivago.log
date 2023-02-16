@@ -1,48 +1,114 @@
 ﻿  main.cpp
-C:\Users\Milagros\Desktop\p\trivago\trivago\Recursos.h(114,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\Recursos.h(180,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\Hotel.h(164,35): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Milagros\Desktop\p\trivago\trivago\Hotel.h(165,38): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(43,7): warning C4101: 'opc': variable local sin referencia
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(150,7): warning C4101: 'opc': variable local sin referencia
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(254,7): warning C4101: 'opc': variable local sin referencia
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(610,14): warning C4101: 'new_marks': variable local sin referencia
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(610,7): warning C4101: 'index': variable local sin referencia
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(609,8): warning C4101: 'sub': variable local sin referencia
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(608,23): warning C4101: 'marks': variable local sin referencia
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(777,52): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(855,36): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(859,37): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(886,52): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(887,54): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(888,55): warning C4244: '-=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(925,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(929,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(944,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(970,15): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(1050,68): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Milagros\Desktop\p\trivago\trivago\Ofertas.h(31,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\Ofertas.h(94,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(42,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(88,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(130,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(134,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(139,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(160,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(183,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(196,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(231,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(265,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(464,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(466,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(505,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(514,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\main.cpp(523,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
-C:\Users\Milagros\Desktop\p\trivago\trivago\Fecha.h(145): warning C4715: 'Date::dateIsReal': no todas las rutas de acceso de control devuelven un valor
-C:\Users\Milagros\Desktop\p\trivago\trivago\UPC.h(259): warning C4172: devolución de dirección de la variable local o temporal: iterator
-C:\Users\Milagros\Desktop\p\trivago\trivago\Hotel.h(198): warning C4715: 'Catalogo::modificar': no todas las rutas de acceso de control devuelven un valor
-C:\Users\Milagros\Desktop\p\trivago\trivago\Usuario.h(566): warning C4715: 'Reservas::buscar': no todas las rutas de acceso de control devuelven un valor
-C:\Users\Milagros\Desktop\p\trivago\trivago\UPC.h(259): warning C4172: devolución de dirección de la variable local o temporal: iterator
-C:\Users\Milagros\Desktop\p\trivago\trivago\Recursos.h(147): warning C4715: 'generarID': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Recursos.h(114,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Recursos.h(180,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(384,35): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(385,38): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(403,17): warning C4267: 'return': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(43,7): warning C4101: 'opc': variable local sin referencia
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(150,7): warning C4101: 'opc': variable local sin referencia
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(254,7): warning C4101: 'opc': variable local sin referencia
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(610,14): warning C4101: 'new_marks': variable local sin referencia
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(610,7): warning C4101: 'index': variable local sin referencia
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(609,8): warning C4101: 'sub': variable local sin referencia
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(608,23): warning C4101: 'marks': variable local sin referencia
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(777,52): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(855,36): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(859,37): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(886,52): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(887,54): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(888,55): warning C4244: '-=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(925,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(929,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(944,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(970,15): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(1050,68): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Ofertas.h(31,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Ofertas.h(94,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(42,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(88,3): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(130,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(134,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(139,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(160,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(183,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(196,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(231,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(265,4): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(464,7): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _kbhit. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(466,12): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(505,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(514,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\main.cpp(523,7): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(227,1): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(224,1): message : al compilar la función del miembro clase plantilla "void HashTable<std::string,Hotel *>::reporte_breakfast(void)"
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(420,28): message : Vea la referencia a la creación de una instancia de la función plantilla "void HashTable<std::string,Hotel *>::reporte_breakfast(void)" que se está compilando
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(338,27): message : Vea la referencia a la creación de una instancia de clase plantilla "HashTable<std::string,Hotel *>" que se está compilando
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(229,32): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(212,1): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(209,1): message : al compilar la función del miembro clase plantilla "void HashTable<std::string,Hotel *>::reporte_PE(void)"
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(417,21): message : Vea la referencia a la creación de una instancia de la función plantilla "void HashTable<std::string,Hotel *>::reporte_PE(void)" que se está compilando
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(215,32): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(198,1): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(195,1): message : al compilar la función del miembro clase plantilla "void HashTable<std::string,Hotel *>::save(void)"
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(431,15): message : Vea la referencia a la creación de una instancia de la función plantilla "void HashTable<std::string,Hotel *>::save(void)" que se está compilando
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(200,32): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(183,1): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(180,1): message : al compilar la función del miembro clase plantilla "void HashTable<std::string,Hotel *>::print_all(void)"
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(413,20): message : Vea la referencia a la creación de una instancia de la función plantilla "void HashTable<std::string,Hotel *>::print_all(void)" que se está compilando
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(186,32): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(154,21): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(151,1): message : al compilar la función del miembro clase plantilla "S HashTable<std::string,S>::get(T)"
+          with
+          [
+              S=Hotel *,
+              T=std::string
+          ]
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(425,3): message : Vea la referencia a la creación de una instancia de la función plantilla "S HashTable<std::string,S>::get(T)" que se está compilando
+          with
+          [
+              S=Hotel *,
+              T=std::string
+          ]
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(147,21): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(145,1): message : al compilar la función del miembro clase plantilla "void HashTable<std::string,Hotel *>::remove(T)"
+          with
+          [
+              T=std::string
+          ]
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(400,17): message : Vea la referencia a la creación de una instancia de la función plantilla "void HashTable<std::string,Hotel *>::remove(T)" que se está compilando
+          with
+          [
+              T=std::string
+          ]
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(141,1): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(138,1): message : al compilar la función del miembro clase plantilla "void HashTable<std::string,Hotel *>::insert(T,S)"
+          with
+          [
+              T=std::string,
+              S=Hotel *
+          ]
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(387,18): message : Vea la referencia a la creación de una instancia de la función plantilla "void HashTable<std::string,Hotel *>::insert(T,S)" que se está compilando
+          with
+          [
+              T=std::string,
+              S=Hotel *
+          ]
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(241,21): warning C4267: 'argumento': conversión de 'size_t' a 'const int'; posible pérdida de datos
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(239,1): message : al compilar la función del miembro clase plantilla "bool HashTable<std::string,Hotel *>::search(T)"
+          with
+          [
+              T=std::string
+          ]
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(152,3): message : Vea la referencia a la creación de una instancia de la función plantilla "bool HashTable<std::string,Hotel *>::search(T)" que se está compilando
+          with
+          [
+              T=std::string
+          ]
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Fecha.h(145): warning C4715: 'Date::dateIsReal': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Milagros\Desktop\triv\trivago\trivago\UPC.h(275): warning C4172: devolución de dirección de la variable local o temporal: iterator
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Usuario.h(566): warning C4715: 'Reservas::buscar': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Milagros\Desktop\triv\trivago\trivago\UPC.h(275): warning C4172: devolución de dirección de la variable local o temporal: iterator
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Recursos.h(147): warning C4715: 'generarID': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Milagros\Desktop\triv\trivago\trivago\Hotel.h(163): warning C4715: 'HashTable<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,Hotel *>::get': no todas las rutas de acceso de control devuelven un valor
   main.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
-  trivago.vcxproj -> C:\Users\Milagros\Desktop\p\trivago\x64\Debug\trivago.exe
+  trivago.vcxproj -> C:\Users\Milagros\Desktop\triv\trivago\x64\Debug\trivago.exe
