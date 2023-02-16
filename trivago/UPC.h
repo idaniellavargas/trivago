@@ -846,6 +846,55 @@ namespace UPC {
 		}
 	};
 
+	template <typename T> class HashTableAVL {
+	private:
+		vector<AVLTree<T>> table;
+		int numElements;
+		int size;
+
+		int hash(const std::string& key) {
+			int hashVal = 0;
+			for (char c : key) {
+				hashVal = 31 * hashVal + c;
+			}
+			return hashVal % size;
+		}
+
+	public:
+		HashTableAVL(int size) : table(size), numElements(0), size(size) {}
+
+		void insert(const std::string& key, const T& data) {
+			int index = hash(key);
+			table[index].insert(key, data);
+			numElements++;
+		}
+
+		T* find(const std::string& key) {
+			int index = hash(key);
+			typename AVLTree<T>::Node* node = table[index].search(table[index].getRoot(), key);
+			if (node == nullptr) {
+				return nullptr;
+			}
+			else {
+				return &node->data;
+			}
+		}
+
+		void remove(const std::string& key) {
+			int index = hash(key);
+			table[index].remove(key);
+			numElements--;
+		}
+
+		int getNumElements() const {
+			return numElements;
+		}
+
+		int getSize() const {
+			return size;
+		}
+	};
+
 	template<typename T> void lswap(typename list<T>::Iterator a, typename list<T>::Iterator b) {
 		T aux = *a;
 		a = *b;
