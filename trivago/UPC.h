@@ -668,6 +668,183 @@ namespace UPC {
 
 	};
 
+	template <typename T> class AVLTree {
+	private:
+		struct Node {
+			std::string key;
+			T data;
+			int height;
+			Node* left;
+			Node* right;
+
+			Node(const std::string& key, const T& data) : key(key), data(data), height(1), left(nullptr), right(nullptr) {}
+		};
+
+		Node* root;
+
+		int getHeight(Node* node) {
+			if (node == nullptr) {
+				return 0;
+			}
+			return node->height;
+		}
+
+		int getBalanceFactor(Node* node) {
+			if (node == nullptr) {
+				return 0;
+			}
+			return getHeight(node->left) - getHeight(node->right);
+		}
+
+		Node* leftRotate(Node* node) {
+			Node* newRoot = node->right;
+			Node* temp = newRoot->left;
+			newRoot->left = node;
+			node->right = temp;
+
+			node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+			newRoot->height = 1 + std::max(getHeight(newRoot->left), getHeight(newRoot->right));
+
+			return newRoot;
+		}
+
+		Node* rightRotate(Node* node) {
+			Node* newRoot = node->left;
+			Node* temp = newRoot->right;
+			newRoot->right = node;
+			node->left = temp;
+
+			node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+			newRoot->height = 1 + std::max(getHeight(newRoot->left), getHeight(newRoot->right));
+
+			return newRoot;
+		}
+
+		Node* insert(Node* node, const std::string& key, const T& data) {
+			if (node == nullptr) {
+				return new Node(key, data);
+			}
+			else if (key < node->key) {
+				node->left = insert(node->left, key, data);
+			}
+			else {
+				node->right = insert(node->right, key, data);
+			}
+
+			node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+			int balanceFactor = getBalanceFactor(node);
+
+			if (balanceFactor > 1 && key < node->left->key) {
+				return rightRotate(node);
+			}
+			else if (balanceFactor > 1 && key > node->left->key) {
+				node->left = leftRotate(node->left);
+				return rightRotate(node);
+			}
+			else if (balanceFactor < -1 && key > node->right->key) {
+				return leftRotate(node);
+			}
+			else if (balanceFactor < -1 && key < node->right->key) {
+				node->right = rightRotate(node->right);
+				return leftRotate(node);
+			}
+
+			return node;
+		}
+		Node* search(Node* node, const std::string& key) {
+			if (node == nullptr || node->key == key) {
+				return node;
+			}
+			if (key < node->key) {
+				return search(node->left, key);
+			}
+			else {
+				return search(node->right, key);
+			}
+		}
+		Node* remove(Node* node, const std::string& key) {
+			if (node == nullptr) {
+				return node;
+			}
+			if (key < node->key) {
+				node->left = remove(node->left, key);
+			}
+			else if (key > node->key) {
+				node->right = remove(node->right, key);
+			}
+			else {
+				if (node->left == nullptr || node->right == nullptr) {
+					Node* temp = node->left ? node->left : node->right;
+					if (temp == nullptr) {
+						temp = node;
+						node = nullptr;
+					}
+					else {
+						*node = *temp;
+					}
+					delete temp;
+				}
+				else {
+					Node* temp = minValueNode(node->right);
+					node->key = temp->key;
+					node->data = temp->data;
+					node->right = remove(node->right, temp->key);
+				}
+			}
+
+			if (node == nullptr) {
+				return node;
+			}
+
+			node->height = 1 + std::max(getHeight(node->left), getHeight(node->right));
+			int balanceFactor = getBalanceFactor(node);
+
+			if (balanceFactor > 1 && getBalanceFactor(node->left) >= 0) {
+				return rightRotate(node);
+			}
+			else if (balanceFactor > 1 && getBalanceFactor(node->left) < 0) {
+				node->left = leftRotate(node->left);
+				return rightRotate(node);
+			}
+			else if (balanceFactor < -1 && getBalanceFactor(node->right) <= 0) {
+				return leftRotate(node);
+			}
+			else if (balanceFactor < -1 && getBalanceFactor(node->right) > 0) {
+				node->right = rightRotate(node->right);
+				return leftRotate(node);
+			}
+
+			return node;
+		}
+
+		Node* minValueNode(Node* node) {
+			Node* current = node;
+			while (current->left != nullptr) {
+				current = current->left;
+			}
+			return current;
+		}
+	public:
+		AVLTree() : root(nullptr) {}
+		void insert(const std::string& key, const T& data) {
+			root = insert(root, key, data);
+		}
+
+		void remove(const std::string& key) {
+			root = remove(root, key);
+		}
+
+		T search(const std::string& key) {
+			Node* node = search(root, key);
+			if (node != nullptr) {
+				return node->data;
+			}
+			else {
+				throw std::out_of_range("Key not found.");
+			}
+
+		}
+	};
 
 	template<typename T> void lswap(typename list<T>::Iterator a, typename list<T>::Iterator b) {
 		T aux = *a;
