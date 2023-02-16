@@ -1,0 +1,656 @@
+#include "Recursos.h"
+#include "Comentarios.h"
+#include "Usuario.h"
+#include "Ofertas.h"
+#include "Datos.h"
+using namespace std;
+
+typedef void (*fp)();
+Usuario* cuenta = NULL;
+Cliente* cliente;
+DueñoHotelero* dueño;
+Administrador* admin;
+//arrays
+//independientes:
+Administradores* arrAdmin = new Administradores();
+Catalogo* arrCat = new Catalogo();
+arrComent* arrCom = new arrComent();
+Ofertas* arrOfer = new Ofertas();
+//relativos:
+Reservas* arrRes = new Reservas(arrCat);
+Clientela* arrCliente = new Clientela(arrRes);
+Dueños* arrHotel = new Dueños(arrRes);
+bool sesionIniciada = false;
+short tipo = 0;
+UPC::stack<fp>s;
+auto funcion = &Mostrar_Logo;
+
+void FuncionalidadUsuario() {
+	Console::Clear();
+	char opc;
+	string nom, opc2, cor, con, hot;
+	vector<string> lista;
+	Usuario* temp = NULL;
+	string id;
+	string nomb, corrv, cont, vr1;
+	char delimitador = ',';
+	string linea;
+	ifstream larchivo1;
+	vector<string> l;
+	do
+	{
+		cout << "¿Registrarse (R) o Iniciar sesión (I)?" << endl;
+		std::cin >> opc;
+		opc = toupper(opc);
+		if (cuenta != NULL) //Revisamos que ya se haya registrado o iniciado sesion
+		{
+			cout << "Ya se encuentra autenticado en el sistema" << endl;
+			_sleep(1000);
+			opc = 'o';
+			break;
+		}
+	} while (opc != 'R' && opc != 'I');
+
+	if (opc == 'R')
+	{
+		do {
+			cout << "¿Desea registrarse como cliente(1), administrado(2), o dueño hotelero(3)?" << endl;
+			std::cin >> tipo;
+		} while (tipo > 3 || tipo < 0);
+
+		//Registramos las variables del usuario
+		cout << "---------Registrarse---------" << endl;
+		cout << "Nombre: ";
+		std::cin >> nom;
+		if (tipo == 2) {
+			cout << "ID: ";
+			cin >> id;
+		}
+		else if (tipo == 3) {
+			cout << "Hotel: ";
+			cin >> hot;
+		}
+		cout << "Correo: ";
+		std::cin >> cor;
+		cout << "Contraseña: ";
+		std::cin >> con;
+		if(cuenta != NULL) delete cuenta;
+		if (tipo == 1) {
+			if (arrCliente->BuscarCliente(cor) == NULL)
+			{
+				Cliente* aux = new Cliente(nom, cor, con, 10000, arrRes); //Registramos al usuario
+				cuenta = aux;
+				arrCliente->agregarCliente(aux);
+				sesionIniciada = true;
+			}
+			else
+			{
+				cout << "Este correo ya esta siendo usado" << endl;
+			}
+		}
+		else if (tipo == 2) {
+			if (arrAdmin->BuscarAdmin(cor) == NULL)
+			{
+				Administrador* aux = new Administrador(nom, cor, con, id, true);
+				cuenta = aux;
+				arrAdmin->agregarAdmin(aux);
+				sesionIniciada = true;
+			}
+			else
+			{
+				cout << "Este correo ya esta siendo usado" << endl;
+			}
+		}
+		else {
+			if (arrHotel->BuscarDueño(cor) == NULL)
+			{
+				DueñoHotelero* aux = new DueñoHotelero(nom, cor, con, 0, hot, arrRes);
+				cuenta = aux;
+				arrHotel->agregarDueño(aux);
+				sesionIniciada = true;
+			}
+			else
+			{
+				cout << "Este correo ya esta siendo usado" << endl;
+			}
+		}
+		sesionIniciada = true;
+		_sleep(1000);
+	}
+	else if (opc == 'I')
+	{
+		do {
+			cout << "¿Desea iniciar sesión como cliente(1), administrador(2), o dueño hotelero(3)?" << endl;
+			std::cin >> tipo;
+		} while (tipo > 3 || tipo < 0);
+		do
+		{
+			switch (tipo) {
+			case 1:
+				cout << "Correo: ";
+				std::cin >> cor; //Ingresamos el correo
+				temp = arrCliente->BuscarCliente(cor);
+				cliente = arrCliente->BuscarCliente(cor);
+				break;
+			case 2:
+				cout << "ID: ";
+				cin >> id;
+				temp = arrAdmin->BuscarAdmin(id);
+				admin = arrAdmin->BuscarAdmin(id);
+				break;
+			case 3:
+				cout << "Hotel: ";
+				cin >> hot;
+				temp = arrHotel->BuscarDueño(hot);
+				dueño= arrHotel->BuscarDueño(hot);
+				break;
+			default:
+				break;
+			}
+		} while (temp == NULL);
+
+		//Validamos la contraseña
+
+		cout << "Contraseña: ";
+		std::cin >> con; //Ingresamos la contraseña
+		if (temp->getContrasena() == con)
+		{
+			sesionIniciada = true;
+			cout << "Contraseña correcta";
+			_sleep(1000);
+			delete cuenta;
+			cuenta = temp;
+			cout << "\nInicio de sesion exitoso.";
+			_sleep(2000);
+		}
+		else
+		{
+			cout << "Contraseña incorrecta" << endl;
+			_sleep(1000);
+		}
+	}
+	else if (opc == 'E') {
+		int contador = 0;
+		if (tipo == 1)
+		{
+			for (auto i = 0; i < arrCliente->get_size(); i++)
+			{
+				if (arrCliente->get_pos(i)->getcorreo() == cuenta->getcorreo())
+				{
+					arrCliente->eliminarPos(contador);
+					arrCliente->guardar();
+					cuenta = NULL;
+					sesionIniciada = false;
+				}
+				contador++;
+			}
+		}
+		else if (tipo == 2)
+		{
+			for (auto i = 0; i < arrAdmin->get_size(); i++)
+			{
+				if (arrAdmin->get_pos(i)->getcorreo() == cuenta->getcorreo())
+				{
+					arrAdmin->eliminarPos(contador);
+					arrAdmin->guardar();
+					cuenta = NULL;
+					sesionIniciada = false;
+				}
+				contador++;
+			}
+		}
+		else {
+			for (auto i = 0; i < arrHotel->get_size(); i++)
+			{
+				if (arrHotel->get_pos(i)->getcorreo() == cuenta->getcorreo())
+				{
+					arrHotel->eliminarPos(contador);
+					arrHotel->guardar();
+					cuenta = NULL;
+					sesionIniciada = false;
+				}
+				contador++;
+			}
+		}
+	}
+}
+void FuncionalidadHotel() {
+	Hotel* objHotel  = NULL;
+	string nombre, ID, ubicacion, moneda;
+	short huespedes, habitaciones;
+	long telefono;
+	bool wifi, piscina, spa, parking, mascotas, desayuno;
+	float precio, precioVIP;
+
+	while (true)
+	{
+		Console::Clear();
+		short op, pos;
+		op = MenuHotel();
+		if (op == 1)
+		{
+			if (tipo == 1) {
+				cout << "\nACCESO DENEGADO";
+				_sleep(1000);
+				return;
+			}
+			fflush(stdin);
+			cin.ignore();
+			cout << "¿Cómo se llama el hotel?\n"; getline(cin, nombre);
+			cout << "¿Dónde se ubica?\n"; getline(cin, ubicacion);
+			cout << "¿Qué tipo de cambio usa?\n"; getline(cin, moneda);
+			cout << "\nIngrese el límite de huéspedes por habitación: "; cin >> huespedes;
+			cout << "\nIngrese la cantidad de habitaciones disponibles: "; cin >> habitaciones;
+			cout << "\nIngrese un teléfono de contacto: "; cin >> telefono;
+			cout << "\nSi se cuenta con el servicio ingrese un 1, caso contrario 0:";
+			cout << "\nWiFi: "; cin >> wifi;
+			cout << "\nPiscina: "; cin >> piscina;
+			cout << "\nSpa: "; cin >> spa;
+			cout << "\nParking: "; cin >> parking;
+			cout << "\nMascotas: "; cin >> mascotas;
+			cout << "\nDesayuno: "; cin >> desayuno;
+			cout << "\nAhora, ingrese el precio regular de alojamiento: "; cin >> precio;
+			cout << "\nFinalmente, digite el precio de habitaciones VIP: "; cin >> precioVIP;
+			ID = generarID(1, nombre, 0);
+			objHotel = new Hotel(nombre, ID, ubicacion, moneda, huespedes, habitaciones, telefono, wifi, piscina, spa, parking, mascotas, desayuno, precio, precioVIP);
+			arrCat->agregarHotel(objHotel);
+			_sleep(2000);
+			Console::Clear();
+			MenuHotel();
+		}
+		if (op == 2)
+		{
+			arrCat->mostrar();
+			GoBack();
+		}
+		if (op == 3)
+		{
+			if (tipo != 2 && tipo != 3) {
+				cout << "ACCESO DENEGADO";
+				_sleep(1000);
+				return;
+			}
+			int opcionM;
+			cout << "Ingrese la poscion  que desee Modificar "; std::cin >> pos;
+			//Hotel* objHotel = arrCat->modificar(pos);
+			string nombre;
+			string ubicacion;
+			cout << "Que desea Modificar del Objeto: " << endl;
+			cout << " 1 .- El Nombre " << endl;
+			cout << " 2 .- Ubicacion " << endl;
+			std::cin >> opcionM;
+			switch (opcionM)
+			{
+			case 1:
+
+				cout << " Nombre  : (" << objHotel->get_nombre() << ") :"; std::cin >> nombre;
+				objHotel->set_nombre(nombre);
+				break;
+			case 2:
+
+				cout << " Ubicacion  : (" << objHotel->get_ubicacion() << ") :"; std::cin >> ubicacion;
+				objHotel->set_ubicacion(ubicacion);
+				break;
+			
+	
+			default:
+				cout << " Ha digitado un numero invalido " << endl;
+				break;
+			}
+		}
+		if (op == 4)
+		{
+			if (tipo != 2 && tipo != 3) {
+				cout << "ACCESO DENEGADO";
+				_sleep(1000);
+				return;
+			}
+			cout << "Ingrese la posicion que desee Eliminar: "; std::cin >> pos;
+			//arrCat->eliminarPos(pos);
+		}
+		if (op == 5) 
+		{
+			arrCat->HotelesPeruanos();
+			GoBack();
+			break;
+
+		}
+		if (op == 6)
+		{
+			arrCat->HotelesDesayuno();
+			GoBack();
+			break;
+		}
+		if (op == 7) 
+		{
+			int choice;
+			Ofertas* ofertas=new Ofertas();
+			if (tipo == 1)choice = ofertas->MenuOfertasAll();
+			else choice = ofertas->MenuOfertas();
+			if (choice == 1) {
+				ofertas->toString();
+				_sleep(1000);
+			}
+			else if (choice == 2 && (tipo == 2 || tipo == 3)) {
+				ofertas->NuevaOferta(ofertas);
+				_sleep(1000);
+			}
+			//GoBack();
+			break;
+		}
+		if (op == 8)
+		{
+			delete objHotel;
+			cout << "Nos vemos pronto!";
+			_sleep(1000);
+			break;
+		}
+	}
+}
+void Mostrar_Creditos() {
+	int** pCreditos;
+	Iniciar_Arreglos_Creditos(pCreditos);
+	Console::Clear();
+
+	for (int i = 0; i < FILAS; i++) {
+		for (int j = 0; j < COLUMNAS; j++) {
+			if (pCreditos[i][j] == 1) {
+				Console::ForegroundColor = ConsoleColor::Yellow;
+				cout << (char)219;
+			}
+			else if (pCreditos[i][j] == 3) {
+				Console::ForegroundColor = ConsoleColor::White;
+				cout << "@";
+			}
+			else if (i == 16) {
+				if (j == 14) cout << "DESARROLLADO POR:        ";
+				else if (j < 27) cout << ' ';
+			}
+			else if (i == 19) {
+				if (j == 14) cout << "x Gustavo De Vivero      ";
+				else if (j < 27) cout << ' ';
+			}
+			else if (i == 21) {
+				if (j == 14) cout << "x Marcelo Poggi          ";
+				else if (j < 27) cout << ' ';
+			}
+			else if (i == 23) {
+				if (j == 14) cout << "x Daniella Vargas        ";
+				else if (j < 27) cout << ' ';
+			}
+			else if (i == 25) {
+				if (j == 14) cout << "x Juliana Yauricasa      ";
+				else if (j < 27) cout << ' ';
+			}
+		
+			else if (i == 28) {
+				if (j == 8) cout << "PRESIONE 'ESC' PARA REGRESAR AL MENU ";
+				else if (j < 15) cout << ' ';
+			}
+		
+			else {
+				cout << ' ';
+			}
+		}
+		cout << endl;
+	}
+	GoBack();
+}
+void FuncionalidadComent() {
+	
+	int op;
+	do
+	{
+		op = MenuComent();
+		if (op == 1) NuevoComentario(arrCom, cuenta);
+		else if (op == 2) mostrarComentario(arrCom);
+	} while (op != 1 && op != 2);
+}
+void FuncionalidadReservas() {
+	int opcR;
+	float oferta;
+	
+	if (tipo == 1) {
+		while (true)
+		{
+			Console::Clear();
+			int op;
+
+			op = MenuReservas();
+			if (op == 1)
+			{
+				Console::Clear();
+				opcR = arrOfer->MenuOfertasAll();
+				if (opcR == 1)
+				{
+					arrOfer->mostrarOferta(arrOfer);
+					oferta = arrOfer->obtenerOferta();
+				}
+				cliente->reservarHotel(arrCat, arrRes, cliente, arrHotel, oferta);
+			}
+			else if (op == 2)
+			{
+				arrRes->visualizarReservas(cliente->getcorreo());
+			}
+			else if (op == 3)
+			{
+				cliente->cancelarReserva(arrRes, arrHotel);
+			}
+			else if (op == 4) {
+				cliente->cambiarfecha(arrRes);
+			}
+			break;
+		}
+	}
+	if (tipo == 3) {
+		Console::Clear();
+
+		while (true)
+		{
+			int op;
+			do {
+				cout << " Menú de Opciones " << endl;
+				cout << "1.- Visualizar lista de espera" << endl;
+				cout << "2. Aceptar reserva" << endl;
+				cout << "3. Rechazar reserva" << endl;
+				cout << " Ingrese opcion: "; cin >> op;
+			} while (op < 1 || op > 4);
+			if (op == 1)
+			{
+				dueño->visualizarWaitingList();
+			}
+			if (op == 2)
+			{
+				dueño->aceptarReserva(dueño);
+			}
+			if (op == 3)
+			{
+				dueño->rechazarReserva(dueño);
+			}
+			break;
+		}
+	}
+}
+void Mostrar_Menu() {
+	/* Inicializamos matriz */
+	int** pMenu;
+	Iniciar_Arreglos_Menu(pMenu);
+	bool mostrarMenu = true;
+	int tecla, x = 20, y = 8;
+
+	while (true) {
+
+		if (mostrarMenu) {
+			mostrarMenu = false;
+
+			/* Limpieza de la consola */
+			Console::CursorVisible = false;
+			Console::Clear();
+
+			/* Cargamos datos de Menú */
+			for (int i = 0; i < FILAS; i++) {
+				for (int j = 0; j < COLUMNAS; j++) {
+					Console::ForegroundColor = ConsoleColor::Yellow;
+
+					if (sesionIniciada) {
+						if (i == 8) {
+							if (j == COLUMNAS / 2)Imprimir_Trivago();
+						}
+
+						else if (i == 14) {
+							if (j == COLUMNAS / 2 - 15) cout << "INICIAR SESION O CREAR CUENTA";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 16) {
+							if (j == COLUMNAS / 2 - 6) cout << "HOTELES";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 18) {
+							if (j == COLUMNAS / 2 - 6) cout << "CREDITOS";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 20) {
+							if (j == COLUMNAS / 2 - 6) cout << "COMENTS";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 22) {
+							if (j == COLUMNAS / 2 - 10) cout << "GUARDAR Y SALIR";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 24) {
+							if (j == COLUMNAS / 2 - 10) cout << "ACTUALIZAR DATOS";
+							else if (j < 30) cout << ' ';
+						}
+						else if (i == 26) {
+							if (j == COLUMNAS / 2 - 10) cout << "RESERVAR ESTADIA";
+							else if (j < 30) cout << ' ';
+						}
+						else {
+							cout << ' ';
+						}
+					}
+					else {
+						if (i == 8) {
+							if (j == COLUMNAS / 2)Imprimir_Trivago();
+						}
+
+						else if (i == 14) {
+							if (j == COLUMNAS / 2 - 15) cout << "INICIAR SESION O CREAR CUENTA";
+							else if (j < 30) cout << ' ';
+						}
+					}
+				}
+
+				cout << endl;
+			}
+		}
+
+		/* Teclas */
+		
+		Desplazarse(x, y, true);
+
+		if (kbhit()) {
+			Desplazarse(x, y, false);
+			tecla = getch();
+			switch (tecla) {
+			case 'r':
+				arrRes->generardatos(1000, arrCat);
+			case 13: // Enter
+				if (x == 20) funcion = &FuncionalidadUsuario;
+				if (x == 22) funcion = &FuncionalidadHotel;
+				if (x == 24) funcion = &Mostrar_Creditos;
+				if (x == 26) funcion = &FuncionalidadComent;
+				if (x == 28){
+					arrAdmin->guardar();
+					delete arrAdmin;
+					arrCat->guardar();
+					delete arrCat;
+					arrCom->guardar();
+					delete arrCom;
+					arrRes->guardar();
+					delete arrRes;
+					arrCliente->guardar();
+					delete arrCliente;
+					arrHotel->guardar();
+					delete arrHotel;
+					delete arrOfer;
+					exit(0);
+				}
+				if (x == 30) {
+					Console::Clear();
+					int n;
+					string aux;
+					cout << "Seleccione lo que desee actualizar: ";
+					cout << "\n1. Correo";
+					cout << "\n2. Contraseña";
+					cout << "\n3. Usuario\n\n";
+					std::cin >> n;
+					switch (n) {
+					case 1:
+						cout << endl;
+						std::cin.ignore();
+						cout << "Ingrese el nuevo correo:" << endl;
+						std::cin >> aux;
+						cuenta->ActualizarCorr(aux, tipo);
+						cout << "Listo!";
+						_sleep(2000);
+						break;
+					case 2:
+						cout << endl;
+						cin.ignore();
+						cout << "Ingrese la nueva contraseña:" << endl;
+						cin >> aux;
+						cuenta->ActualizarContra(aux, tipo);
+						cout << "Listo!";
+						_sleep(2000);
+						break;
+					case 3:
+						cout << endl;
+						std::cin.ignore();
+						cout << "Ingrese el nuevo nombre de usuario:" << endl;
+						std::cin >> aux;
+						cuenta->ActualizarUsuario(aux, tipo);
+						cout << "Listo!";
+						_sleep(2000);
+						break;
+					}
+				}
+				if (x == 32) funcion = &FuncionalidadReservas;
+				s.push(funcion);
+				(*funcion)();
+				s.pop();
+				funcion = s.top(); //menu
+				(*funcion)();
+				break;
+			case 72: // Arriba
+				if (x > 20 && sesionIniciada) x = x - 2;
+				break;
+			case 80: // Abajo
+				if (x < 32 && sesionIniciada) x = x + 2;
+				break;
+			}
+			Desplazarse(x, y, true);
+		}
+	}
+}
+
+int main()
+{
+	setlocale(LC_ALL, "spanish"); 
+	SetConsoleCP(1252); 
+	SetConsoleOutputCP(1252);
+	Console::SetWindowSize(COLUMNAS, FILAS);
+	Console::CursorVisible = false;
+	s.push(funcion);
+	(*funcion)();
+	s.pop();
+	funcion = &Mostrar_Menu;
+	s.push(funcion);
+	(*funcion)();
+	system("pause");
+	delete cuenta;
+	return 0;
+}
+//funcionalidad reserva ofertas
+//inicio sesion dueño, inicio de sesion admin
+//actualizar datos
