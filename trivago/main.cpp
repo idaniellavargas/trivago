@@ -69,19 +69,19 @@ void FuncionalidadUsuario() {
 		std::cin >> cor;
 		cout << "Contraseña: ";
 		std::cin >> con;
-		if(cuenta != NULL) delete cuenta;
+		if (cuenta != NULL) delete cuenta;
 		if (tipo == 1) {
-			Cliente*aux = new Cliente(nom, cor, con, 10000, arrRes); //Registramos al usuario
+			Cliente* aux = new Cliente(nom, cor, con, 10000, arrRes); //Registramos al usuario
 			cuenta = aux;
 			arrCliente->agregarCliente(aux);
 		}
 		else if (tipo == 2) {
-			Administrador*aux = new Administrador(nom, cor, con, id, true);
+			Administrador* aux = new Administrador(nom, cor, con, id, true);
 			cuenta = aux;
 			arrAdmin->agregarAdmin(aux);
 		}
 		else {
-			DueñoHotelero*aux = new DueñoHotelero(nom, cor, con, 0, hot, arrRes);
+			DueñoHotelero* aux = new DueñoHotelero(nom, cor, con, 0, hot, arrRes);
 			cuenta = aux;
 			arrHotel->agregarDueño(aux);
 		}
@@ -113,7 +113,7 @@ void FuncionalidadUsuario() {
 				cout << "Hotel: ";
 				cin >> hot;
 				temp = arrHotel->BuscarDueño(hot);
-				dueño= arrHotel->BuscarDueño(hot);
+				dueño = arrHotel->BuscarDueño(hot);
 				break;
 			default:
 				break;
@@ -142,7 +142,7 @@ void FuncionalidadUsuario() {
 	}
 }
 void FuncionalidadHotel() {
-	Hotel* objHotel  = NULL;
+	Hotel* objHotel = NULL;
 	string nombre, ID, ubicacion, moneda;
 	short huespedes, habitaciones;
 	long telefono;
@@ -218,8 +218,8 @@ void FuncionalidadHotel() {
 				cout << " Ubicacion  : (" << objHotel->get_ubicacion() << ") :"; std::cin >> ubicacion;
 				objHotel->set_ubicacion(ubicacion);
 				break;
-			
-	
+
+
 			default:
 				cout << " Ha digitado un numero invalido " << endl;
 				break;
@@ -235,7 +235,7 @@ void FuncionalidadHotel() {
 			cout << "Ingrese la posicion que desee Eliminar: "; std::cin >> pos;
 			//arrCat->eliminarPos(pos);
 		}
-		if (op == 5) 
+		if (op == 5)
 		{
 			arrCat->HotelesPeruanos();
 			GoBack();
@@ -248,10 +248,10 @@ void FuncionalidadHotel() {
 			GoBack();
 			break;
 		}
-		if (op == 7) 
+		if (op == 7)
 		{
 			int choice;
-			Ofertas* ofertas=new Ofertas();
+			Ofertas* ofertas = new Ofertas();
 			if (tipo == 1)choice = ofertas->MenuOfertasAll();
 			else choice = ofertas->MenuOfertas();
 			if (choice == 1)ofertas->toString();
@@ -303,12 +303,12 @@ void Mostrar_Creditos() {
 				if (j == 14) cout << "x Juliana Yauricasa      ";
 				else if (j < 27) cout << ' ';
 			}
-		
+
 			else if (i == 28) {
 				if (j == 8) cout << "PRESIONE 'ESC' PARA REGRESAR AL MENU ";
 				else if (j < 15) cout << ' ';
 			}
-		
+
 			else {
 				cout << ' ';
 			}
@@ -318,18 +318,18 @@ void Mostrar_Creditos() {
 	GoBack();
 }
 void FuncionalidadComent() {
-	
+
 	int op;
 	do
 	{
 		op = MenuComent();
-		if (op == 1) NuevoComentario(arrCom, cuenta);
+		if (op == 1) NuevoComentario(arrCat, arrCom, cuenta);//here
 		else if (op == 2) mostrarComentario(arrCom);
 	} while (op != 1 && op != 2);
 }
 void FuncionalidadReservas() {
-	
-	
+
+
 	if (tipo == 1) {
 		while (true)
 		{
@@ -339,7 +339,7 @@ void FuncionalidadReservas() {
 			op = MenuReservas();
 			if (op == 1)
 			{
-				cliente->reservarHotel(arrCat, arrRes, cliente, arrHotel);
+				cliente->reservarHotel(*arrCat, *arrRes, *cliente, *arrHotel);
 			}
 			else if (op == 2)
 			{
@@ -459,7 +459,7 @@ void Mostrar_Menu() {
 		}
 
 		/* Teclas */
-		
+
 		Desplazarse(x, y, true);
 
 		if (kbhit()) {
@@ -480,7 +480,7 @@ void Mostrar_Menu() {
 				if (x == 22) funcion = &FuncionalidadHotel;
 				if (x == 24) funcion = &Mostrar_Creditos;
 				if (x == 26) funcion = &FuncionalidadComent;
-				if (x == 28){
+				if (x == 28) {
 					arrAdmin->guardar();
 					delete arrAdmin;
 					arrCat->guardar();
@@ -555,8 +555,8 @@ void Mostrar_Menu() {
 
 int main()
 {
-	setlocale(LC_ALL, "spanish"); 
-	SetConsoleCP(1252); 
+	setlocale(LC_ALL, "spanish");
+	SetConsoleCP(1252);
 	SetConsoleOutputCP(1252);
 	Console::SetWindowSize(COLUMNAS, FILAS);
 	Console::CursorVisible = false;

@@ -30,3 +30,5 @@ C:\Users\Milagros\Desktop\triv\trivago\trivago\x64\Debug\trivago.vcxproj.Assembl
 C:\Users\Milagros\Desktop\triv\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
 D:\Universidad\2023-0\AyEdD\New folder (2)\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
 D:\Universidad\2023-0\AyEdD\New folder (2)\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\Milagros\Desktop\wu\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\Milagros\Desktop\wu\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache

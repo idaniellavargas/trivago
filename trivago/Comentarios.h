@@ -27,10 +27,10 @@ public:
 		cout << "===================" << endl;
 	}
 	string guardar() {
-		return "\n" + ID + "," + Usuario + "," + to_string(Puntaje) + "," + Coment ;
+		return "\n" + ID + "," + Usuario + "," + to_string(Puntaje) + "," + Coment;
 	}
 
-	bool operator<(const Comentario &rhs) {
+	bool operator<(const Comentario& rhs) {
 		return Usuario < rhs.Usuario;
 	}
 };
@@ -90,67 +90,51 @@ public:
 function<void(short)> agregar{
 		[](short puntaje) { if (puntaje != 0)cout << "\nRegistro de comentario exitoso"; }
 };
-void NuevoComentario(arrComent* arrc, Usuario* u) {
-	Catalogo* arrh = new Catalogo();
+
+void NuevoComentario(Catalogo* arrh, arrComent* arrc, Usuario* u) {
+	Console::Clear;
 	Hotel* h = NULL;
 	string id;
 	char c;
 	short puntaje;
 	string coment;
 
-	Console::Clear();
-	while (1) {
-
+	do {
 		cout << "Ingrese ID del Hotel que quiere comentar:\n";
-		do {
-			cin >> id;
+		cin >> id;
+		transform(id.begin(), id.end(), id.begin(), ::toupper);
+		h = arrh->BuscarHotel(id);
+		if (h == NULL) cout << "ID no encontrada.\n Intente de nuevo:\n";
+	} while (h == NULL);
 
-			transform(id.begin(), id.end(), id.begin(), ::toupper);
-
-			h = arrh->BuscarHotel(id);
-			Console::Clear();
-			if (h == NULL) cout << "ID no encontrada.\n Intente de nuevo:\n";
-		} while (h == NULL);
-
-		do {
-			Console::Clear();
-			h->toString();
-			cout << "\n confirma su seleccion? (y/n):\n";
-			cin >> c;
-		} while (c != 'y' && c != 'n');
-
-		Console::Clear();
+	while (1) {
+		h->toString();
+		cout << "\nConfirma su seleccion? (y/n):\n";
+		cin >> c;
 		if (c == 'n') continue;
-		else {
+		else if (c == 'y') {
 			do {
-				cout << "Ingrese un rating del 1 al 5 (1 = muy malo, 5 = excelente): \n";
+				cout << "Ingrese un rating del 1 al 5 (1 = muy malo, 5 = excelente):\n";
 				cin >> puntaje;
-				Console::Clear();
-				if (puntaje < 0 || puntaje > 5) cout << "Puntaje fuera de rango.\n";
-			} while (puntaje < 0 || puntaje > 5);
+				if (puntaje < 1 || puntaje > 5) cout << "Puntaje fuera de rango.\n";
+			} while (puntaje < 1 || puntaje > 5);
 
-			do {
-				Console::Clear();
-				cout << "Desea dejar una resena? (y/n):\n";
-				cin >> c;
-			} while (c != 'y' && c != 'n');
-
-			if (c == 'n') coment = "";
-			else {
+			cout << "Desea dejar una resena? (y/n):\n";
+			cin >> c;
+			if (c == 'y') {
 				cin.ignore();
 				getline(cin, coment);
 			}
+			else {
+				coment = "";
+			}
 
-			string nombre = u->getnombre();
-			if (nombre == "") nombre = "anonimo";
+			string nombre = (u->getnombre() == "") ? "anónimo" : u->getnombre();
 			Comentario* ncoment = new Comentario(id, nombre, puntaje, coment);
 			arrc->addComent(ncoment);
-			cout << endl;
 			agregar(puntaje);
 			break;
 		}
-		GoBack();
-		break;
 	}
 }
 
