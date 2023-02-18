@@ -1,0 +1,32 @@
+C:\Users\usuario\Desktop\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\usuario\Desktop\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\I.C.G\Desktop\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\I.C.G\Desktop\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+D:\Universidad\2023-0\AyEdD\PC1\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\I.C.G\Desktop\o\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\I.C.G\Desktop\o\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+D:\Universidad\2023-0\AyEdD\Parcial\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+D:\Universidad\2023-0\AyEdD\Parcial\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\I.C.G\Desktop\e\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\I.C.G\Desktop\e\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\I.C.G\Desktop\a\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\I.C.G\Desktop\a\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\I.C.G\Desktop\me llegas\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\I.C.G\Desktop\me llegas\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\I.C.G\Desktop\ea\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\I.C.G\Desktop\ea\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\I.C.G\Desktop\eee\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\I.C.G\Desktop\eee\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\Usuario\Desktop\Nueva carpeta (7)\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\Usuario\Desktop\Nueva carpeta (7)\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\I.C.G\Desktop\Nueva carpeta\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+D:\Universidad\2023-0\AyEdD\final\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\Milagros\Desktop\p\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\Milagros\Desktop\p\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\Milagros\Desktop\triv\trivago\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+C:\Users\Milagros\Desktop\triv\trivago\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
+D:\Universidad\2023-0\AyEdD\New folder (2)\trivago\x64\Debug\trivago.vcxproj.AssemblyReference.cache
+D:\Universidad\2023-0\AyEdD\New folder (2)\trivago\x64\Debug\trivago.vcxproj.SuggestedBindingRedirects.cache
