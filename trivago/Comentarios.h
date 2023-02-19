@@ -61,6 +61,10 @@ public:
 		}
 	}
 
+	void deord() {
+		shuffle(arrc);
+	}
+
 	void toString() {
 		for (auto i : arrc) {
 			i->toString();

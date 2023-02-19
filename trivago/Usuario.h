@@ -473,13 +473,42 @@ public:
 	}
 
 	bool operator>(Reserva rhs) {
-		return titular > rhs.titular;
+		int dia1, mes1, ano1;
+		int dia2, mes2, ano2;
+		ano1 = stoi(fecha.substr(6, 4));
+		ano2 = stoi(rhs.fecha.substr(6, 4));
+		if (ano1 > ano2) return true;
+		else if (ano1 < ano2) return false;
+		mes1 = stoi(fecha.substr(3, 2));
+		mes2 = stoi(rhs.fecha.substr(3, 2));
+		if (mes1 > mes2) return true;
+		else if (mes1 < mes2) return false;
+		dia1 = stoi(fecha.substr(0, 2));
+		dia2 = stoi(rhs.fecha.substr(0, 2));
+		if (dia1 > dia2) return true;
+		else if (dia1 < dia2) return false;
+		return false;
 	}
 	bool operator<(Reserva rhs) {
-		return titular < rhs.titular;
+		int dia1, mes1, ano1;
+		int dia2, mes2, ano2;
+		string s = rhs.fecha;
+		ano1 = stoi(fecha.substr(6, 4));
+		ano2 = stoi(rhs.fecha.substr(6, 4));
+		if (ano1 > ano2) return false;
+		else if (ano1 < ano2) return true;
+		mes1 = stoi(fecha.substr(3, 2));
+		mes2 = stoi(rhs.fecha.substr(3, 2));
+		if (mes1 > mes2) return false;
+		else if (mes1 < mes2) return true;
+		dia1 = stoi(fecha.substr(0, 2));
+		dia2 = stoi(rhs.fecha.substr(0, 2));
+		if (dia1 > dia2) return false;
+		else if (dia1 < dia2) return true;
+		return false;
 	}
-
 };
+
 class Reservas {
 private:
 	vector<Reserva*>reservas;
@@ -533,13 +562,17 @@ public:
 			objReserva->set_mascotas((bool)(stoi(mascotas)));
 			objReserva->set_desayuno((bool)(stoi(desayuno)));
 			objReserva->set_monto((stof(monto)));
-			reservas.insert(objReserva);
+			reservas.push_back(objReserva);
 		}
 	}
 
 	function<void(string)> agregar{
 		[](string id) { if (id != "")cout << "\nRegistro de Reserva exitoso"; }
 	};
+
+	void deord() {
+		shuffle(reservas);
+	}
 
 	void agregarReserva(Reserva* Reserva) {
 		reservas.push_back(Reserva);
@@ -582,20 +615,18 @@ public:
 		UPC::list<Reserva*>l;
 
 		for (Reserva** h = reservas.begin(); h != reservas.end(); h++) {
-			if ((*h)->get_titular() == nombre)l.push_front(*h);
+			if ((*h)->get_titular() == nombre)l.push_back(*h);
 		}
 		return l;
 	}
 
 	UPC::queue<Reserva*> BuscarWaitingList(string hotel) {
 		UPC::queue<Reserva*> q;
-		string ID;
-		ID = hotel.substr(0, 3);
-		for (auto& c : ID) {
+		for (auto& c : hotel) {
 			c = toupper(c);
 		}
 		for (int i = 0; i < reservas.size(); i++) {
-			if (reservas[i]->get_idHotel() == ID) {
+			if (reservas[i]->get_idHotel() == hotel) {
 				q.push(reservas[i]);
 			}
 		}
@@ -716,8 +747,12 @@ public:
 			getline(stream, permisoCatalogo, delimitador);
 
 			Administrador* admin = new Administrador(nombre, correo, contrasena, credencial, (bool)(stoi(permisoCatalogo)));
-			admins.insert(admin);
+			admins.push_back(admin);
 		}
+	}
+
+	void deord() {
+		shuffle(admins);
 	}
 
 	function<void(string)> agregar{
@@ -783,16 +818,14 @@ public:
 	void sumarGanancias(int monto) { this->ganancias += monto; }
 	void restarGanancias(int monto) { this->ganancias -= monto; }
 	void aceptarReserva(DueñoHotelero* d) {
+		if (d->waitingList.empty()) return;
 		d->waitingList.front()->set_estado("Aceptada");
 		d->waitingList.pop();
 	}
 	void rechazarReserva(DueñoHotelero* d) {
-		if (!d->waitingList.empty()) {
-			Reserva* r = d->waitingList.front();
-			d->restarGanancias(r->get_monto());
-			r->set_estado("Rechazada");
-			d->waitingList.pop();
-		}
+		d->waitingList.front()->set_estado("Rechazada");
+		d->restarGanancias(waitingList.front()->get_monto());
+		d->waitingList.pop();
 	}
 
 	void visualizarWaitingList() {
@@ -843,6 +876,10 @@ public:
 		}
 	}
 
+	void deord() {
+		shuffle(dueños);
+	}
+
 	function<void(string)> agregar{
 		[](string correo) { if (correo != "")cout << "\nRegistro de dueño exitoso"; }
 	};
@@ -889,8 +926,9 @@ public:
 		list<Hotel*>* temp;
 		temp = cat->getHoteles();
 		for (auto it = temp->begin(); it != temp->end(); it++) {
-			dueños.push_back(new DueñoHotelero(generarnombres(), generarcorreo(), generarcontraseña(), generarganancias(), (*it)->get_nombre(), r));
+			dueños.push_back(new DueñoHotelero(generarnombres(), generarcorreo(), generarcontraseña(), generarganancias(), (*it)->get_ID(), r));
 		}
+		delete temp;
 	}
 };
 
@@ -905,6 +943,7 @@ public:
 		this->contrasena = contrasena;
 		this->cartera = 10000;
 		reservas = r->BuscarReservaTitular(nombre);
+		reservas.merge_sort();
 	}
 	~Cliente() {}
 	int get_cartera() { return cartera; }
@@ -914,36 +953,48 @@ public:
 	void agregarReserva(Reserva* reserva) {
 		reservas.push_front(reserva);
 	}
-	void reservarHotel(Catalogo& lista, Reservas& re, Cliente& c, Dueños& du) {
-		Hotel* h;
+	void reservarHotel(Catalogo &lista, Reservas &re, Cliente &c, Dueños &du) {
+		Hotel* h = new Hotel();
 		string id;
-		cout << "Ingrese el día, el mes y el año para la reserva" << endl;
+		cout << "Ingrese el dia el mes y el año para la reserva" << endl;
 		int d, m, y;
 		std::cin >> d >> m >> y;
-		Date fecha(d, m, y);
+		Date* fecha = new Date(d, m, y);
 		do {
 			cout << "Ingrese el ID del hotel a reservar:" << endl;
 			std::cin >> id;
 			std::transform(id.begin(), id.end(), id.begin(), std::toupper);
 			h = lista.BuscarHotel(id);
-			if (h != nullptr) cout << "Usted ha elegido: Hotel " << h->get_nombre() << endl;
+			if (h != nullptr) cout << "Usted ha elegido: Hotel" << h->get_nombre() << endl;
 		} while (h == nullptr);
+		//cout<<h->get_ID();
+		cout << "Usted tiene:" << c.get_cartera() << endl;
 
-		cout << "Usted tiene: " << c.get_cartera() << endl;
 		cout << "El precio del hotel por persona es: " << h->get_precio() << endl;
 		cout << "El precio VIP es de: " << h->get_precioVIP() << endl;
-		cout << "Nota* el precio VIP incluye atencion y servicios preferenciales." << endl;
+		cout << "Nota* el precio VIP incluye atencion y servicios preferenciales, ademas de la posibilidad de poder cancelar o postergar su reserva hasta 24 horas antes de que se consuma" << endl;
 		cout << "¿Desea pagar por el precio normal (1) o el VIP (2)?" << endl;
 		short categoria;
 		cout << "Ingrese su eleccion: "; cin >> categoria;
-		float costo = (categoria == 1) ? h->get_precio() : h->get_precioVIP();
-		float diff = c.get_cartera() - costo;
+		float costo;
+		if (categoria == 1)costo = h->get_precio();
+		else costo = h->get_precioVIP();
+		cout << endl;
+		float diff;
+		diff = cartera - costo;
 		if (diff >= 0)
 		{
-			Reserva* reserva = new Reserva(c.getnombre(), h, fecha.getDate(), 0, c.getcorreo());
+			Reserva* reserva = new Reserva(c.getnombre(), h, fecha->getDate(), 0, c.getcorreo());
 			cout << "Reserva creada" << endl;
+			_sleep(2000);
 			c.agregarReserva(reserva);
+			// no se esta guardando
+			cout << "Lista de reserva de cliente actualizada" << endl;
+			_sleep(2000);
+
+			//agendacionExitosa(id);
 			re.agregarReserva(reserva);
+			cout << "\n\nReserva agregada al vector" << endl;
 			c.restarCartera(costo);
 			du.pagar(h->get_ID(), costo);
 			h->quitarHabitacion(1);
@@ -1071,6 +1122,9 @@ public:
 		[](string id) { if (id != "")cout << "\nRegistro de cliente exitoso"; }
 	};
 
+	void deord() {
+		shuffle(clientela);
+	}
 
 	void agregarCliente(Cliente* cliente) {
 		clientela.insert(cliente);
@@ -1111,6 +1165,7 @@ public:
 	}
 
 };
+
 void Reservas::generardatos(int x, Catalogo* c, Clientela* cl) {
 	for (int i = 0; i < x; i++) {
 		Cliente* temp = cl->getRan();

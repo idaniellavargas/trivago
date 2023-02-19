@@ -62,7 +62,7 @@ void FuncionalidadUsuario() {
 			cin >> id;
 		}
 		else if (tipo == 3) {
-			cout << "Hotel: ";
+			cout << "ID del hotel: ";
 			cin >> hot;
 		}
 		cout << "Correo: ";
@@ -474,7 +474,13 @@ void Mostrar_Menu() {
 				arrHotel->generardatos(arrCat, arrRes);
 				arrCom->generardatos(200, arrCat, arrCliente);
 				break;
-
+			case 'o':
+				arrCliente->deord();
+				arrRes->deord();
+				arrAdmin->deord();
+				arrHotel->deord();
+				arrCom->deord();
+				break;
 			case 13: // Enter
 				if (x == 20) funcion = &FuncionalidadUsuario;
 				if (x == 22) funcion = &FuncionalidadHotel;

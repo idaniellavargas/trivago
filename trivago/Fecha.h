@@ -107,9 +107,11 @@ void Date::set_month(int month)
 
 string Date::getDate() { //concatenacion como con +
 	string s;
+	if(day < 10) s.append("0");
 	s.append(to_string(day));
 	s.append("/");
 	s.append(to_string(month));
+	if (month < 10) s.append("0");
 	s.append("/");
 	s.append(to_string(year));
 	return s;
