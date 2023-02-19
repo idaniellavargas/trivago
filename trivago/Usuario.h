@@ -1026,10 +1026,12 @@ public:
 				cout << endl;
 			}
 			std::cin >> n;
-
 			auto it = reservas.begin();
-			n--;
-			while (n--) it++;
+
+			if (n) {
+				while (n--) it++;
+
+			}
 			auto* p = *it;
 			Catalogo* h = new Catalogo();
 			h->BuscarHotel(p->get_idHotel())->agregarHabitacion(1);
@@ -1040,7 +1042,6 @@ public:
 			int pos;
 			pos = r->buscar(p);
 			r->eliminarPos(pos);
-			r->delete_record(pos);
 
 		}
 	}
@@ -1073,15 +1074,13 @@ public:
 			std::cin >> n; //validar imput?
 
 			auto it = reservas.begin();
-			n--;
-			while (n--) it++;
+			while (n) {
+				n--;
+				it++;
+			}
 			auto* p = *it;
 			p->set_fecha(fecha->getDate());
 			conf = false;
-			int pos;
-			pos = r->buscar(p);
-			r->delete_record(pos);
-			r->agregarReserva(p);
 		}
 		if (conf)cout << "No hay reservas en el registro" << endl;
 	}
