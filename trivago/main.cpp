@@ -110,7 +110,7 @@ void FuncionalidadUsuario() {
 				admin = arrAdmin->BuscarAdmin(id);
 				break;
 			case 3:
-				cout << "Hotel: ";
+				cout << "ID del Hotel: ";
 				cin >> hot;
 				temp = arrHotel->BuscarDueño(hot);
 				dueño = arrHotel->BuscarDueño(hot);
@@ -406,47 +406,51 @@ void Mostrar_Menu() {
 					Console::ForegroundColor = ConsoleColor::Yellow;
 
 					if (sesionIniciada) {
-						if (i == 8) {
+						switch (i) {
+						case 8:
 							if (j == COLUMNAS / 2)Imprimir_Trivago();
-						}
-
-						else if (i == 14) {
+							break;
+						case 14:
 							if (j == COLUMNAS / 2 - 15) cout << "INICIAR SESION O CREAR CUENTA";
 							else if (j < 30) cout << ' ';
-						}
-						else if (i == 16) {
+							break;
+						case 16:
 							if (j == COLUMNAS / 2 - 6) cout << "HOTELES";
 							else if (j < 30) cout << ' ';
-						}
-						else if (i == 18) {
-							if (j == COLUMNAS / 2 - 6) cout << "CREDITOS";
-							else if (j < 30) cout << ' ';
-						}
-						else if (i == 20) {
+							break;
+						case 18:
+								if (j == COLUMNAS / 2 - 6) cout << "CREDITOS";
+								else if (j < 30) cout << ' ';
+								break;
+						case 20:
 							if (j == COLUMNAS / 2 - 6) cout << "COMENTS";
 							else if (j < 30) cout << ' ';
-						}
-						else if (i == 22) {
+							break;
+						case 22:
 							if (j == COLUMNAS / 2 - 10) cout << "GUARDAR Y SALIR";
 							else if (j < 30) cout << ' ';
-						}
-						else if (i == 24) {
+							break;
+						case 24:
 							if (j == COLUMNAS / 2 - 10) cout << "ACTUALIZAR DATOS";
 							else if (j < 30) cout << ' ';
-						}
-						else if (i == 26) {
+							break;
+						case 26:
 							if (j == COLUMNAS / 2 - 10) cout << "RESERVAR ESTADIA";
 							else if (j < 30) cout << ' ';
-						}
-						else {
+							break;
+						case 28:
+							if (j == COLUMNAS / 2 - 9) cout << "ORDENAR DATOS";
+							else if (j < 30) cout << ' ';
+							break;
+						default:
 							cout << ' ';
+							break;
 						}
 					}
 					else {
 						if (i == 8) {
 							if (j == COLUMNAS / 2)Imprimir_Trivago();
 						}
-
 						else if (i == 14) {
 							if (j == COLUMNAS / 2 - 15) cout << "INICIAR SESION O CREAR CUENTA";
 							else if (j < 30) cout << ' ';
@@ -473,6 +477,8 @@ void Mostrar_Menu() {
 				arrAdmin->generardatos(50);
 				arrHotel->generardatos(arrCat, arrRes);
 				arrCom->generardatos(200, arrCat, arrCliente);
+				mostrarMenu = true;
+				_sleep(500);
 				break;
 			case 'o':
 				arrCliente->deord();
@@ -541,6 +547,13 @@ void Mostrar_Menu() {
 					}
 				}
 				if (x == 32) funcion = &FuncionalidadReservas;
+				if (x == 34) {
+					arrCliente->sort();
+					arrRes->sort();
+					arrAdmin->sort();
+					arrCom->sort();
+					arrHotel->sort();
+				}
 				s.push(funcion);
 				(*funcion)();
 				s.pop();
@@ -551,7 +564,7 @@ void Mostrar_Menu() {
 				if (x > 20 && sesionIniciada) x = x - 2;
 				break;
 			case 80: // Abajo
-				if (x < 32 && sesionIniciada) x = x + 2;
+				if (x < 34 && sesionIniciada) x = x + 2;
 				break;
 			}
 			Desplazarse(x, y, true);

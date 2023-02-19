@@ -57,12 +57,16 @@ public:
 			puntaje = stoi(p);
 			getline(stream, coment, delimitador);
 			Comentario* aux = new Comentario(ID, usuario, puntaje, coment);
-			arrc.insert(aux);
+			arrc.push_back(aux);
 		}
 	}
 
 	void deord() {
 		shuffle(arrc);
+	}
+
+	void sort() {
+		arrc.sort();
 	}
 
 	void toString() {
@@ -71,8 +75,13 @@ public:
 		}
 	}
 
+	function<void()> agregar{
+		[](){ cout << "\nComentario Creado"; }
+	};
+
 	void addComent(Comentario* nc) {
-		arrc.insert(nc);
+		arrc.push_back(nc);
+		agregar();
 	}
 
 	void guardar() {
@@ -86,7 +95,7 @@ public:
 
 	void generardatos(int x, Catalogo* cat, Clientela* cl) {
 		for (int i = 0; i < x; i++) {
-			arrc.push_back(new Comentario(cat->randH()->get_ID(), cl->getRan()->getnombre(), generarpuntaje(), generarcomentario()));
+			addComent(new Comentario(cat->randH()->get_ID(), cl->getRan()->getnombre(), generarpuntaje(), generarcomentario()));
 		}
 	}
 };

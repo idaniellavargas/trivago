@@ -574,6 +574,10 @@ public:
 		shuffle(reservas);
 	}
 
+	void sort() {
+		reservas.sort();
+	}
+
 	void agregarReserva(Reserva* Reserva) {
 		reservas.push_back(Reserva);
 		agregar(Reserva->get_titular());
@@ -584,10 +588,7 @@ public:
 
 	int get_size() { return reservas.size(); }
 	Reserva* get_pos(int i) { return reservas[i]; }
-	void actualizar() {
-		shsort(reservas, [](Reserva* Reserva1, Reserva* Reserva2) {
-			return Reserva1->get_fecha() < Reserva2->get_fecha(); });
-	}
+
 
 	Reserva* modificar(int pos) {
 		for (int i = 0; i < reservas.size(); i++)
@@ -597,10 +598,6 @@ public:
 	}
 	int buscar(Reserva* elem) {
 		for (int i = 0; i < reservas.size(); i++)if (reservas[i] == elem)return i;
-	}
-	void mostrar() {
-		actualizar();
-		for (int i = 0; i < reservas.size(); i++) reservas[i]->toString();
 	}
 	friend class DueñoHotelero;
 	void visualizarReservas(string correo) {
@@ -755,12 +752,16 @@ public:
 		shuffle(admins);
 	}
 
+	void sort() {
+		admins.sort();
+	}
+
 	function<void(string)> agregar{
 		[](string correo) { if (correo != "")cout << "\nRegistro de admin exitoso"; }
 	};
 
 	void agregarAdmin(Administrador* admin) {
-		admins.insert(admin);
+		admins.push_back(admin);
 		agregar(admin->getcorreo());
 	}
 	void eliminarPos(int pos) {
@@ -793,7 +794,7 @@ public:
 			do {
 				temp = generarcredencial();
 			} while (BuscarAdmin(temp) != NULL);
-			admins.push_back(new Administrador(generarnombres(), generarcorreo(), generarcontraseña(), generarcredencial(), generarbool()));
+			agregarAdmin(new Administrador(generarnombres(), generarcorreo(), generarcontraseña(), generarcredencial(), generarbool()));
 		}
 	}
 };
@@ -872,7 +873,7 @@ public:
 			getline(stream, hotel, delimitador);
 
 			DueñoHotelero* dueño = new DueñoHotelero(nombre, correo, contrasena, stoi(ganancias), hotel, r);
-			dueños.insert(dueño);
+			dueños.push_back(dueño);
 		}
 	}
 
@@ -880,12 +881,16 @@ public:
 		shuffle(dueños);
 	}
 
+	void sort() {
+		dueños.sort();
+	}
+
 	function<void(string)> agregar{
 		[](string correo) { if (correo != "")cout << "\nRegistro de dueño exitoso"; }
 	};
 
 	void agregarDueño(DueñoHotelero* duenho) {
-		dueños.insert(duenho);
+		dueños.push_back(duenho);
 
 		agregar(duenho->getcorreo());
 	}
@@ -926,7 +931,7 @@ public:
 		list<Hotel*>* temp;
 		temp = cat->getHoteles();
 		for (auto it = temp->begin(); it != temp->end(); it++) {
-			dueños.push_back(new DueñoHotelero(generarnombres(), generarcorreo(), generarcontraseña(), generarganancias(), (*it)->get_ID(), r));
+			agregarDueño(new DueñoHotelero(generarnombres(), generarcorreo(), generarcontraseña(), generarganancias(), (*it)->get_ID(), r));
 		}
 		delete temp;
 	}
@@ -1112,7 +1117,7 @@ public:
 
 			if (nombre != "") {
 				Cliente* cliente = new Cliente(nombre, correo, contrasena, stoi(cartera), r);
-				clientela.insert(cliente);
+				clientela.push_back(cliente);
 
 			}
 		}
@@ -1126,8 +1131,12 @@ public:
 		shuffle(clientela);
 	}
 
+	void sort() {
+		clientela.sort();
+	}
+
 	void agregarCliente(Cliente* cliente) {
-		clientela.insert(cliente);
+		clientela.push_back(cliente);
 		agregar(cliente->getnombre());
 	}
 	void eliminarPos(int pos) {
@@ -1156,7 +1165,8 @@ public:
 
 	void generardatos(int x, Reservas* r) {
 		for (int i = 0; i < x; i++) {
-			clientela.push_back(new Cliente(generarnombres(), generarcorreo(), generarcontraseña(), generarcartera(), r));
+			agregarCliente(new Cliente(generarnombres(), generarcorreo(), generarcontraseña(), generarcartera(), r));
+			agregar("a");
 		}
 	}
 
@@ -1169,7 +1179,7 @@ public:
 void Reservas::generardatos(int x, Catalogo* c, Clientela* cl) {
 	for (int i = 0; i < x; i++) {
 		Cliente* temp = cl->getRan();
-		reservas.push_back(new Reserva(temp->getContrasena(), c->randH(), generarfecha(), generarbool(), temp->getcorreo()));
+		agregarReserva(new Reserva(temp->getContrasena(), c->randH(), generarfecha(), generarbool(), temp->getcorreo()));
 	}
 	cout << ".\n";
 }
